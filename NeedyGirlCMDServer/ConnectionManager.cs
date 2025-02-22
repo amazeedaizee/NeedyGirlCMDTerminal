@@ -11,7 +11,7 @@ namespace NeedyGirlCMDServer
         internal static bool isConnected = true;
         internal static void StartServer()
         {
-            //var currentUser = new SecurityIdentifier(WindowsIdentity.GetCurrent().User.Value);
+            ///var currentUser = new SecurityIdentifier(WindowsIdentity.GetCurrent().User.Value);
             //var networkSid = new SecurityIdentifier(WellKnownSidType.NetworkSid, null);
             PipeSecurity pipeSecurity = new PipeSecurity();
             //pipeSecurity.AddAccessRule(new PipeAccessRule(currentUser, PipeAccessRights.ReadWrite, System.Security.AccessControl.AccessControlType.Allow));
