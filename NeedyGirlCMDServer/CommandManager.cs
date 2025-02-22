@@ -40,12 +40,12 @@ namespace NeedyGirlCMDServer
         internal static async UniTask StartReceiveCommand()
         {
             Initializer.logger.LogInfo("Connecting to terminal...");
-            streamReader = new StreamReader(ConnectionManager.pipe);
-            streamWriter = new StreamWriter(ConnectionManager.pipe);
+            streamReader = new StreamReader(ConnectionManager.client.GetStream());
+            streamWriter = new StreamWriter(ConnectionManager.client.GetStream());
             streamWriter.AutoFlush = true;
             Initializer.logger.LogInfo("Successfully connected to the terminal!");
             await UniTask.Delay(500);
-            while (ConnectionManager.pipe.IsConnected)
+            while (ConnectionManager.client.Connected)
             {
                 try
                 {
@@ -55,9 +55,7 @@ namespace NeedyGirlCMDServer
                 catch { }
             }
             Initializer.logger.LogInfo("Disconnected from the terminal.");
-            ConnectionManager.pipe.Close();
-            ConnectionManager.pipe.Dispose();
-            ConnectionManager.pipe = null;
+            ConnectionManager.tcpListener.Stop();
             ConnectionManager.StartServer();
         }
 
@@ -227,11 +225,13 @@ namespace NeedyGirlCMDServer
         }
         internal static void SendMessage(string message)
         {
-            if (!ConnectionManager.pipe.IsConnected)
+            if (!ConnectionManager.client.Connected)
                 return;
             streamWriter.WriteLine(message);
+            ConnectionManager.client.GetStream().Flush();
             streamReader.DiscardBufferedData();
-            ConnectionManager.pipe.WaitForPipeDrain();
+
+            //ConnectionManager.pipe.WaitForPipeDrain();
         }
     }
 }

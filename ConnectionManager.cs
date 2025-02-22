@@ -1,5 +1,6 @@
 ﻿using System;
-using System.IO.Pipes;
+using System.Net;
+using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,14 +13,14 @@ namespace NeedyGirlCMDTerminal
         internal static bool isRunning = true;
         internal static bool isNotConnected = true;
 
-        internal static NamedPipeClientStream pipe;
+        internal static TcpClient link = new TcpClient();
 
         internal static void StartManualConnection()
         {
             try
             {
-                pipe = new NamedPipeClientStream(".", "WindoseServer", PipeDirection.InOut, PipeOptions.Asynchronous, System.Security.Principal.TokenImpersonationLevel.Identification);
-                pipe.Connect(1);
+                link = new TcpClient();
+                link.Connect(Dns.GetHostName(), 55770);
             }
             catch { }
         }
@@ -40,11 +41,10 @@ namespace NeedyGirlCMDTerminal
             skipArtLoad = false;
             StartManualConnection();
 #if !DEBUG
-            if (!pipe.IsConnected)
+            if (!link.Connected)
             {
-                pipe.Close();
-                pipe.Dispose();
-                pipe = null;
+                link.Close();
+                link.Dispose();
                 Console.WriteLine("Connection failed!\nPress any key to try again.\n");
                 Console.ReadKey(true);
                 Console.Clear();

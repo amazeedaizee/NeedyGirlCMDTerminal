@@ -27,10 +27,10 @@ namespace NeedyGirlCMDTerminal
         internal static void CreateStreamReaderWriter()
         {
 #if !DEBUG
-            if (ConnectionManager.pipe != null && ConnectionManager.pipe.IsConnected)
+            if (ConnectionManager.link != null && ConnectionManager.link.Connected)
             {
-                streamReader = new StreamReader(ConnectionManager.pipe);
-                streamWriter = new StreamWriter(ConnectionManager.pipe);
+                streamReader = new StreamReader(ConnectionManager.link.GetStream());
+                streamWriter = new StreamWriter(ConnectionManager.link.GetStream());
                 streamWriter.AutoFlush = true;
             }
 #else
@@ -53,8 +53,7 @@ namespace NeedyGirlCMDTerminal
             while ((restartKey != ConsoleKey.Y && restartKey != ConsoleKey.N) && !ConnectionManager.isRunning);
             if (restartKey == ConsoleKey.Y)
             {
-                ConnectionManager.pipe.Dispose();
-                ConnectionManager.pipe = null;
+                ConnectionManager.link.Dispose();
                 ConnectionManager.StartLoad();
             }
             else Environment.Exit(0);
@@ -65,7 +64,7 @@ namespace NeedyGirlCMDTerminal
             string command;
             var input = Console.In;
             state = CommandState.AwaitingInput;
-            if (!ConnectionManager.pipe.IsConnected)
+            if (!ConnectionManager.link.Connected)
             {
                 ConnectionManager.isRunning = false;
             }
@@ -95,7 +94,7 @@ namespace NeedyGirlCMDTerminal
         {
             if (!ConnectionManager.isRunning)
                 return;
-            if (!ConnectionManager.pipe.IsConnected)
+            if (!ConnectionManager.link.Connected)
             {
                 ConnectionManager.isRunning = false;
                 return;
@@ -103,7 +102,8 @@ namespace NeedyGirlCMDTerminal
             streamWriter.WriteLine(command);
             state = CommandState.ReadingInput;
             Console.WriteLine($"Sent: {command}");
-            ConnectionManager.pipe.WaitForPipeDrain();
+            ConnectionManager.link.GetStream().Flush();
+            // ConnectionManager.link.WaitForPipeDrain();
             while (state == CommandState.ReadingInput)
             {
                 Thread.Sleep(100);
@@ -119,7 +119,7 @@ namespace NeedyGirlCMDTerminal
             while (state != CommandState.ReadingInput)
             {
                 Thread.Sleep(100);
-                if (!ConnectionManager.pipe.IsConnected)
+                if (!ConnectionManager.link.Connected)
                 {
                     ConnectionManager.isRunning = false;
                     return;
@@ -138,7 +138,7 @@ namespace NeedyGirlCMDTerminal
             }
             state = CommandState.SendingOutput;
             streamReader.DiscardBufferedData();
-            if (!ConnectionManager.pipe.IsConnected)
+            if (!ConnectionManager.link.Connected)
             {
                 ConnectionManager.isRunning = false;
                 return;
