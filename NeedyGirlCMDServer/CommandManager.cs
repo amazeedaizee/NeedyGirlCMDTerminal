@@ -230,7 +230,7 @@ namespace NeedyGirlCMDServer
             streamWriter.WriteLine(message);
             ConnectionManager.client.GetStream().Flush();
             streamReader.DiscardBufferedData();
-
+            Initializer.logger.LogMessage("Pinging back to Terminal.");
             //ConnectionManager.pipe.WaitForPipeDrain();
         }
     }
