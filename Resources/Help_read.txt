@@ -1,0 +1,14 @@
+﻿
+READ: 
+
+Does a command that involves reading an in-game text file from the game.
+
+====================================================================================
+
+> read <filename>
+
+Reads text from the selected file that matches <filename>. 
+File has to be an in-game text file.
+
+====================================================================================
+

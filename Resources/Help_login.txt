@@ -1,0 +1,15 @@
+﻿
+LOGIN: 
+
+Logs into MeTube. Does not require a webpage to be open.
+
+====================================================================================
+
+> login <password>
+
+Tries to log into MeTube based on the specified <password>.
+
+<password>: ??????????
+
+====================================================================================
+

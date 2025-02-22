@@ -1,0 +1,14 @@
+﻿
+CUT: 
+
+Does an action related to Self-Destruct. Only applies when the Self-Destruct
+window can be interacted with.
+
+====================================================================================
+
+> cut
+
+Places a mark in the Self-Destruct window.
+
+====================================================================================
+

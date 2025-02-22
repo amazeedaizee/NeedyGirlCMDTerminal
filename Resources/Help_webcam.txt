@@ -1,0 +1,38 @@
+﻿
+WEBCAM | AME: 
+
+Does specific commands related to the Webcam.
+
+====================================================================================
+
+> webcam
+
+Places the Webcam as the active window.
+
+------------------------------------------------------------------------------------
+
+> webcam pat /number/
+
+Headpats Ame. 
+
+Including a /number/ headpats her the specified number of times. 
+/number/ has to be above zero.
+
+------------------------------------------------------------------------------------
+
+> webcam random
+
+Sets the current idle animation to a random one (dependent on current stats)
+
+------------------------------------------------------------------------------------
+
+> webcam <window state>
+	
+Sets the <window state> of the webcam.
+
+<window state>: {minimize | min | -}
+                {maximize | max | +}
+                {close | x}
+
+====================================================================================
+

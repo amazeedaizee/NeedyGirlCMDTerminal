@@ -1,0 +1,65 @@
+﻿
+DEBUG: 
+
+Does specific commands depending on its arguments and the game's current scene.
+Only applies if the game is currently in Debug Mode.
+
+====================================================================================
+Login/Caution Scene
+------------------------------------------------------------------------------------
+
+> debug
+
+Loads the Test Scene.
+
+====================================================================================
+Normal Scene
+------------------------------------------------------------------------------------
+
+> debug
+
+Opens the Task Manager For Debug window, where stats can be edited.
+
+> debug set <stat> <number>
+	
+Sets a specific stat to the number written. Number must be between 0 and the stat max.
+(Stat max is exclusive to each stat.)
+
+<stat>: [followers, f]                     max: 9999999
+        [stress, s]                     max: 100 or 120
+        [love, affection, l, a]         max: 100 or 120
+        [darkness, dark, d]                    max: 100
+        [day]                                   max: 30
+        [sex]                                   max: 30
+        [streamlevel]                            max: 5
+
+====================================================================================
+Test Scene
+------------------------------------------------------------------------------------
+
+> debug play <event>
+	
+Plays an <event> from the Event Dropdown List.
+NOTE: THIS COMMAND IS UNSTABLE AND MIGHT FREEZE THE TERMINAL. 
+      USE AT YOUR OWN DISCRETION.
+
+> debug speed <number>
+
+Sets the game speed to the number written. Number must be between 0.1 to 20.
+
+> debug {webcam | ame} <animation>
+
+Sets the animation in the webcam to the specific <animation>.
+
+> debug set <stat> <number>
+	
+Sets a specific stat to the number written. Number must be between 0 and the stat max.
+(Stat max is exclusive to each stat.)
+
+<stat>: [followers, f]                     max: 9999999
+        [stress, s]                     max: 100 or 120
+        [love, affection, l, a]         max: 100 or 120
+        [darkness, dark, d]                    max: 100
+        [day]                                   max: 30
+        [sex]                                   max: 30
+        [streamlevel]                            max: 5

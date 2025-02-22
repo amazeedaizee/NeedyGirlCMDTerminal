@@ -1,0 +1,93 @@
+﻿
+STREAM | S: 
+
+Does specific commands related to the current playing stream or with using the current stream generator.
+
+NOTE: THESE COMMANDS DO NOT INVOLVE CHOOSING AND THEN PLAYING A SPECIFIC STREAM.
+      To choose a stream to play, see the action command for more.
+      > help action
+
+====================================================================================
+Login/Caution Scene
+------------------------------------------------------------------------------------
+
+> stream
+
+Opens the stream generator.
+
+> stream {add | a} <animation> <text>
+
+Adds a new part to the stream with the requested animation key and text. 
+Use ! if you want to leave the animation key empty.
+
+> stream {edit | e} <index number> <animation> <text>
+
+Edits a part of the stream with the requested index, animation key and text. 
+Use ! if you want to leave the animation key empty.
+
+> stream {delete | d} <index number>
+
+Deletes a part of the stream with the specified index.
+
+> stream {speed | s} <number>
+
+Sets the current stream speed to the specified number (1-3).
+
+> stream {start | play | p}
+
+Plays a part in the stream.
+
+> stream {replay}
+
+Restarts the stream to the beginning.
+
+> stream {reset}
+
+Resets the current stream.
+
+> stream {green | g}
+
+Toggles the stream's green screen.
+
+====================================================================================
+Normal Scene
+------------------------------------------------------------------------------------
+
+> stream {skip | x}
+
+Skips the current playing stream entirely.
+
+NOTE: This command only works if the skip button is visible.
+
+------------------------------------------------------------------------------------
+
+> stream {speed | s} <number>
+
+Sets the current stream spped to the specified number.
+
+NOTE: This command only works if the speed button is visible.
+
+------------------------------------------------------------------------------------
+
+> stream {comment | c} <action> <comment>
+
+Applies an <action> to the selected <comment> in the stream.
+
+<action>: {select | s}
+          {read | r}
+
+          select | s
+          ~~~~~~~~~~
+          Does something to the selected comment depending on the comment:
+          Super: Selects it to be read in-stream.
+          Other: Deletes the comment.
+
+          read | r
+          ~~~~~~~~
+          Shows the selected comment in the terminal.
+
+<comment>: {super | s}
+           1-(current number of comments) (min/max inclusive)
+
+====================================================================================
+

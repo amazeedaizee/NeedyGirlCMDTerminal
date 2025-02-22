@@ -1,0 +1,83 @@
+﻿
+JINE | J: 
+
+Does specific commands related to the Jine window.
+
+====================================================================================
+
+> jine 
+
+Opens the Jine window if its not open.
+
+------------------------------------------------------------------------------------
+
+> jine <window state>
+
+Sets the <window state> of the Jine window. This command is disabled for 
+specific endings.
+
+<window state>: {minimize | min | -}
+                {maximize | max | +}
+                {close | x}
+
+------------------------------------------------------------------------------------
+
+> jine <scroll position>
+
+Sets the <scroll position> of the Jine window.
+
+<scroll position>: scrolltop
+                   scrollup
+                   scrolldown
+                   scrollbottom
+
+------------------------------------------------------------------------------------
+
+> jine {sticker | s} <sticker>
+
+Sends a sticker in Jine based on the selected <sticker>.
+<sticker> parameter only accepts numbers, as it chooses based on sticker 
+position, from left to right.
+
+<sticker>: 1-8 (min/max inclusive)
+
+------------------------------------------------------------------------------------
+
+> jine {message | msg | m} <message>
+
+Sends a custom <message> in Jine. Only applies if the message box in Jine is active.
+(NOTE: active doesn't always mean visible in this context)
+
+<message> can be anything within the character limits of the terminal.
+
+------------------------------------------------------------------------------------
+
+> jine {choose | c} <option number>
+
+Chooses an active option in Jine. Only applies if any option in Jine is active.
+<option number> parameter is based on the option position, from top to bottom.
+
+<option number>: 1-(max amount of options) (min/max inclusive)
+
+------------------------------------------------------------------------------------
+
+> jine {read | r} <message kind>
+
+Shows a Jine message in the terminal.
+
+<message kind>: last
+                first
+                last ame
+                first ame
+                {last p | last p-chan}
+                {first p | first p-chan}
+                1-(total number of messages) (min/max inclusive)
+                
+------------------------------------------------------------------------------------
+
+> jine history count
+
+Shows the count for all messages in the message history in Jine.
+
+====================================================================================
+

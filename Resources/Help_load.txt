@@ -1,0 +1,53 @@
+﻿
+LOAD: 
+
+Does specific commands that involves loading a specific day. Some commands work 
+differently depending on the current scene.
+
+====================================================================================
+Login/Caution Scene
+....................................................................................
+
+> load <data number> <day number>
+
+Loads a specific day. Only applies when a data save has not been chosen yet.
+
+<data number>: 1-3  (min/max inclusive)
+<day number>:  1-30 (min/max inclusive)
+
+------------------------------------------------------------------------------------
+
+> load <data number>
+
+Loads a specific data save with the dropdown of available days.
+Only applies when a data save has not been chosen yet.
+
+<data number>: 1-3  (min/max inclusive)
+
+------------------------------------------------------------------------------------
+
+> load <day number>
+
+Loads a specific data save with the dropdown of available days.
+Only applies when a data save has been chosen.
+
+<day number>: 1-3  (min/max inclusive)
+
+====================================================================================
+Normal Scene
+....................................................................................
+
+> load 
+
+Opens the Load window.
+
+------------------------------------------------------------------------------------
+
+> load <data number> <day number>
+
+Loads a specific day. Only applies while the taskbar is interactable.
+
+<data number>: 1-3  (min/max inclusive)
+<day number>:  1-30 (min/max inclusive)
+
+====================================================================================

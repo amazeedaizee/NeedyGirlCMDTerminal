@@ -1,0 +1,71 @@
+﻿
+ACTION | A: 
+
+Does an action based on the shortcuts on the left of the desktop. 
+Cannot be used during the Login/Caution scene or when choosing a zip file.
+
+====================================================================================
+
+> action {stream | 1 | s}
+
+Opens the Stream window (to choose what to stream). Can only be done at night.
+Can also play specific streams based on the current ending (if applicable)
+
+------------------------------------------------------------------------------------
+
+> action {stream | 1 | s} list
+
+Lists any available ideas to stream in the terminal.
+
+------------------------------------------------------------------------------------
+
+> action {stream | 1 | s} <stream topic> /stream level/
+
+Plays the requested stream. Can only be done at night.
+Can only do streams that are unlocked and have not been done already. 
+
+<stream topic>: {chatandchill | chat | c | 1}
+                {letsplay | game | g | 2}
+                {nerdtalk | nerd | n | 3}
+                {conspiracytheories | conspiracy | y | 4}
+                {netlore | l | 5}
+                {asmr | a | 6}
+                {sexystream | sexy | x | 7}
+                {angelexplains | explains | e | 8}
+                {kangeltriesstuff | stuff | s | 9}
+                {breakdown | break | b | 10}
+                {sponsorships | sponsor | ad | p | 11}
+                {milestone | internetangel | angel | i | 12}
+
+/stream level/: 1-5 (min/max inclusive)
+
+------------------------------------------------------------------------------------
+
+> action <parent action>
+	
+Opens the specified <parent action> window.
+
+<parent action>: {hangout | h | 2}
+                 {sleep | z | 3}
+                 {medication | drugs | m | d | 4}
+                 {internet | i | 5}
+                 {goout | o | 6} | o | 6>
+
+------------------------------------------------------------------------------------
+
+> action <parent action> <child action> [force | f]
+	
+Does the specified action. 
+
+Use [force | f] to do the action without the prompt to skip stream (if applicable)
+
+<parent action>: {hangout | h | 2}
+                 {sleep | z | 3}
+                 {medication | drugs | m | d | 4}
+                 {internet | i | 5}
+                 {goout | o | 6}
+
+NOTE: Each parent action has its own corresponding child action. To know more, use 
+      > help action parent
+====================================================================================
+

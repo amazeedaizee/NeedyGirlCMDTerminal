@@ -1,0 +1,14 @@
+﻿
+OPEN: 
+
+Does a command that involves opening an in-game text file from the game.
+
+====================================================================================
+
+> open <filename>
+
+Opens the selected file that matches <filename>. 
+File has to be an in-game text file.
+
+====================================================================================
+

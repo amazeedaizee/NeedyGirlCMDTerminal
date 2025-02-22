@@ -1,0 +1,68 @@
+﻿
+OPTIONS: 
+
+Does specific commands related to setting game options.
+
+====================================================================================
+
+> options {language | lang | l} <language>
+
+Sets the game language based on the specified <language>.
+<language> is not case-sensitive.
+
+<language>: {JP | Japanese}
+            {EN | English}
+            {CN | Mandarin | Chinese}
+            {KO | Korean}
+            {TW | Cantonese}
+            {VN | Vietnamese}
+            {FR | French}
+            {IT | Italian}
+            {GE | German}
+            {SP | Spanish}
+            {RU | Russiah}
+
+------------------------------------------------------------------------------------
+
+> options {music | bgm | m} <number>
+
+Sets the current game music volume based on the specified <number>.
+
+<number>: 0-100 (min/max inclusive)
+
+------------------------------------------------------------------------------------
+
+> options {sound | se | s} <number>
+
+Sets the current game SFX (sound effects) volume based on the specified <number>.
+
+<number>: 0-100 (min/max inclusive)
+
+------------------------------------------------------------------------------------
+
+> options {windowsize | window | w} <size>
+
+Sets the current game window size based on the specified <size>.
+
+<size>: {fullscreen}
+        {windowedfullscreen | fullscreenwindowed}
+        {windowed}
+
+------------------------------------------------------------------------------------
+
+> options 
+
+Opens the Control Panel Window.
+
+------------------------------------------------------------------------------------
+
+> options <window state>
+	
+Sets the <window state> of the Control Panel window.
+
+<window state>: {minimize | min | -}
+                {maximize | max | +}
+                {close | x}
+
+====================================================================================
+

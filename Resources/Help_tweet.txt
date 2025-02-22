@@ -1,0 +1,55 @@
+﻿
+TWEETER | POKETTER | P | J: 
+
+Does specific commands related to the Tweeter window.
+
+====================================================================================
+
+> tweeter 
+
+Opens the Tweeter window if its not open.
+
+------------------------------------------------------------------------------------
+
+> tweeter <window state>
+
+Sets the <window state> of the Tweeter window. This command is disabled for 
+specific endings.
+
+<window state>: {minimize | min | -}
+                {maximize | max | +}
+                {close | x}
+
+------------------------------------------------------------------------------------
+
+> tweeter <scroll position>
+
+Sets the <scroll position> of the Tweeter window.
+
+<scroll position>: scrolltop
+                   scrollup
+                   scrolldown
+                   scrollbottom
+
+------------------------------------------------------------------------------------
+
+> tweeter {read | r} <message kind>
+
+Shows a tweet in the terminal.
+
+<message kind>: last
+                first
+                last ame
+                first ame
+                last kangel
+                first kangel
+                1-(total number of tweets) (min/max inclusive)
+                
+------------------------------------------------------------------------------------
+
+> tweeter history count
+
+Shows the count for all tweets in the tweet history in Tweeter.
+
+====================================================================================
+

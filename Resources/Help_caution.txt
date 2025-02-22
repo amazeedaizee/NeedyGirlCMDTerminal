@@ -1,0 +1,20 @@
+﻿
+CAUTION: 
+
+Does specific commands related to the Caution Screen. Only applies at the
+Caution Screen while in the Login/Caution Scene.
+
+====================================================================================
+
+> caution ok
+
+Continues to the Login Screen.
+
+------------------------------------------------------------------------------------
+
+> caution cancel
+
+Quits the game.
+
+====================================================================================
+

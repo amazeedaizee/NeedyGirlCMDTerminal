@@ -1,0 +1,16 @@
+﻿
+UNZIP: 
+
+Does a command related to unzipping a zip in the Choose Zip Scene.
+
+====================================================================================
+
+> unzip <number>
+
+Unzips a specific zipped folder based on its zip <number>. Does not unzip zips that
+are already unzipped.
+
+<number>: 1-30 (min/max inclusive)
+
+====================================================================================
+

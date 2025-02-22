@@ -1,0 +1,79 @@
+This section covers all main commands that you can use in the game.
+
+Each command for the game usually has a main command associated with it.
+
+Each main command usually has more than one way to access it.
+Usually in short form such as a single letter representing the
+primary key-word.
+
+You can look at what key-words is associated with a main command by 
+looking at the title of their commands page.
+
+i.e. COMMAND | C
+
+NOTE: All key-words for commands have to be written in lower-case.
+      (with the exception of some, like custom messages)
+      The upper-case in the title is just used for emphasis.
+
+For instance, here's what the Notification command looks like:
+
+NOTIFICATION | NOTIF | N: 
+
+Does a command related to notifications.
+
+====================================================================================
+
+> notification
+
+Clicks on the last active notification on the bottom right.
+
+Also exits the epiphany window when it is shown on the screen.
+
+====================================================================================
+
+For the above...
+
+> notification
+
+can also be substituted with...
+
+> notif
+
+or...
+
+> n
+
+Here are a list of main commands that are currently available
+for the game. These only list their main key word:
+
+> action
+> caution
+> cut
+> debug
+> ending
+> info
+> jine
+> load
+> login
+> notification
+> open
+> options
+> picture
+> read
+> reload
+> reset
+> shutdown
+> stream
+> tweeter
+> unzip
+> webcam 
+> window
+
+To know more about each of them, you can use this command to access 
+their respective commands page:
+
+> help <main command>
+
+NOTE: I wonder what happens if you press enter in the terminal 
+      without any command written down?
+      (It just acts as a general button click for moving things along.)

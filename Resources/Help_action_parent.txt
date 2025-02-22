@@ -1,0 +1,56 @@
+﻿
+This list contains all <child actions> for each <parent action> to use in the 
+command:
+
+> action <parent action> <child action> [force | f]
+
+====================================================================================
+
+Parent Action                     Child Action
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+{hangout | h | 2}:                {game | g |1}
+                                  {ame | a | 2}
+                                  {sex | s | x | 3}
+
+{sleep | z | 3}:                  {dusk | d | 1}
+                                  {night | n | 2}
+                                  {tomorrow | t | 3} 
+
+{medication | drugs | m | d | 4}: {depaz | d | 1}
+                                  {depazx | dx | 1x} * x is overdosing
+                                  {dylsem | b | 2}
+                                  {dylsemx | bx | 2x} * x is overdosing
+                                  {ambien | a | 3}
+                                  {grass | weed | g | w | 4}
+                                  {paper | lsd | p | l | 5}
+
+{internet | i | 5}:               {tweeter | poketter | t | p | 1}
+                                  {search | s | 2}
+                                  {video | v | 3}
+                                  {anon | st | a | k | 4}
+                                  {dinder | d | 5}
+
+{goout | o | 6}:                  hospital
+                                  kichigoji
+                                  {hikarigaokapark | park}
+                                  ikebukuro
+                                  nakano
+                                  shimokitazawa
+                                  shinjuku
+                                  ueno
+                                  harajuku
+                                  ichigaya
+                                  jinbocho
+                                  shibuya
+                                  akihabara
+                                  asakusa
+                                  {gisneyland | disney}
+                                  toyosu
+                                  ????????????
+
+NOTE: If you're using... 
+> action {internet | i | 5} {anon | st | a | k | 4} [force | f]
+
+====================================================================================
+

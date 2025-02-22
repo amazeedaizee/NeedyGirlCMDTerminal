@@ -1,0 +1,29 @@
+﻿
+ENDING | END: 
+
+Does commands related to endings.
+
+====================================================================================
+
+> ending
+
+This command changes depending on if the ending dialog or the ending blue screen is 
+open or not. Does not work otherwise.
+
+If Ending Dialog Is Open
+~~~~~~~~~~~~~~~~~~~~~~~~
+Clicks on the OK button for the Ending Dialog.
+
+If Blue Screen Is Active
+~~~~~~~~~~~~~~~~~~~~~~~~
+Exits out of the Blue Screen and into either the Choose Zip scene or the 
+Login/Caution scene based on zip completion.
+
+------------------------------------------------------------------------------------
+
+> ending {info | i}
+
+Shows ending name and description for the current ending.
+
+====================================================================================
+

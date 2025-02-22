@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <LangVersion>preview</LangVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyTitle>NeedyGirlCMDTerminal</AssemblyTitle>
+    <Product>NeedyGirlCMDTerminal</Product>
+    <Copyright>Copyright ©  2023</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="NeedyGirlCMDServer\ActionCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\BootCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\CommandManager.cs" />
+    <Compile Remove="NeedyGirlCMDServer\ConnectionManager.cs" />
+    <Compile Remove="NeedyGirlCMDServer\DebugCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\ErrorMessages.cs" />
+    <Compile Remove="NeedyGirlCMDServer\GameCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\GamePatcher.cs" />
+    <Compile Remove="NeedyGirlCMDServer\InfoCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\Initializer.cs" />
+    <Compile Remove="NeedyGirlCMDServer\JineCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\LoadCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\LoginCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\MetaCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\MyPicturesCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\NotifCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Remove="NeedyGirlCMDServer\obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+    <Compile Remove="NeedyGirlCMDServer\obj\Release\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+    <Compile Remove="NeedyGirlCMDServer\OptionsCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\Properties\AssemblyInfo.cs" />
+    <Compile Remove="NeedyGirlCMDServer\StreamCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\TextReaderCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\TweetCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\WebcamCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\WindowCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\WristCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\ZipCommands.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,15 @@
+﻿
+SHUTDOWN: 
+
+Does a command that involves shuting down the game.
+
+====================================================================================
+
+> shutdown [force | f]
+
+Quits the game.
+
+Including [force | f] will quit the game instantly, without opening a dialog box.
+
+====================================================================================
+

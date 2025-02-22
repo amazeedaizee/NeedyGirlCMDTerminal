@@ -1,0 +1,17 @@
+﻿
+RESET | RESTART: 
+
+Does a command that involves restarting the game.
+
+====================================================================================
+
+> reset [force | f]
+
+Resets the game back to the Login/Caution screen.
+
+Including [force | f] will reset the game instantly, without opening a dialog box.
+
+NOTE: This command will only work when the taskbar is interactable.
+
+====================================================================================
+

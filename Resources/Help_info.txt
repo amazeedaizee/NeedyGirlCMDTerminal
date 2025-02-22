@@ -1,0 +1,14 @@
+﻿
+INFO | I: 
+
+Does a command related to showing game stats.
+
+====================================================================================
+
+> info
+
+Shows current stats such as the current day. It will also show some stats that are 
+not as obvious like the current amount of ***.
+
+====================================================================================
+

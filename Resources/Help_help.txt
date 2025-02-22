@@ -1,0 +1,53 @@
+Welcome to the Help command!
+
+Feeling lost about what to do? The help command will help you figure out 
+what command to use at the right time!
+
+Commands will usually have at least one parameter, but can sometimes
+have two or more. 
+
+You will know if its a command written in the terminal if it is
+written like this:
+
+> help
+
+The description for the command is usually written below the
+actual command.
+
+There are also some parameters written with special brackets.
+Here's what each special bracket means:
+
+{option1 | option2}:   Mandatory parameter where you have to write down 
+                       any of the options in the brackets, each separated 
+                       by the vertical bar symbol | .
+
+<any number option>:   Mandatory parameter where you have to write down
+                       an option that matches the criteria in the brackets.
+                       Usually what you have to write down is located at 
+                       the end of the command's description.
+
+[option1 | option2]:   Optional parameter where you can write down any of 
+                       the options in the brackets, each separated by the 
+                       vertical bar symbol | .
+
+/any number option/:   Optional parameter where you can write down an 
+                       option that matches the criteria in the brackets.
+                       Usually what you can write down is located at the 
+                       end of the command's description.
+
+Some commands can only happen during a specific scene in the game, during
+specific events, or more.
+
+Main commands are a list of commands related to each other that you can 
+use in the game. Some main commands only have one command, while others 
+have a bunch of them.
+
+To learn more about what main commands are available, use:
+> help command
+
+Also, to make things go by faster you can press Enter/Return without entering 
+anything to simulate a mouse click when speeding up dialogue, and other events.
+
+Also also, remember, you can close this application at any time by using Ctrl + C 
+(in case you didn't know before.)
+

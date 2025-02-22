@@ -1,0 +1,70 @@
+﻿
+WINDOW | W: 
+
+Does specific commands related to windows.
+
+====================================================================================
+
+> window toggleall
+
+Either minimizes all windows if any are opened, or opens all windows.
+
+------------------------------------------------------------------------------------
+
+> window <selected window> <window state>
+
+Sets the <window state> of the <selected window>.
+
+<selected window>: {active | a}
+                   {previous | prev | p}
+                   {next | n}
+                   1-(total number of windows) (min/max inclusive)
+
+<window state> :   {minimize | min | -}
+                   {maximize | max | +}
+                   {close | x}
+
+------------------------------------------------------------------------------------
+
+> window <selected window> <scroll position>
+
+Sets the <scroll position> of the <selected window>.
+
+<selected window>: {active | a}
+                   {previous | prev | p}
+                   {next | n}
+                   1-(total number of windows) (min/max inclusive)
+
+<scroll position>: scrolltop
+                   scrollup
+                   scrolldown
+                   scrollbottom
+
+------------------------------------------------------------------------------------
+
+> window <window to select> ok
+
+Auto-clicks the "OK" button or similar in the <selected window>.
+
+NOTE: Only works on specific windows.
+
+<selected window>: {active | a}
+                   {previous | prev | p}
+                   {next | n}
+                   1-(total number of windows) (min/max inclusive)
+
+------------------------------------------------------------------------------------
+
+> window <window to select> cancel
+
+Auto-clicks the "Cancel" button or similar in the <selected window>.
+
+NOTE: Only works on specific windows.
+
+<selected window>: {active | a}
+                   {previous | prev | p}
+                   {next | n}
+                   1-(total number of windows) (min/max inclusive)
+                   
+====================================================================================
+

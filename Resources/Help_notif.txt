@@ -1,0 +1,15 @@
+﻿
+NOTIFICATION | NOTIF | N: 
+
+Does a command related to notifications.
+
+====================================================================================
+
+> notification
+
+Clicks on the last active notification on the bottom right.
+
+Also exits the epiphany window when it is shown on the screen.
+
+====================================================================================
+
