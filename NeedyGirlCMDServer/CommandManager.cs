@@ -231,8 +231,10 @@ namespace NeedyGirlCMDServer
                 return;
             streamWriter.WriteLine(message);
             ConnectionManager.client.GetStream().Flush();
+            Initializer.logger.LogMessage("Pinging back to Terminal: " + message);
+            if (message != ">" || message != "?>")
+                streamWriter.WriteLine(">");
             streamReader.DiscardBufferedData();
-            //Initializer.logger.LogMessage("Pinging back to Terminal: " + message);
             //ConnectionManager.pipe.WaitForPipeDrain();
         }
     }

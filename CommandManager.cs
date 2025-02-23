@@ -127,13 +127,14 @@ namespace NeedyGirlCMDTerminal
                     return;
                 }
             }
-            while (ConnectionManager.link.GetStream().DataAvailable)
+            do
             {
+                if (!ConnectionManager.link.GetStream().DataAvailable) break;
                 message = await streamReader.ReadLineAsync();
                 allMessages += message;
                 if (message != ">" && message != "?>")
                     Console.WriteLine(message);
-            }
+            } while (ConnectionManager.link.Connected && message != ">" && message != "?>");
             if (allMessages == "?>")
             {
                 IsHelpCommand(_currentCommand);
