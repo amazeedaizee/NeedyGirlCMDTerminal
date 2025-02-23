@@ -229,9 +229,14 @@ namespace NeedyGirlCMDServer
         {
             if (!ConnectionManager.pipe.IsConnected)
                 return;
-            streamWriter.WriteLine(message);
             streamReader.DiscardBufferedData();
-            ConnectionManager.pipe.WaitForPipeDrain();
+            streamWriter.WriteLine(message);
+
+            //            Initializer.logger.LogMessage("Pinging to the terminal: " + message);
+            if (message != ">" && message != "?>")
+                streamWriter.WriteLine(">");
+            streamWriter.Flush();
+            //ConnectionManager.pipe.WaitForPipeDrain();
         }
     }
 }

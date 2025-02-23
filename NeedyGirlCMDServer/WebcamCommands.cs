@@ -25,6 +25,7 @@ namespace NeedyGirlCMDServer
             if (commands.Length == 1)
             {
                 ame.Touched();
+                return "";
             }
 
             WindowCommands.ChangeWindowState(ame, commands[1]);

@@ -103,7 +103,7 @@ namespace NeedyGirlCMDTerminal
             streamWriter.WriteLine(command);
             state = CommandState.ReadingInput;
             Console.WriteLine($"Sent: {command}");
-            ConnectionManager.pipe.WaitForPipeDrain();
+            //ConnectionManager.pipe.WaitForPipeDrain();
             while (state == CommandState.ReadingInput)
             {
                 Thread.Sleep(100);
@@ -112,6 +112,7 @@ namespace NeedyGirlCMDTerminal
 
         internal static async Task ReceiveCommand()
         {
+            int peek;
             string allMessages = "";
             string message = "";
             if (!ConnectionManager.isRunning)
@@ -125,12 +126,17 @@ namespace NeedyGirlCMDTerminal
                     return;
                 }
             }
-            while (streamReader.Peek() >= 0)
+            while ((message = await streamReader.ReadLineAsync()) != ">" && message != "?>")
             {
-                message = await streamReader.ReadLineAsync();
+                if (!ConnectionManager.pipe.IsConnected)
+                {
+                    ConnectionManager.isRunning = false;
+                    return;
+                }
                 allMessages += message;
-                if (message != ">" && message != "?>")
+                if (message != "?>")
                     Console.WriteLine(message);
+
             }
             if (allMessages == "?>")
             {

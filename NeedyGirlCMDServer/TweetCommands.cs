@@ -14,7 +14,7 @@ namespace NeedyGirlCMDServer
             IWindow window;
             string userToRead;
             var seperator = new Regex(@"\s+");
-            string[] commands = seperator.Split(input, 4);
+            string[] commands = seperator.Split(input, 3);
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
             bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Poketter);
             if (!isDataActive || (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable && !isWindowActive))
@@ -54,16 +54,14 @@ namespace NeedyGirlCMDServer
             }
             if (CommandManager.IsInputMatchCmd(commands[1], tweetRead))
             {
-                if (commands.Length == 4)
-                {
-                    userToRead = string.Join(" ", commands[2], commands[3]);
-                }
-                else userToRead = commands[2];
+                userToRead = commands[2];
                 return ReadTweet(userToRead);
             }
-            if (commands[1] == "history" && commands[2] == "count")
+            if (commands[1] == "history")
             {
-                return HistoryCount();
+                var count = seperator.Split(commands[2], 2);
+                if (count[0] == "count")
+                    return HistoryCount();
             }
             return ErrorMessages.INVALID_CMD;
         }

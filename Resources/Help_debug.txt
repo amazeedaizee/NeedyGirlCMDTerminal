@@ -40,16 +40,22 @@ Test Scene
 > debug play <event>
 	
 Plays an <event> from the Event Dropdown List.
-NOTE: THIS COMMAND IS UNSTABLE AND MIGHT FREEZE THE TERMINAL. 
-      USE AT YOUR OWN DISCRETION.
+
+------------------------------------------------------------------------------------
 
 > debug speed <number>
 
 Sets the game speed to the number written. Number must be between 0.1 to 20.
 
+------------------------------------------------------------------------------------
+
 > debug {webcam | ame} <animation>
 
 Sets the animation in the webcam to the specific <animation>.
+
+NOTE: <animation> does not check if an animation key is valid. Use at your own risk.
+
+------------------------------------------------------------------------------------
 
 > debug set <stat> <number>
 	

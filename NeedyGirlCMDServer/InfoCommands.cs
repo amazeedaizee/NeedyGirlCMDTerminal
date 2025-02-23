@@ -1,6 +1,7 @@
 ﻿using NGO;
 using ngov3;
 using System;
+using UnityEngine.SceneManagement;
 
 namespace NeedyGirlCMDServer
 {
@@ -11,6 +12,22 @@ namespace NeedyGirlCMDServer
             string info = "\n";
             string ngoEvent;
             string stream;
+            bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
+            if (!isDataActive)
+            {
+                return ErrorMessages.CMD_SPECIFIC_BUSY;
+            }
+
+            if (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable)
+            {
+                bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.TaskManager);
+                if (!isWindowActive)
+                {
+                    SingletonMonoBehaviour<WindowManager>.Instance.NewWindow(AppType.TaskManager);
+                }
+                else SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.TaskManager).Touched();
+            }
+
             var statusManager = SingletonMonoBehaviour<StatusManager>.Instance;
             var eventManager = SingletonMonoBehaviour<EventManager>.Instance;
             var lang = SingletonMonoBehaviour<Settings>.Instance.CurrentLanguage.Value;

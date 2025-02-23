@@ -19,7 +19,7 @@ Lists any available ideas to stream in the terminal.
 
 ------------------------------------------------------------------------------------
 
-> action {stream | 1 | s} <stream topic> /stream level/
+> action {stream | 1 | s} <stream topic> 
 
 Plays the requested stream. Can only be done at night.
 Can only do streams that are unlocked and have not been done already. 
@@ -36,8 +36,6 @@ Can only do streams that are unlocked and have not been done already.
                 {breakdown | break | b | 10}
                 {sponsorships | sponsor | ad | p | 11}
                 {milestone | internetangel | angel | i | 12}
-
-/stream level/: 1-5 (min/max inclusive)
 
 ------------------------------------------------------------------------------------
 
@@ -67,5 +65,6 @@ Use [force | f] to do the action without the prompt to skip stream (if applicabl
 
 NOTE: Each parent action has its own corresponding child action. To know more, use 
       > help action parent
+
 ====================================================================================
 

@@ -34,10 +34,6 @@ namespace NeedyGirlCMDServer
             ConnectionManager.StartServer();
         }
 
-        void LoadResources()
-        {
-
-        }
     }
 
 }

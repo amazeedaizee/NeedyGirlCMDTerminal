@@ -20,7 +20,7 @@ namespace NeedyGirlCMDServer
             string customMsg;
             string userToRead;
             var seperator = new Regex(@"\s+");
-            string[] commands = seperator.Split(input, 4);
+            string[] commands = seperator.Split(input, 3);
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
             EndingType currentEnding = SingletonMonoBehaviour<EventManager>.Instance.nowEnding;
             bool isHorror = SingletonMonoBehaviour<EventManager>.Instance.isHorror;
@@ -61,32 +61,34 @@ namespace NeedyGirlCMDServer
                 return "This command (when not just opening the Jine window or scrolling) requires at least 3 arguments.";
             }
             if (CommandManager.IsInputMatchCmd(commands[1], jineSticker))
-                return await SendSticker(commands[2]);
+            {
+                var sticker = seperator.Split(commands[2], 2);
+                return await SendSticker(sticker[0]);
+            }
+
             if (CommandManager.IsInputMatchCmd(commands[1], jineMessage))
             {
-                if (commands.Length == 4)
-                {
-                    customMsg = string.Join(" ", commands[2], commands[3]);
-                }
-                else customMsg = commands[2];
+                customMsg = commands[2];
                 customMsg.TrimStart(' ', '\n', '\r');
                 return await SendMessage(customMsg);
             }
 
             if (CommandManager.IsInputMatchCmd(commands[1], jineChoose))
-                return await ChooseOption(commands[2]);
+            {
+                var choice = seperator.Split(commands[2], 2);
+                return await ChooseOption(choice[0]);
+            }
+
             if (CommandManager.IsInputMatchCmd(commands[1], jineRead))
             {
-                if (commands.Length == 4)
-                {
-                    userToRead = string.Join(" ", commands[2], commands[3]);
-                }
-                else userToRead = commands[2];
+                userToRead = commands[2];
                 return ReadMessage(userToRead);
             }
-            if (commands[1] == "history" && commands[2] == "count")
+            if (commands[1] == "history")
             {
-                return HistoryCount();
+                var count = seperator.Split(commands[2], 2);
+                if (count[0] == "count")
+                    return HistoryCount();
             }
             return ErrorMessages.INVALID_CMD;
         }
