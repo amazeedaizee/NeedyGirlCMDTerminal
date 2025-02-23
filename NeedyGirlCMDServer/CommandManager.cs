@@ -55,6 +55,8 @@ namespace NeedyGirlCMDServer
                 catch { }
             }
             Initializer.logger.LogInfo("Disconnected from the terminal.");
+            ConnectionManager.client.Close();
+            ConnectionManager.client.Dispose();
             ConnectionManager.tcpListener.Stop();
             ConnectionManager.StartServer();
         }
@@ -230,7 +232,7 @@ namespace NeedyGirlCMDServer
             streamWriter.WriteLine(message);
             ConnectionManager.client.GetStream().Flush();
             streamReader.DiscardBufferedData();
-            Initializer.logger.LogMessage("Pinging back to Terminal.");
+            Initializer.logger.LogMessage("Pinging back to Terminal: " + message);
             //ConnectionManager.pipe.WaitForPipeDrain();
         }
     }

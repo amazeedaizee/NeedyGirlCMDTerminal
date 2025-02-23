@@ -13,7 +13,7 @@ namespace NeedyGirlCMDTerminal
         internal static bool isRunning = true;
         internal static bool isNotConnected = true;
 
-        internal static TcpClient link = new TcpClient();
+        internal static TcpClient link = new();
 
         internal static void StartManualConnection()
         {

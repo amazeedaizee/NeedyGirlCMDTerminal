@@ -38,6 +38,16 @@ namespace NeedyGirlCMDServer
         {
 
         }
+
+        public async void OnApplicationQuit()
+        {
+            if (ConnectionManager.client != null && ConnectionManager.client.Connected)
+            {
+                ConnectionManager.client.Close();
+                ConnectionManager.client.Dispose();
+                ConnectionManager.tcpListener.Stop();
+            }
+        }
     }
 
 }

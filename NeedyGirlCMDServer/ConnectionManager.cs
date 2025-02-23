@@ -10,6 +10,7 @@ namespace NeedyGirlCMDServer
         internal static TcpListener tcpListener = null;
         internal static bool isConnected = true;
         internal static TcpClient client = null;
+
         internal static void StartServer()
         {
             /// var currentUser = new SecurityIdentifier(WindowsIdentity.GetCurrent().User.Value);
@@ -34,7 +35,7 @@ namespace NeedyGirlCMDServer
                 Initializer.logger.LogInfo("Connection failed! Pipe is null.");
                 return;
             }
-            tcpListener.Start();
+            tcpListener.Start(1);
             Initializer.logger.LogInfo("Waiting...");
             client = await tcpListener.AcceptTcpClientAsync();
             Initializer.logger.LogInfo("boop");

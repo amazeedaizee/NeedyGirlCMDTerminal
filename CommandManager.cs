@@ -115,6 +115,7 @@ namespace NeedyGirlCMDTerminal
             //  Console.WriteLine("Running Receive Command");
             string allMessages = "";
             string message = "";
+            int count = 0;
             if (!ConnectionManager.isRunning)
                 return;
             while (state != CommandState.ReadingInput)
@@ -126,14 +127,13 @@ namespace NeedyGirlCMDTerminal
                     return;
                 }
             }
-            while (!ConnectionManager.link.GetStream().DataAvailable)
+            while (ConnectionManager.link.GetStream().DataAvailable)
             {
-                Thread.Sleep(100);
+                message = await streamReader.ReadLineAsync();
+                allMessages += message;
+                if (message != ">" && message != "?>")
+                    Console.WriteLine(message);
             }
-            message = await streamReader.ReadLineAsync();
-            allMessages += message;
-            if (message != ">" && message != "?>")
-                Console.WriteLine(message);
             if (allMessages == "?>")
             {
                 IsHelpCommand(_currentCommand);
