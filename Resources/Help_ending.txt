@@ -17,7 +17,8 @@ Clicks on the OK button for the Ending Dialog.
 If Blue Screen Is Active
 ~~~~~~~~~~~~~~~~~~~~~~~~
 Exits out of the Blue Screen and into either the Choose Zip scene or the 
-Login/Caution scene based on zip completion.
+Login/Caution scene based on zip completion. This can also be exited by just entering
+an empty command. (pressing Enter/Return without typing anything)
 
 ------------------------------------------------------------------------------------
 

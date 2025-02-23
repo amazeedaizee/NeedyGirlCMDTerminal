@@ -10,7 +10,7 @@ Login/Caution Scene
 
 > load <data number> <day number>
 
-Loads a specific day. Only applies when a data save has not been chosen yet.
+Loads a specific save in a specific day. Only applies when a data save has not been chosen yet.
 
 <data number>: 1-3  (min/max inclusive)
 <day number>:  1-30 (min/max inclusive)

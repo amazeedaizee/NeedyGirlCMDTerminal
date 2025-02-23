@@ -8,7 +8,9 @@ Does a command related to opening pictures from My Pictures.
 > picture {open | o} <picture id>
 
 Opens a picture with the matching <picture id>. If the picture isn't available, 
-a placeholder will be shown instead. This can be used even if My Pictures isn't open.
+a placeholder will be shown instead. Case-sensitive.
+
+This can be used even if My Pictures isn't open.
 
 ------------------------------------------------------------------------------------
 

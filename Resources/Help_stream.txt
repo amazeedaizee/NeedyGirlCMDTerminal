@@ -15,35 +15,61 @@ Login/Caution Scene
 
 Opens the stream generator.
 
+------------------------------------------------------------------------------------
+
 > stream {add | a} <animation> <text>
 
 Adds a new part to the stream with the requested animation key and text. 
 Use ! if you want to leave the animation key empty.
+
+<index number>: 1-(total amount of parts) (min/max inclusive)
+
+NOTE: <animation> does not check if an animation key is valid. Use at your own risk.
+
+------------------------------------------------------------------------------------
 
 > stream {edit | e} <index number> <animation> <text>
 
 Edits a part of the stream with the requested index, animation key and text. 
 Use ! if you want to leave the animation key empty.
 
+<index number>: 1-(total amount of parts) (min/max inclusive)
+
+NOTE: <animation> does not check if an animation key is valid. Use at your own risk.
+
+------------------------------------------------------------------------------------
+
 > stream {delete | d} <index number>
 
 Deletes a part of the stream with the specified index.
 
+------------------------------------------------------------------------------------
+
 > stream {speed | s} <number>
 
-Sets the current stream speed to the specified number (1-3).
+Sets the current stream speed to the specified number.
+
+<number>: 1-3 (min/max inclusive)
+
+------------------------------------------------------------------------------------
 
 > stream {start | play | p}
 
 Plays a part in the stream.
 
+------------------------------------------------------------------------------------
+
 > stream {replay}
 
 Restarts the stream to the beginning.
 
+------------------------------------------------------------------------------------
+
 > stream {reset}
 
 Resets the current stream.
+
+------------------------------------------------------------------------------------
 
 > stream {green | g}
 
@@ -66,6 +92,8 @@ NOTE: This command only works if the skip button is visible.
 Sets the current stream spped to the specified number.
 
 NOTE: This command only works if the speed button is visible.
+
+<number>: 1-3 (min/max inclusive)
 
 ------------------------------------------------------------------------------------
 

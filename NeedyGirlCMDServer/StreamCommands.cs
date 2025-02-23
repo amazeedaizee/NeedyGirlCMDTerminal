@@ -26,7 +26,7 @@ namespace NeedyGirlCMDServer
         {
             Live live;
             var seperator = new Regex(@"\s+");
-            string[] commands = seperator.Split(input, 5);
+            string[] commands = seperator.Split(input, 3);
             bool isBootActive = SceneManager.GetActiveScene().name == "BiosToLoad";
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
 
@@ -39,28 +39,30 @@ namespace NeedyGirlCMDServer
                 {
                     var anim = "";
                     var text = "";
-                    if (commands.Length > 2) anim = commands[2];
-                    if (commands.Length > 4)
-                        text = commands.Length > 4 ? string.Concat(commands[3], ' ', commands[4]) : commands[3];
-                    return AddKey(commands[2], text);
+                    var others = seperator.Split(commands[2].Trim(), 2);
+                    if (commands.Length > 2) anim = others[0];
+                    if (others.Length == 2) text = others[1];
+                    return AddKey(anim, text);
                 }
                 if (CommandManager.IsInputMatchCmd(commands[1], streamGenEdit))
                 {
                     var anim = "";
                     var text = "";
                     if (commands.Length < 3) return ErrorMessages.CMD_MISSING_ARGS;
-                    if (!int.TryParse(commands[2], out int idx))
+                    var others = seperator.Split(commands[2].Trim(), 3);
+                    if (!int.TryParse(others[0], out int idx))
                     {
                         return "index number must be a number.";
                     }
-                    if (commands.Length > 3) anim = commands[3];
-                    if (commands.Length == 5) text = commands[4];
+                    if (commands.Length > 3) anim = others[1];
+                    if (commands.Length == 5) text = others[2];
                     return EditKey(idx, anim, text);
                 }
                 if (CommandManager.IsInputMatchCmd(commands[1], streamGenDelete))
                 {
                     if (commands.Length < 3) return ErrorMessages.CMD_MISSING_ARGS;
-                    if (!int.TryParse(commands[2], out int idx))
+                    var others = seperator.Split(commands[2].Trim(), 2);
+                    if (!int.TryParse(others[0], out int idx))
                     {
                         return "index number must be a number.";
                     }
@@ -69,7 +71,8 @@ namespace NeedyGirlCMDServer
                 if (CommandManager.IsInputMatchCmd(commands[1], streamSpeed))
                 {
                     if (commands.Length < 3) return ErrorMessages.CMD_MISSING_ARGS;
-                    if (!int.TryParse(commands[2], out int speed))
+                    var others = seperator.Split(commands[2].Trim(), 2);
+                    if (!int.TryParse(others[0], out int speed))
                     {
                         return "Speed number must be a number.";
                     }
@@ -95,7 +98,8 @@ namespace NeedyGirlCMDServer
                 if (CommandManager.IsInputMatchCmd(commands[1], streamSpeed))
                 {
                     if (commands.Length < 3) return ErrorMessages.CMD_MISSING_ARGS;
-                    if (!int.TryParse(commands[2], out int speed))
+                    var others = seperator.Split(commands[2].Trim(), 2);
+                    if (!int.TryParse(others[0], out int speed))
                     {
                         return "Speed number must be a number.";
                     }
@@ -103,29 +107,30 @@ namespace NeedyGirlCMDServer
                 }
                 if (CommandManager.IsInputMatchCmd(commands[1], streamComment))
                 {
-                    if (commands.Length < 4)
+                    var others = seperator.Split(commands[2].Trim(), 3);
+                    if (others.Length < 2)
                     {
                         return "The comment command requires at least 2 other arguments.";
                     }
-                    if (CommandManager.IsInputMatchCmd(commands[2], commentSelect))
+                    if (CommandManager.IsInputMatchCmd(others[0], commentSelect))
                     {
-                        if (CommandManager.IsInputMatchCmd(commands[3], commentSuper))
+                        if (CommandManager.IsInputMatchCmd(others[1], commentSuper))
                         {
                             return SelectSuperChat(live);
                         }
-                        if (!int.TryParse(commands[3], out int selectedChat))
+                        if (!int.TryParse(others[1], out int selectedChat))
                         {
                             return "Comment number must be a number.";
                         }
                         return SelectComment(live, selectedChat);
                     }
-                    if (CommandManager.IsInputMatchCmd(commands[2], commentRead))
+                    if (CommandManager.IsInputMatchCmd(others[0], commentRead))
                     {
-                        if (CommandManager.IsInputMatchCmd(commands[3], commentSuper))
+                        if (CommandManager.IsInputMatchCmd(others[1], commentSuper))
                         {
                             return ReadSuperComment(live);
                         }
-                        if (!int.TryParse(commands[3], out int readChat))
+                        if (!int.TryParse(others[1], out int readChat))
                         {
                             return "Comment number must be a number.";
                         }

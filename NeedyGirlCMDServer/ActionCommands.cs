@@ -432,23 +432,9 @@ namespace NeedyGirlCMDServer
             {
                 return "Invalid stream topic.";
             }
-            if (commands.Length == 3)
+            if (!TryGetStreamLevel(netaManager, streamTopic, out level))
             {
-                if (!TryGetStreamLevel(netaManager, streamTopic, out level))
-                {
-                    return "No new stream for this topic exists.";
-                }
-            }
-            else
-            {
-                if (!int.TryParse(commands[3], out level))
-                {
-                    return "Stream level has to be a number.";
-                }
-                if (!(level > 0 && level < 6))
-                {
-                    return "Stream level has to be between 1 to 5.";
-                }
+                return "No new stream for this topic exists.";
             }
             var usedStream = netaManager.usedAlpha.Find(s => s.alphaType == streamTopic && s.level == level);
             var gotStream = netaManager.GotAlpha.Find(s => s.alphaType == streamTopic && s.level == level);
