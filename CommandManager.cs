@@ -112,6 +112,7 @@ namespace NeedyGirlCMDTerminal
 
         internal static async Task ReceiveCommand()
         {
+            int peek;
             string allMessages = "";
             string message = "";
             if (!ConnectionManager.isRunning)
@@ -125,12 +126,12 @@ namespace NeedyGirlCMDTerminal
                     return;
                 }
             }
-            while (streamReader.Peek() >= 0)
+            while ((message = await streamReader.ReadLineAsync()) != ">" && message != "?>")
             {
-                message = await streamReader.ReadLineAsync();
                 allMessages += message;
-                if (message != ">" && message != "?>")
+                if (message != "?>")
                     Console.WriteLine(message);
+
             }
             if (allMessages == "?>")
             {
