@@ -236,7 +236,7 @@ namespace NeedyGirlCMDServer
             if (message != ">" && message != "?>")
                 streamWriter.WriteLine(">");
             streamWriter.Flush();
-            ConnectionManager.pipe.WaitForPipeDrain();
+            //ConnectionManager.pipe.WaitForPipeDrain();
         }
     }
 }
