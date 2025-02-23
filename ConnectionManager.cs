@@ -12,15 +12,40 @@ namespace NeedyGirlCMDTerminal
         static bool skipArtLoad;
         internal static bool isRunning = true;
         internal static bool isNotConnected = true;
+        internal static string addr = null;
 
         internal static TcpClient link = new();
 
+
+        internal static void OnboardStart()
+        {
+
+            Console.Write("Please enter host name or IP Address to connect to (leave empty for localhost): ");
+            string value = Console.ReadLine();
+            addr = value;
+            StartLoad();
+
+        }
         internal static void StartManualConnection()
         {
+
             try
             {
                 link = new TcpClient();
-                link.Connect(Dns.GetHostName(), 55770);
+
+                if (IPAddress.TryParse(addr, out var ip))
+                {
+                    link.Connect(ip, 55770);
+                }
+                else if (!string.IsNullOrEmpty(addr))
+                {
+                    link.Connect(addr, 55770);
+                }
+                else
+                {
+                    link.Connect(Dns.GetHostName(), 55770);
+                }
+
             }
             catch { }
         }

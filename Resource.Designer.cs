@@ -75,6 +75,20 @@ namespace NeedyGirlCMDTerminal {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to                                                      ######@@@@#                     ####           
+        ///                                                  ## ###     @@@@@@##****######    ## @**##         
+        ///                                                #  ##          @@#      @@@ **#@@@#  @@@####  ***   
+        ///                                              #  ##           ##    ****@@@@@@@@@#  ##  #####*****  
+        ///                                             # ##           ##     *    @@@@  #@@   # ## ###********
+        ///   [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string angelASCIIart1 {
+            get {
+                return ResourceManager.GetString("angelASCIIart1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 
         ///ACTION | A: 
         ///
@@ -251,6 +265,8 @@ namespace NeedyGirlCMDTerminal {
         /// <summary>
         ///   Looks up a localized string similar to This section covers all main commands that you can use in the game.
         ///
+        ///Each command for the game usually has a main command associated with it.
+        ///
         ///Each main command usually has more than one way to access it.
         ///Usually in short form such as a single letter representing the
         ///primary key-word.
@@ -261,8 +277,7 @@ namespace NeedyGirlCMDTerminal {
         ///i.e. COMMAND | C
         ///
         ///NOTE: All key-words for commands have to be written in lower-case.
-        ///      (with the exception of some, like custom messages)
-        ///      The upper-case in the t [rest of string was truncated]&quot;;.
+        ///      (with [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Help_help_command {
             get {
@@ -446,20 +461,22 @@ namespace NeedyGirlCMDTerminal {
         
         /// <summary>
         ///   Looks up a localized string similar to 
-        ///VIEW | PIC | PICTURE: 
+        ///PICTURE | PIC: 
         ///
         ///Does a command related to opening pictures from My Pictures.
         ///
         ///====================================================================================
         ///
-        ///&gt; view &lt;picture id&gt;
+        ///&gt; picture {open | o} &lt;picture id&gt;
         ///
         ///Opens a picture with the matching &lt;picture id&gt;. If the picture isn&apos;t available, 
-        ///a placeholder will be shown instead.
+        ///a placeholder will be shown instead. This can be used even if My Pictures isn&apos;t open.
         ///
-        ///====================================================================================
+        ///------------------------------------------------------------------------------------
         ///
-        ///.
+        ///&gt; picture
+        ///
+        ///Opens the My Pictures window.        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Help_pic {
             get {
@@ -566,21 +583,19 @@ namespace NeedyGirlCMDTerminal {
         ///   Looks up a localized string similar to 
         ///STREAM | S: 
         ///
-        ///Does specific commands related to the current playing stream.
+        ///Does specific commands related to the current playing stream or with using the current stream generator.
         ///
         ///NOTE: THESE COMMANDS DO NOT INVOLVE CHOOSING AND THEN PLAYING A SPECIFIC STREAM.
         ///      To choose a stream to play, see the action command for more.
         ///      &gt; help action
         ///
         ///====================================================================================
+        ///Login/Caution Scene
+        ///------------------------------------------------------------------------------------
         ///
-        ///&gt; stream {skip | x}
+        ///&gt; stream
         ///
-        ///Skips the current playing stream entirely.
-        ///
-        ///NOTE: This command only works if the skip button is visible.
-        ///
-        ///----------------------------------- [rest of string was truncated]&quot;;.
+        ///Opens  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Help_stream {
             get {
@@ -649,6 +664,12 @@ namespace NeedyGirlCMDTerminal {
         ///
         ///====================================================================================
         ///
+        ///&gt; webcam
+        ///
+        ///Places the Webcam as the active window.
+        ///
+        ///------------------------------------------------------------------------------------
+        ///
         ///&gt; webcam pat /number/
         ///
         ///Headpats Ame. 
@@ -656,13 +677,7 @@ namespace NeedyGirlCMDTerminal {
         ///Including a /number/ headpats her the specified number of times. 
         ////number/ has to be above zero.
         ///
-        ///------------------------------------------------------------------------------------
-        ///
-        ///&gt; webcam random
-        ///
-        ///Sets the current idle animation to a random one (dependent on current stats)
-        ///
-        ///------------------------ [rest of string was truncated]&quot;;.
+        ///-------------------------------------------------------------------- [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Help_webcam {
             get {
