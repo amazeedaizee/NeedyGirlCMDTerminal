@@ -40,12 +40,12 @@ namespace NeedyGirlCMDServer
         internal static async UniTask StartReceiveCommand()
         {
             Initializer.logger.LogInfo("Connecting to terminal...");
-            streamReader = new StreamReader(ConnectionManager.client.GetStream());
-            streamWriter = new StreamWriter(ConnectionManager.client.GetStream());
+            streamReader = new StreamReader(ConnectionManager.pipe);
+            streamWriter = new StreamWriter(ConnectionManager.pipe);
             streamWriter.AutoFlush = true;
             Initializer.logger.LogInfo("Successfully connected to the terminal!");
             await UniTask.Delay(500);
-            while (ConnectionManager.client.Connected)
+            while (ConnectionManager.pipe.IsConnected)
             {
                 try
                 {
@@ -55,9 +55,9 @@ namespace NeedyGirlCMDServer
                 catch { }
             }
             Initializer.logger.LogInfo("Disconnected from the terminal.");
-            ConnectionManager.client.Close();
-            ConnectionManager.client.Dispose();
-            ConnectionManager.tcpListener.Stop();
+            ConnectionManager.pipe.Close();
+            ConnectionManager.pipe.Dispose();
+            ConnectionManager.pipe = null;
             ConnectionManager.StartServer();
         }
 
@@ -227,15 +227,11 @@ namespace NeedyGirlCMDServer
         }
         internal static void SendMessage(string message)
         {
-            if (!ConnectionManager.client.Connected)
+            if (!ConnectionManager.pipe.IsConnected)
                 return;
             streamWriter.WriteLine(message);
-            ConnectionManager.client.GetStream().Flush();
-            Initializer.logger.LogMessage("Pinging back to Terminal: " + message);
-            if (message != ">" || message != "?>")
-                streamWriter.WriteLine(">");
             streamReader.DiscardBufferedData();
-            //ConnectionManager.pipe.WaitForPipeDrain();
+            ConnectionManager.pipe.WaitForPipeDrain();
         }
     }
 }

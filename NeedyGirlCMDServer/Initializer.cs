@@ -34,20 +34,6 @@ namespace NeedyGirlCMDServer
             ConnectionManager.StartServer();
         }
 
-        void LoadResources()
-        {
-
-        }
-
-        public void OnApplicationQuit()
-        {
-            if (ConnectionManager.client != null && ConnectionManager.client.Connected)
-            {
-                ConnectionManager.client.Close();
-                ConnectionManager.client.Dispose();
-                ConnectionManager.tcpListener.Stop();
-            }
-        }
     }
 
 }

@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Net;
-using System.Net.Sockets;
+using System.IO.Pipes;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,44 +11,15 @@ namespace NeedyGirlCMDTerminal
         static bool skipArtLoad;
         internal static bool isRunning = true;
         internal static bool isNotConnected = true;
-        internal static string addr = null;
 
-        internal static TcpClient link = new();
+        internal static NamedPipeClientStream pipe;
 
-
-        internal static void OnboardStart()
-        {
-
-            //Console.Write("Please enter host name or IP Address to connect to (leave empty for localhost): ");
-            //string value = Console.ReadLine();
-            //addr = value;
-            //addr = addr.Trim();
-            StartLoad();
-
-        }
         internal static void StartManualConnection()
         {
-
             try
             {
-                //link = new TcpClient();
-
-                //if (IPAddress.TryParse(addr, out var ip))
-                //{
-                //    Console.WriteLine("pass");
-                //    link.Connect(ip, 55770);
-                //}
-                //else if (!string.IsNullOrEmpty(addr))
-                //{
-                //    link.Connect(addr, 55770);
-                //}
-                //else
-                //{
-                //    link.Connect(Dns.GetHostName(), 55770);
-
-                //}
-
-                link.Connect(IPAddress.Parse("127.0.0.1"), 55770);
+                pipe = new NamedPipeClientStream(".", "WindoseServer", PipeDirection.InOut, PipeOptions.Asynchronous, System.Security.Principal.TokenImpersonationLevel.Identification);
+                pipe.Connect(1);
             }
             catch { }
         }
@@ -70,10 +40,11 @@ namespace NeedyGirlCMDTerminal
             skipArtLoad = false;
             StartManualConnection();
 #if !DEBUG
-            if (!link.Connected)
+            if (!pipe.IsConnected)
             {
-                link.Close();
-                link.Dispose();
+                pipe.Close();
+                pipe.Dispose();
+                pipe = null;
                 Console.WriteLine("Connection failed!\nPress any key to try again.\n");
                 Console.ReadKey(true);
                 Console.Clear();
