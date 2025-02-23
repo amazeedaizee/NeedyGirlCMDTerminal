@@ -22,7 +22,9 @@ namespace NeedyGirlCMDServer
             //thread = new Thread(WaitForConnection);
             //thread.Start();
             var port = 55770;
-            IPAddress ipAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0];
+            //IPAddress ipAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0];
+            IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
+            Initializer.logger.LogInfo("Hosting on " + ipAddress.ToString());
             if (tcpListener == null)
                 tcpListener = new TcpListener(ipAddress, port);
             WaitForConnection().Forget();
@@ -38,7 +40,7 @@ namespace NeedyGirlCMDServer
             tcpListener.Start(1);
             Initializer.logger.LogInfo("Waiting...");
             client = await tcpListener.AcceptTcpClientAsync();
-            Initializer.logger.LogInfo("boop");
+            //Initializer.logger.LogInfo("boop");
             CommandManager.StartReceiveCommand().Forget();
             //thread.Join();
 

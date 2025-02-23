@@ -20,9 +20,10 @@ namespace NeedyGirlCMDTerminal
         internal static void OnboardStart()
         {
 
-            Console.Write("Please enter host name or IP Address to connect to (leave empty for localhost): ");
-            string value = Console.ReadLine();
-            addr = value;
+            //Console.Write("Please enter host name or IP Address to connect to (leave empty for localhost): ");
+            //string value = Console.ReadLine();
+            //addr = value;
+            //addr = addr.Trim();
             StartLoad();
 
         }
@@ -31,21 +32,24 @@ namespace NeedyGirlCMDTerminal
 
             try
             {
-                link = new TcpClient();
+                //link = new TcpClient();
 
-                if (IPAddress.TryParse(addr, out var ip))
-                {
-                    link.Connect(ip, 55770);
-                }
-                else if (!string.IsNullOrEmpty(addr))
-                {
-                    link.Connect(addr, 55770);
-                }
-                else
-                {
-                    link.Connect(Dns.GetHostName(), 55770);
-                }
+                //if (IPAddress.TryParse(addr, out var ip))
+                //{
+                //    Console.WriteLine("pass");
+                //    link.Connect(ip, 55770);
+                //}
+                //else if (!string.IsNullOrEmpty(addr))
+                //{
+                //    link.Connect(addr, 55770);
+                //}
+                //else
+                //{
+                //    link.Connect(Dns.GetHostName(), 55770);
 
+                //}
+
+                link.Connect(IPAddress.Parse("127.0.0.1"), 55770);
             }
             catch { }
         }

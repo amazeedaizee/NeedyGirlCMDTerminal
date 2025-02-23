@@ -39,7 +39,7 @@ namespace NeedyGirlCMDServer
 
         }
 
-        public async void OnApplicationQuit()
+        public void OnApplicationQuit()
         {
             if (ConnectionManager.client != null && ConnectionManager.client.Connected)
             {
