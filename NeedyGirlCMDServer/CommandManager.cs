@@ -103,9 +103,27 @@ namespace NeedyGirlCMDServer
             {
                 message = MetaCommands.RespondToAngel(input);
             }
+            else if (SceneManager.GetActiveScene().name == "WindowUITestScene" &&
+    SingletonMonoBehaviour<EventManager>.Instance.nowEnding == NGO.EndingType.Ending_Completed &&
+    !SingletonMonoBehaviour<WebCamManager>.Instance.hidegirl.Value)
+            {
+                message = "...";
+            }
+            else if (IsInputMatchCmd(input, cautionCommand, true))
+            {
+                message = BootCommands.CautionCommand(input);
+            }
+            else if (IsInputMatchCmd(input, optionsCommand, true))
+            {
+                message = OptionsCommands.SetOptions(input);
+            }
             else if (IsInputMatchCmd(input, helpCommand, true))
             {
                 message = "?>";
+            }
+            else if (SceneManager.GetActiveScene().name.Contains("Window") && SingletonMonoBehaviour<DayPassing2D>.Instance.playingAnimation)
+            {
+                message = MsgManager.SendMessage(ServerMessage.CMD_BUSY);
             }
             else if (IsInputMatchCmd(input, windowCommand, true))
             {
@@ -115,10 +133,6 @@ namespace NeedyGirlCMDServer
                     message = MsgManager.SendMessage(ServerMessage.CMD_WRONG_ARGS);
                 }
                 else message = WindowCommands.SelectWindowCommand(commands[1]);
-            }
-            else if (IsInputMatchCmd(input, cautionCommand, true))
-            {
-                message = BootCommands.CautionCommand(input);
             }
             else if (IsInputMatchCmd(input, loadCommand, true))
             {
@@ -130,10 +144,6 @@ namespace NeedyGirlCMDServer
             else if (IsInputMatchCmd(input, reloadCommand, true))
             {
                 LoadCommands.ReloadSave();
-            }
-            else if (IsInputMatchCmd(input, optionsCommand, true))
-            {
-                message = OptionsCommands.SetOptions(input);
             }
             else if (IsInputMatchCmd(input, resetCommand, true))
             {
@@ -151,19 +161,9 @@ namespace NeedyGirlCMDServer
             {
                 message = ZipCommands.OpenLockedZip(input);
             }
-            else if (SceneManager.GetActiveScene().name.Contains("Window") && SingletonMonoBehaviour<DayPassing2D>.Instance.playingAnimation)
-            {
-                message = MsgManager.SendMessage(ServerMessage.CMD_BUSY);
-            }
             else if (IsInputMatchCmd(input, infoCommand))
             {
                 message = InfoCommands.ShowInfo();
-            }
-            else if (SceneManager.GetActiveScene().name == "WindowUITestScene" &&
-                SingletonMonoBehaviour<EventManager>.Instance.nowEnding == NGO.EndingType.Ending_Completed &&
-                !SingletonMonoBehaviour<WebCamManager>.Instance.hidegirl.Value)
-            {
-                message = "...";
             }
             else if (IsInputMatchCmd(input, endingCommand, true))
             {
