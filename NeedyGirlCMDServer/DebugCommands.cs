@@ -178,7 +178,7 @@ namespace NeedyGirlCMDServer
                 int maxFollowers = statusManager.GetMaxStatus(status);
                 if (stat > maxFollowers)
                 {
-                    return $"Number to set is too high! ({maxFollowers})";
+                    stat = maxFollowers;
                 }
                 statusManager.UpdateStatusToNumber(status, stat);
                 return "";
