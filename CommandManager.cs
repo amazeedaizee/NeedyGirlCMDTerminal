@@ -18,6 +18,7 @@ namespace NeedyGirlCMDTerminal
         const int TEN_MINUTES = 60000 * 10;
         const string P_CHAN_INPUT = @"NGO:\Users\P> ";
         const string TIME_OUT_MSG = "Disconnected due to idling! Press the Enter/Return key to continue.\n";
+        const string READ_OUT_MSG = "Disconnected due to no response from the server!\n";
         static string _currentCommand;
         static ConsoleKey restartKey;
         static StreamReader streamReader;
@@ -27,10 +28,10 @@ namespace NeedyGirlCMDTerminal
         internal static void CreateStreamReaderWriter()
         {
 #if !DEBUG
-            if (ConnectionManager.pipe != null && ConnectionManager.pipe.IsConnected)
+            if (ConnectionManager.pipe != null && ConnectionManager.pipe.Connected)
             {
-                streamReader = new StreamReader(ConnectionManager.pipe);
-                streamWriter = new StreamWriter(ConnectionManager.pipe);
+                streamReader = new StreamReader(ConnectionManager.ns);
+                streamWriter = new StreamWriter(ConnectionManager.ns);
                 streamWriter.AutoFlush = true;
             }
 #else
@@ -53,7 +54,7 @@ namespace NeedyGirlCMDTerminal
             while ((restartKey != ConsoleKey.Y && restartKey != ConsoleKey.N) && !ConnectionManager.isRunning);
             if (restartKey == ConsoleKey.Y)
             {
-                ConnectionManager.pipe.Dispose();
+                ConnectionManager.pipe.Close();
                 ConnectionManager.pipe = null;
                 ConnectionManager.StartLoad();
             }
@@ -65,7 +66,9 @@ namespace NeedyGirlCMDTerminal
             string command;
             var input = Console.In;
             state = CommandState.AwaitingInput;
-            if (!ConnectionManager.pipe.IsConnected)
+            ConnectionManager.ns.ReadTimeout = 4;
+            ConnectionManager.pipe.Client.Poll(5, System.Net.Sockets.SelectMode.SelectWrite);
+            if (!ConnectionManager.pipe.Connected)
             {
                 ConnectionManager.isRunning = false;
             }
@@ -95,7 +98,7 @@ namespace NeedyGirlCMDTerminal
         {
             if (!ConnectionManager.isRunning)
                 return;
-            if (!ConnectionManager.pipe.IsConnected)
+            if (!ConnectionManager.pipe.Connected)
             {
                 ConnectionManager.isRunning = false;
                 return;
@@ -120,31 +123,43 @@ namespace NeedyGirlCMDTerminal
             while (state != CommandState.ReadingInput)
             {
                 Thread.Sleep(100);
-                if (!ConnectionManager.pipe.IsConnected)
+                if (!ConnectionManager.pipe.Connected)
                 {
                     ConnectionManager.isRunning = false;
                     return;
                 }
             }
-            while ((message = await streamReader.ReadLineAsync()) != ">" && message != "?>")
+            ConnectionManager.ns.ReadTimeout = 4;
+            ConnectionManager.pipe.Client.Poll(5, System.Net.Sockets.SelectMode.SelectRead);
+            if (!ConnectionManager.pipe.Connected)
             {
-                if (!ConnectionManager.pipe.IsConnected)
+                ConnectionManager.isRunning = false;
+                return;
+            }
+            Task.Run(ExitCommandRead);
+            while ((message = await streamReader.ReadLineAsync()) != ">")
+            {
+                if (message == "!>")
                 {
                     ConnectionManager.isRunning = false;
                     return;
                 }
-                allMessages += message;
+                if (message != ">")
+                    allMessages += message;
                 if (message != "?>")
                     Console.WriteLine(message);
+                else
+                {
+                    IsHelpCommand(_currentCommand);
+                    break;
+                }
+
 
             }
-            if (allMessages == "?>")
-            {
-                IsHelpCommand(_currentCommand);
-            }
+            ConnectionManager.ns.ReadTimeout = Timeout.Infinite;
             state = CommandState.SendingOutput;
             streamReader.DiscardBufferedData();
-            if (!ConnectionManager.pipe.IsConnected)
+            if (!ConnectionManager.pipe.Connected)
             {
                 ConnectionManager.isRunning = false;
                 return;
@@ -171,6 +186,7 @@ namespace NeedyGirlCMDTerminal
         }
         internal static async Task ExitCommandWrite()
         {
+
             await Task.WhenAny(Task.Delay(TEN_MINUTES), CheckIfAwaitingInput());
             if (!ConnectionManager.isRunning)
                 return;
@@ -183,6 +199,30 @@ namespace NeedyGirlCMDTerminal
             async Task<bool> CheckIfAwaitingInput()
             {
                 while (state == CommandState.AwaitingInput)
+                {
+                    await Task.Delay(1);
+                }
+                return true;
+            }
+        }
+
+        internal static async Task ExitCommandRead()
+        {
+            ConnectionManager.ns.ReadTimeout = 5;
+            await Task.WhenAny(Task.Delay(4), CheckIfReadingInput());
+            if (!ConnectionManager.isRunning)
+                return;
+            if (state != CommandState.ReadingInput)
+                return;
+            if (ConnectionManager.pipe.Client.Poll(1, System.Net.Sockets.SelectMode.SelectRead))
+            {
+                Console.WriteLine("\n");
+                Console.WriteLine(READ_OUT_MSG);
+                state = CommandState.TimedOut;
+            }
+            async Task<bool> CheckIfReadingInput()
+            {
+                while (state == CommandState.ReadingInput)
                 {
                     await Task.Delay(1);
                 }

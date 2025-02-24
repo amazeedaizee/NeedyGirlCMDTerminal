@@ -2,6 +2,8 @@
 using ngov3;
 using ngov3.Effect;
 using System.IO;
+using System.Net.Sockets;
+using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine.SceneManagement;
 
@@ -26,7 +28,7 @@ namespace NeedyGirlCMDServer
         readonly static string[] jineCommand = { "j", "jine" };
         readonly static string[] notifCommand = { "n", "notif", "notification" };
         readonly static string[] tweetCommand = { "t", "tweeter", "p", "poketter" };
-        readonly static string[] actionCommand = { "a", "action" };
+        internal readonly static string[] actionCommand = { "a", "action" };
         readonly static string[] readCommand = { "read" };
         readonly static string[] openCommand = { "open" };
         readonly static string[] unzipCommand = { "unzip" };
@@ -36,16 +38,19 @@ namespace NeedyGirlCMDServer
         internal static StreamReader streamReader;
         internal static StreamWriter streamWriter;
 
+        internal static NetworkStream ns;
+
         //[MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static async UniTask StartReceiveCommand()
         {
             Initializer.logger.LogInfo("Connecting to terminal...");
-            streamReader = new StreamReader(ConnectionManager.pipe);
-            streamWriter = new StreamWriter(ConnectionManager.pipe);
+            ns = ConnectionManager.client.GetStream();
+            streamReader = new StreamReader(ns);
+            streamWriter = new StreamWriter(ns);
             streamWriter.AutoFlush = true;
             Initializer.logger.LogInfo("Successfully connected to the terminal!");
             await UniTask.Delay(500);
-            while (ConnectionManager.pipe.IsConnected)
+            while (ConnectionManager.client.Connected)
             {
                 try
                 {
@@ -55,10 +60,10 @@ namespace NeedyGirlCMDServer
                 catch { }
             }
             Initializer.logger.LogInfo("Disconnected from the terminal.");
-            ConnectionManager.pipe.Close();
-            ConnectionManager.pipe.Dispose();
-            ConnectionManager.pipe = null;
-            ConnectionManager.StartServer();
+            ConnectionManager.client.Close();
+            ConnectionManager.client.Dispose();
+            ConnectionManager.pipe.Stop();
+            ConnectionManager.WaitForConnection().Forget();
         }
 
         internal static async UniTask ReceiveCommand()
@@ -66,10 +71,27 @@ namespace NeedyGirlCMDServer
             string[] commands;
             string message = "";
             var seperator = new Regex(@"\s+");
-            string input;
-            input = await streamReader.ReadLineAsync();
-            Initializer.logger.LogInfo($"Receiving command: {input}");
+            int size = 8192;
+            var buf = new byte[size];
+            //var sb = new StringBuilder();
+            string input = "";
+            await ns.ReadAsync(buf, 0, size, ConnectionManager.cts.Token);
+            if (ConnectionManager.cts.IsCancellationRequested)
+                return;
+            var arr = Encoding.UTF8.GetString(buf);
+            foreach (var c in arr)
+            {
+
+                if (c == '\0')
+                {
+                    break;
+                }
+                input += c;
+
+            }
             input = input.Trim();
+            Initializer.logger.LogInfo($"Receiving command: {input}");
+
             if (string.IsNullOrWhiteSpace(input))
             {
                 await MouseClick.FakeMouseClick();
@@ -227,13 +249,12 @@ namespace NeedyGirlCMDServer
         }
         internal static void SendMessage(string message)
         {
-            if (!ConnectionManager.pipe.IsConnected)
+            if (!ConnectionManager.client.Connected)
                 return;
             streamReader.DiscardBufferedData();
             streamWriter.WriteLine(message);
-
-            //            Initializer.logger.LogMessage("Pinging to the terminal: " + message);
-            if (message != ">" && message != "?>")
+            Initializer.logger.LogMessage("Pinging to the terminal: " + message);
+            if (message != ">" && message != "?>" && message != "!>")
                 streamWriter.WriteLine(">");
             streamWriter.Flush();
             //ConnectionManager.pipe.WaitForPipeDrain();
