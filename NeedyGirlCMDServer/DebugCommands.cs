@@ -176,6 +176,10 @@ namespace NeedyGirlCMDServer
             string ChangeStatusToNumber(StatusType status, int stat)
             {
                 int maxFollowers = statusManager.GetMaxStatus(status);
+                if (stat < 0)
+                {
+                    stat = 0;
+                }
                 if (stat > maxFollowers)
                 {
                     stat = maxFollowers;

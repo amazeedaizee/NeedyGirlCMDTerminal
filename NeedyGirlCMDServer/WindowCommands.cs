@@ -168,7 +168,7 @@ namespace NeedyGirlCMDServer
         {
             Transform transform;
             Button okButton;
-            Initializer.logger.LogInfo("AppType: " + window.appType.ToString());
+            //Initializer.logger.LogInfo("AppType: " + window.appType.ToString());
             //if (window.appType == AppType.TimePassDialog)
             //{
             //    try
@@ -258,7 +258,7 @@ namespace NeedyGirlCMDServer
         internal static string ClickCancelButton(IWindow window)
         {
             Button cancelButton;
-            Initializer.logger.LogInfo("AppType: " + window.appType.ToString());
+            //Initializer.logger.LogInfo("AppType: " + window.appType.ToString());
             //if (window.appType == AppType.TimePassDialog)
             //{
             //    try

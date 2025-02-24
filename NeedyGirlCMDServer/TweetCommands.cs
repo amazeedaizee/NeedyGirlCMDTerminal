@@ -245,7 +245,7 @@ namespace NeedyGirlCMDServer
             else
             {
                 if (!int.TryParse(input, out var num))
-                    return "Message index must be a number.";
+                    return "Tweet index must be a number.";
                 return ReadTweet(num - 1);
             }
         }

@@ -59,6 +59,7 @@ namespace NeedyGirlCMDServer
             bool isForceAction = false;
             var seperator = new Regex(@"\s+");
             string[] commands = seperator.Split(input, 5);
+            var lang = SingletonMonoBehaviour<Settings>.Instance.CurrentLanguage.Value;
             var eventManager = SingletonMonoBehaviour<EventManager>.Instance;
             var windowManager = SingletonMonoBehaviour<WindowManager>.Instance;
             var horrorShortcuts = GameObject.Find("HakkyoShortCutParent").GetComponent<CanvasGroup>();
@@ -155,7 +156,7 @@ namespace NeedyGirlCMDServer
             if (CommandManager.IsInputMatchCmd(commands[1], drugAction))
             {
                 if (SingletonMonoBehaviour<NetaManager>.Instance.usedAlpha.Exists((AlphaLevel al) => al.alphaType == AlphaType.Angel && al.level == 5))
-                    return "No.";
+                    return NgoEx.GetToolTipText(NgoEx.getToolTip(TooltipType.Tooltip_Angel), lang);
                 if (commands.Length == 2)
                 {
                     if (eventManager.isHorror && horrorShortcuts.interactable)
@@ -371,6 +372,7 @@ namespace NeedyGirlCMDServer
         {
             int level;
             AlphaType streamTopic;
+            var lang = SingletonMonoBehaviour<Settings>.Instance.CurrentLanguage.Value;
             var netaManager = SingletonMonoBehaviour<NetaManager>.Instance;
             var windowManager = SingletonMonoBehaviour<WindowManager>.Instance;
             if (commands.Length == 2)
@@ -396,7 +398,7 @@ namespace NeedyGirlCMDServer
                     return "";
                 }
                 else if (eventManager.kyuusiCount > 0)
-                    return "Not right now...";
+                    return NgoEx.GetToolTipText(NgoEx.getToolTip(TooltipType.tooltip_kyuusi), lang);
                 else if (eventManager.isGedatsu)
                 {
                     eventManager.nowEnding = NGO.EndingType.Ending_Kyouso;
@@ -430,6 +432,8 @@ namespace NeedyGirlCMDServer
             {
                 return "Can't stream anything specific now.";
             }
+            if (eventManager.kyuusiCount > 0)
+                return NgoEx.GetToolTipText(NgoEx.getToolTip(TooltipType.tooltip_kyuusi), lang);
             streamTopic = GetStreamTopic(commands[2]);
             if (streamTopic == AlphaType.none)
             {
@@ -442,8 +446,7 @@ namespace NeedyGirlCMDServer
             var usedStream = netaManager.usedAlpha.Find(s => s.alphaType == streamTopic && s.level == level);
             var gotStream = netaManager.GotAlpha.Find(s => s.alphaType == streamTopic && s.level == level);
             var highestStream = netaManager.GotAlpha.FindLast(s => s.alphaType == streamTopic);
-            if (eventManager.kyuusiCount > 0)
-                return "Not right now...";
+
             if (eventManager.isGedatsu)
             {
                 eventManager.nowEnding = NGO.EndingType.Ending_Kyouso;

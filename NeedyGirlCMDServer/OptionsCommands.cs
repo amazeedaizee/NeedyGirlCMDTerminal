@@ -55,14 +55,14 @@ namespace NeedyGirlCMDServer
                 {
                     var window = SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.ControlPanel);
                     if (!(window._close.interactable || window._maximize.interactable || window._minimize.interactable))
-                        return "Can't modify the Tweeter window now.";
+                        return "Can't modify the Control Panel window now.";
                     if (WindowCommands.IsWindowScroll(window, commands[1]))
                     {
                         return "";
                     }
                     if (!WindowCommands.ChangeWindowState(window, commands[1]))
                     {
-                        return "Invalid command for the Social Media window.";
+                        return "Invalid command for the Control Panel window.";
                     }
                     return "";
                 }

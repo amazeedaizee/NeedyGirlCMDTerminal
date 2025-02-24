@@ -52,7 +52,7 @@ namespace NeedyGirlCMDServer
                     var others = seperator.Split(commands[2].Trim(), 3);
                     if (!int.TryParse(others[0], out int idx))
                     {
-                        return "index number must be a number.";
+                        return "Index number must be a number.";
                     }
                     if (commands.Length > 3) anim = others[1];
                     if (commands.Length == 5) text = others[2];
@@ -64,7 +64,7 @@ namespace NeedyGirlCMDServer
                     var others = seperator.Split(commands[2].Trim(), 2);
                     if (!int.TryParse(others[0], out int idx))
                     {
-                        return "index number must be a number.";
+                        return "Index number must be a number.";
                     }
                     return RemoveKey(idx - 1);
                 }

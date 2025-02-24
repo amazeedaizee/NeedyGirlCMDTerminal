@@ -44,7 +44,7 @@ namespace NeedyGirlCMDServer
                     }
                 }
 
-                return return ErrorMessages.CMD_SPECIFIC_BUSY; ;
+                return ErrorMessages.CMD_SPECIFIC_BUSY; ;
             }
             try
             {
