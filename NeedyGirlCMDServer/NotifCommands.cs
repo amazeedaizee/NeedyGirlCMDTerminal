@@ -16,13 +16,13 @@ namespace NeedyGirlCMDServer
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
             if (!isDataActive)
             {
-                return MsgManager.CMD_SPECIFIC_BUSY;
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             }
             var idea = SingletonMonoBehaviour<NetaManager>.Instance._chipGet;
             notifList = SingletonMonoBehaviour<NotificationManager>.Instance._notiferParent;
             if (notifList.childCount == 0 && idea._cover.alpha == 0f)
             {
-                return "No notifications are active.";
+                return MsgManager.SendMessage(ServerMessage.NOTIF_NO_ACTIVE);
             }
             if (idea._cover.alpha == 1f)
             {
@@ -53,7 +53,7 @@ namespace NeedyGirlCMDServer
                 endingScreen.gameObject.GetComponent<Button>().onClick.Invoke();
                 return "";
             }
-            return MsgManager.CMD_SPECIFIC_BUSY;
+            return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
         }
     }
 }

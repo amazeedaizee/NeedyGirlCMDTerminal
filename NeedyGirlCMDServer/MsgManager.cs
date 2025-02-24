@@ -1,34 +1,75 @@
-﻿using ngov3;
+﻿using Newtonsoft.Json;
+using ngov3;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace NeedyGirlCMDServer
 {
+    [Serializable]
+    public class ServerMsg
+    {
+        public string Id;
+        public string EN;
+        public string JP;
+        public string CN;
+        public string KO;
+        public string TW;
+        public string VN;
+        public string FR;
+        public string IT;
+        public string GE;
+        public string SP;
+        public string RU;
+
+    }
+
     internal class MsgManager
     {
-        internal static LanguageType currentLang = LanguageType.EN;
-        internal class ServerMsg
-        {
-            string id;
-            string EN;
-            string JP;
-            string CN;
-            string KO;
-            string TW;
-            string VN;
-            string FR;
-            string IT;
-            string GE;
-            string SP;
-            string RU;
 
-        }
+
+        internal static LanguageType currentLang = LanguageType.EN;
+        internal static List<ServerMsg> msgList = null;
+
         internal static void InitializeMsgs()
         {
-
+            var data = Encoding.UTF8.GetString(Resource.serv_messages);
+            msgList = JsonConvert.DeserializeObject<List<ServerMsg>>(data);
+            //if (msgList == null || msgList.Count == 0)
+            //    Initializer.logger.LogError("Failed to initialize messages!");
+            //else Initializer.logger.LogInfo("Total messages loaded: " + msgList.Count);
         }
         internal static string SendMessage(ServerMessage msg, params object[] args)
         {
-
-            return "";
+            var msgText = "";
+            var msgObj = msgList.Find(m => m.Id == msg.ToString());
+            if (msgObj == null && msg != ServerMessage.NONE)
+            {
+                Initializer.logger.LogError("Could not find message: " + msg.ToString());
+                return "";
+            }
+            ;
+            msgText = currentLang switch
+            {
+                LanguageType.JP => msgObj.JP,
+                LanguageType.CN => msgObj.CN,
+                LanguageType.KO => msgObj.KO,
+                LanguageType.TW => msgObj.TW,
+                LanguageType.VN => msgObj.VN,
+                LanguageType.FR => msgObj.FR,
+                LanguageType.IT => msgObj.IT,
+                LanguageType.GE => msgObj.GE,
+                LanguageType.SP => msgObj.SP,
+                LanguageType.RU => msgObj.RU,
+                _ => msgObj.EN,
+            };
+            if (string.IsNullOrEmpty(msgText))
+                msgText = msgObj.EN;
+            if (args.Length > 0)
+            {
+                msgText = string.Format(msgText, args);
+            }
+            return msgText;
         }
     }
 
@@ -104,6 +145,7 @@ namespace NeedyGirlCMDServer
         LOAD_MISSING_ARGS_TWO,
         LOAD_SUCCESS,
         LOGIN_INVALID,
+        PIC_WIN_INACTIVE,
         PIC_NO_WIN_MODIFY,
         PIC_WIN_INVALID_CMD,
         PIC_INVALID_ID,
@@ -115,8 +157,8 @@ namespace NeedyGirlCMDServer
         OPTIONS_INVALID_LANG,
         OPTIONS_LANG_SUCCESS,
         OPTIONS_VOL_NAN,
-        OPTIONS_VOL_OUTRANGE
-OPTIONS_BGM_VOL_SUCCESS,
+        OPTIONS_VOL_OUTRANGE,
+        OPTIONS_BGM_VOL_SUCCESS,
         OPTIONS_SFX_VOL_SUCCESS,
         OPTIONS_SIZE_INVALID,
         OPTIONS_SIZE_SUCCESS,
@@ -138,6 +180,8 @@ OPTIONS_BGM_VOL_SUCCESS,
         STREAM_NO_SUPERS,
         TEXT_NOT_FOUND,
         TEXT_NO_PERMISSIONS,
+        TEXT_DEBUG_MISSING_ARGS,
+        TEXT_DEBUG_ARGS_NAN,
         TWEET_SEND_FOLLOW,
         TWEET_NO_FOLLOW,
         TWEET_NULL_FOLLOW,
@@ -148,6 +192,7 @@ OPTIONS_BGM_VOL_SUCCESS,
         TWEET_HISTORY_EMPTY,
         TWEET_BUSY,
         TWEET_MSG_NAN,
+        TWEET_MSG_OUTRANGE,
         TWEET_REPLIES,
         WEBCAM_NOT_ACTIVE,
         WEBCAM_PAT_OUTRANGE,

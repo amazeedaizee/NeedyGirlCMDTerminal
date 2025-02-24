@@ -112,7 +112,7 @@ namespace NeedyGirlCMDServer
                 commands = seperator.Split(input, 2);
                 if (commands.Length == 1)
                 {
-                    message = MsgManager.CMD_WRONG_ARGS;
+                    message = MsgManager.SendMessage(ServerMessage.CMD_WRONG_ARGS);
                 }
                 else message = WindowCommands.SelectWindowCommand(commands[1]);
             }
@@ -153,7 +153,7 @@ namespace NeedyGirlCMDServer
             }
             else if (SceneManager.GetActiveScene().name.Contains("Window") && SingletonMonoBehaviour<DayPassing2D>.Instance.playingAnimation)
             {
-                message = MsgManager.CMD_BUSY;
+                message = MsgManager.SendMessage(ServerMessage.CMD_BUSY);
             }
             else if (IsInputMatchCmd(input, infoCommand))
             {

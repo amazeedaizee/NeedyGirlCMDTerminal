@@ -54,6 +54,7 @@
     <Compile Remove="NeedyGirlCMDServer\LoadCommands.cs" />
     <Compile Remove="NeedyGirlCMDServer\LoginCommands.cs" />
     <Compile Remove="NeedyGirlCMDServer\MetaCommands.cs" />
+    <Compile Remove="NeedyGirlCMDServer\MsgManager.cs" />
     <Compile Remove="NeedyGirlCMDServer\MyPicturesCommands.cs" />
     <Compile Remove="NeedyGirlCMDServer\NotifCommands.cs" />
     <Compile Remove="NeedyGirlCMDServer\obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />

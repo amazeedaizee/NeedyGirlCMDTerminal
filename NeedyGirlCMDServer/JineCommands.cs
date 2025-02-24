@@ -28,14 +28,14 @@ namespace NeedyGirlCMDServer
             bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Jine);
             if (!isDataActive || (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable && !isWindowActive && !isJineRequiredForEnd && !isHorror))
             {
-                return MsgManager.CMD_SPECIFIC_BUSY;
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             }
             if (commands.Length == 1)
             {
                 if (!isWindowActive)
                 {
                     if (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable)
-                        return MsgManager.CMD_SPECIFIC_BUSY;
+                        return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
                     SingletonMonoBehaviour<WindowManager>.Instance.NewWindow(AppType.Jine);
                 }
                 else SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.Jine).Touched();
@@ -44,7 +44,7 @@ namespace NeedyGirlCMDServer
             if (commands.Length == 2 && isWindowActive)
             {
                 if (isJineRequiredForEnd || isHorror)
-                    return "Can't modify the Jine window now.";
+                    return MsgManager.SendMessage(ServerMessage.JINE_NO_WIN_MODIFY);
                 window = SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.Jine);
                 if (WindowCommands.IsWindowScroll(window, commands[1]))
                 {
@@ -52,13 +52,13 @@ namespace NeedyGirlCMDServer
                 }
                 if (!WindowCommands.ChangeWindowState(window, commands[1]))
                 {
-                    return "Invalid command for the Jine window.";
+                    return MsgManager.SendMessage(ServerMessage.JINE_WIN_INVALID_CMD);
                 }
                 return "";
             }
             if (commands.Length < 3)
             {
-                return "This command (when not just opening the Jine window or scrolling) requires at least 3 arguments.";
+                return MsgManager.SendMessage(ServerMessage.JINE_MISSING_CMD_THREE);
             }
             if (CommandManager.IsInputMatchCmd(commands[1], jineSticker))
             {
@@ -90,13 +90,13 @@ namespace NeedyGirlCMDServer
                 if (count[0] == "count")
                     return HistoryCount();
             }
-            return MsgManager.INVALID_CMD;
+            return MsgManager.SendMessage(ServerMessage.INVALID_CMD);
         }
 
         internal static string HistoryCount()
         {
             var jineHistory = SingletonMonoBehaviour<JineManager>.Instance.history.FindAll(j => j.user == JineUserType.ame || j.user == JineUserType.pi);
-            return $"Number of total Jine Messages: {jineHistory.Count}";
+            return MsgManager.SendMessage(ServerMessage.JINE_HISTORY_COUNT, jineHistory.Count);
         }
         internal static async UniTask<string> SendSticker(string input)
         {
@@ -106,12 +106,12 @@ namespace NeedyGirlCMDServer
             JineStampView2D jineStampView2D;
             windowManager = SingletonMonoBehaviour<WindowManager>.Instance;
             if (!int.TryParse(input, out var num))
-                return "Sticker must be a number.";
+                return MsgManager.SendMessage(ServerMessage.JINE_STICKER_NAN);
             num--;
             if (!SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Jine))
             {
                 if (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable)
-                    return "Can't open Jine from the command line now.";
+                    return MsgManager.SendMessage(ServerMessage.JINE_BUSY);
                 windowManager.NewWindow(AppType.Jine);
                 await UniTask.Delay(50);
             }
@@ -120,11 +120,11 @@ namespace NeedyGirlCMDServer
             jineManager = SingletonMonoBehaviour<JineManager>.Instance;
             if (jineManager.waitStatus.Value != JineManager.WaitStatusType.Stamp)
             {
-                return "Jine view is not accepting stickers.";
+                return MsgManager.SendMessage(ServerMessage.JINE_NO_STICKERS);
             }
             if (num > 8 || num < 0)
             {
-                return "Sticker is out of range.";
+                return MsgManager.SendMessage(ServerMessage.JINE_STICKER_OUTRANGE);
             }
             await UniTask.Delay(300);
             jineStampView2D.sendStamp((StampType)num);
@@ -141,7 +141,7 @@ namespace NeedyGirlCMDServer
             if (!SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Jine))
             {
                 if (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable)
-                    return "Can't open Jine from the command line now.";
+                    return MsgManager.SendMessage(ServerMessage.JINE_BUSY);
                 windowManager.NewWindow(AppType.Jine);
                 await UniTask.Delay(50);
             }
@@ -150,7 +150,7 @@ namespace NeedyGirlCMDServer
             jineManager = SingletonMonoBehaviour<JineManager>.Instance;
             if (jineManager.waitStatus.Value != JineManager.WaitStatusType.FreeForm || !jineView2D._piFreeform.gameObject.activeInHierarchy)
             {
-                return "Jine view is not accepting custom messages.";
+                return MsgManager.SendMessage(ServerMessage.JINE_NO_MESSAGES);
             }
             await UniTask.Delay(300);
             jineView2D._inputField.text = input;
@@ -165,13 +165,13 @@ namespace NeedyGirlCMDServer
             IWindow window;
             JineView2D jineView2D;
             if (!int.TryParse(input, out var num))
-                return "Option must be a number.";
+                return MsgManager.SendMessage(ServerMessage.JINE_OPTION_NAN);
             num--;
             windowManager = SingletonMonoBehaviour<WindowManager>.Instance;
             if (!SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Jine))
             {
                 if (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable)
-                    return "Can't open Jine from the command line now.";
+                    return MsgManager.SendMessage(ServerMessage.JINE_BUSY);
                 windowManager.NewWindow(AppType.Jine);
                 await UniTask.Delay(50);
             }
@@ -180,10 +180,10 @@ namespace NeedyGirlCMDServer
             jineManager = SingletonMonoBehaviour<JineManager>.Instance;
             if (jineView2D._selectableObjects.Count == 0 || jineManager.waitStatus.Value != JineManager.WaitStatusType.Option)
             {
-                return "Jine view is not showing any options.";
+                return MsgManager.SendMessage(ServerMessage.JINE_NO_OPTIONS);
             }
             if (num >= jineView2D._selectableObjects.Count || num < 0)
-                return "Option doesn't exist.";
+                return MsgManager.SendMessage(ServerMessage.JINE_OPTION_NOT_FOUND);
             await UniTask.Delay(300);
             jineView2D._selectableObjects[num].GetComponentInChildren<Button>().onClick.Invoke();
             return "";
@@ -198,7 +198,7 @@ namespace NeedyGirlCMDServer
             if (!SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Jine))
             {
                 if (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable)
-                    return "Can't open Jine from the command line now.";
+                    return MsgManager.SendMessage(ServerMessage.JINE_BUSY);
                 windowManager.NewWindow(AppType.Jine);
             }
             if (input == "last")
@@ -228,7 +228,7 @@ namespace NeedyGirlCMDServer
             else
             {
                 if (!int.TryParse(input, out var num))
-                    return "Couldn't find a valid message!.";
+                    return MsgManager.SendMessage(ServerMessage.JINE_READ_NOT_FOUND);
                 return ReadMessage(num);
             }
         }
@@ -244,10 +244,10 @@ namespace NeedyGirlCMDServer
             jineHistory = jineManager.history.FindAll(j => j.user == JineUserType.ame || j.user == JineUserType.pi);
             if (jineHistory.Count == 0)
             {
-                return "Jine History is empty.";
+                return MsgManager.SendMessage(ServerMessage.JINE_HISTORY_EMPTY);
             }
             if (input >= jineHistory.Count || input < 0)
-                return "Jine index value is out of bounds.";
+                return MsgManager.SendMessage(ServerMessage.JINE_READ_OUTRANGE);
             jine = jineHistory[input];
             user = jine.user == JineUserType.ame ? "Ame:" : "You:";
             if (jine.responseType == ResponseType.Stamp)
@@ -275,7 +275,7 @@ namespace NeedyGirlCMDServer
             jineHistory = jineManager.history.FindAll(j => (j.user == JineUserType.ame || j.user == JineUserType.pi) && j.responseType != ResponseType.Stamp);
             if (jineHistory.Count == 0)
             {
-                return "Jine History is empty.";
+                return MsgManager.SendMessage(ServerMessage.JINE_HISTORY_EMPTY);
             }
             if (isLastMsg)
             {

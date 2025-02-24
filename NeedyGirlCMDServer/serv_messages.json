@@ -966,6 +966,20 @@
     "RU": ""
   },
   {
+    "Id": "PIC_WIN_INACTIVE",
+    "EN": "The My Pictures window isn't active yet.",
+    "JP": "",
+    "CN": "",
+    "KO": "",
+    "TW": "",
+    "VN": "",
+    "FR": "",
+    "IT": "",
+    "GE": "",
+    "SP": "",
+    "RU": ""
+  },
+  {
     "Id": "PIC_NO_WIN_MODIFY",
     "EN": "Can't modify the My Pictures window now.",
     "JP": "",
@@ -1442,6 +1456,34 @@
     "RU": ""
   },
   {
+    "Id": "TEXT_DEBUG_MISSING_ARGS",
+    "EN": "Opening this file while debugging must require a number.",
+    "JP": "",
+    "CN": "",
+    "KO": "",
+    "TW": "",
+    "VN": "",
+    "FR": "",
+    "IT": "",
+    "GE": "",
+    "SP": "",
+    "RU": ""
+  },
+  {
+    "Id": "TEXT_DEBUG_ARGS_NAN",
+    "EN": "Not a valid number.",
+    "JP": "",
+    "CN": "",
+    "KO": "",
+    "TW": "",
+    "VN": "",
+    "FR": "",
+    "IT": "",
+    "GE": "",
+    "SP": "",
+    "RU": ""
+  },
+  {
     "Id": "TWEET_SEND_FOLLOW",
     "EN": "Sending follow request to: {0}",
     "JP": "",
@@ -1582,6 +1624,20 @@
     "RU": ""
   },
   {
+    "Id": "TWEET_MSG_OUTRANGE",
+    "EN": "Tweet index value is out of bounds.",
+    "JP": "",
+    "CN": "",
+    "KO": "",
+    "TW": "",
+    "VN": "",
+    "FR": "",
+    "IT": "",
+    "GE": "",
+    "SP": "",
+    "RU": ""
+  },
+  {
     "Id": "TWEET_REPLIES",
     "EN": "Replies: \n-{0}",
     "JP": "",
@@ -1611,7 +1667,7 @@
   },
   {
     "Id": "WEBCAM_PAT_OUTRANGE",
-    "EN": "Number can't be zero or negative",
+    "EN": "Number can't be zero or negative.",
     "JP": "",
     "CN": "",
     "KO": "",

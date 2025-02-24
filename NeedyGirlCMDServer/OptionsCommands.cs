@@ -44,7 +44,7 @@ namespace NeedyGirlCMDServer
                         {
                             if ((SceneManager.GetActiveScene().name == "BiosToLoad" && !SingletonMonoBehaviour<Boot>.Instance.Login.interactable) ||
                                 (SceneManager.GetActiveScene().name != "ChooseZip" && SceneManager.GetActiveScene().name != "BiosToLoad" && !SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable))
-                                return MsgManager.CMD_SPECIFIC_BUSY;
+                                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
                             SingletonMonoBehaviour<WindowManager>.Instance.NewWindow(AppType.ControlPanel);
                         }
                         else SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.ControlPanel).Touched();
@@ -55,18 +55,18 @@ namespace NeedyGirlCMDServer
                 {
                     var window = SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.ControlPanel);
                     if (!(window._close.interactable || window._maximize.interactable || window._minimize.interactable))
-                        return "Can't modify the Control Panel window now.";
+                        return MsgManager.SendMessage(ServerMessage.OPTIONS_NO_WIN_MODIFY);
                     if (WindowCommands.IsWindowScroll(window, commands[1]))
                     {
                         return "";
                     }
                     if (!WindowCommands.ChangeWindowState(window, commands[1]))
                     {
-                        return "Invalid command for the Control Panel window.";
+                        return MsgManager.SendMessage(ServerMessage.OPTIONS_WIN_INVALID_CMD);
                     }
                     return "";
                 }
-                return MsgManager.CMD_WRONG_ARGS;
+                return MsgManager.SendMessage(ServerMessage.CMD_WRONG_ARGS);
             }
             if (CommandManager.IsInputMatchCmd(commands[1], optionLang))
             {
@@ -86,7 +86,7 @@ namespace NeedyGirlCMDServer
             }
             else
             {
-                return MsgManager.INVALID_CMD;
+                return MsgManager.SendMessage(ServerMessage.INVALID_CMD);
             }
         }
 
@@ -133,47 +133,48 @@ namespace NeedyGirlCMDServer
             }
             if (!Enum.TryParse<LanguageType>(language, out var selectedLang))
             {
-                return "The language inputed is not valid.";
+                return MsgManager.SendMessage(ServerMessage.OPTIONS_INVALID_LANG);
             }
             SingletonMonoBehaviour<Settings>.Instance.ChangeLanguage(selectedLang);
             SingletonMonoBehaviour<Settings>.Instance.Save();
-            return $"Changed language to {languages[selectedLang.ToString()]}";
+            return MsgManager.SendMessage(ServerMessage.OPTIONS_LANG_SUCCESS, languages[selectedLang.ToString()]);
         }
         internal static string ChangeBGMVolume(string volume)
         {
             float savedVolume;
             if (!int.TryParse(volume, out var num))
             {
-                return "Volume is not a number.";
+                return MsgManager.SendMessage(ServerMessage.OPTIONS_VOL_NAN);
 
             }
             if (!(num > -1 && num < 101))
             {
-                return "Volume has to be between 0 and 100.";
+                return MsgManager.SendMessage(ServerMessage.OPTIONS_VOL_OUTRANGE);
             }
             savedVolume = num / 100f;
             SingletonMonoBehaviour<Settings>.Instance.BgmVolume = savedVolume;
             SingletonMonoBehaviour<Settings>.Instance.Save();
             AudioManager.Instance.ChangeVolume(NGO.SoundCategory.BGM, savedVolume);
             AudioManager.Instance.ChangeVolume(NGO.SoundCategory.BANK, savedVolume);
-            return $"Changed music volume to {num}";
+            return MsgManager.SendMessage(ServerMessage.OPTIONS_BGM_VOL_SUCCESS, num);
         }
         internal static string ChangeSEVolume(string volume)
         {
             float savedVolume;
             if (!int.TryParse(volume, out var num))
             {
-                return "Volume is not a number.";
+                return MsgManager.SendMessage(ServerMessage.OPTIONS_VOL_NAN);
+
             }
             if (!(num > -1 && num < 101))
             {
-                return "Volume has to be between 0 and 100.";
+                return MsgManager.SendMessage(ServerMessage.OPTIONS_VOL_OUTRANGE);
             }
             savedVolume = num / 100f;
             SingletonMonoBehaviour<Settings>.Instance.SeVolume = savedVolume;
             SingletonMonoBehaviour<Settings>.Instance.Save();
             AudioManager.Instance.ChangeSeVolume(savedVolume);
-            return $"Changed sound effect volume to {num}";
+            return MsgManager.SendMessage(ServerMessage.OPTIONS_SFX_VOL_SUCCESS, num);
         }
         internal static string ChangeWindowSize(string size)
         {
@@ -191,11 +192,11 @@ namespace NeedyGirlCMDServer
             }
             else
             {
-                return "Window size is invalid.";
+                return MsgManager.SendMessage(ServerMessage.OPTIONS_SIZE_INVALID);
             }
             SingletonMonoBehaviour<Settings>.Instance.SetResolution();
             SingletonMonoBehaviour<Settings>.Instance.Save();
-            return $"Changed window size to the specified size.";
+            return MsgManager.SendMessage(ServerMessage.OPTIONS_SIZE_SUCCESS);
         }
     }
 }

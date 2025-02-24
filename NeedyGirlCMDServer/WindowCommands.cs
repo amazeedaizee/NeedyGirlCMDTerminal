@@ -46,7 +46,7 @@ namespace NeedyGirlCMDServer
                 bool isHorror = SingletonMonoBehaviour<EventManager>.Instance.isHorror;
                 bool isJineRequiredForEnd = currentEnding == EndingType.Ending_Work || currentEnding == EndingType.Ending_Needy || currentEnding == EndingType.Ending_Normal || currentEnding == EndingType.Ending_Yarisute;
                 if (isJineRequiredForEnd || isHorror)
-                    return "Can't modify the Jine window now.";
+                    return MsgManager.SendMessage(ServerMessage.JINE_NO_WIN_MODIFY);
             }
             ChangeWindowState(window, commands[0]);
             return "";
@@ -94,7 +94,7 @@ namespace NeedyGirlCMDServer
             }
             else if (window != null && commands.Length == 1)
                 return "";
-            return "Invalid command.";
+            return MsgManager.SendMessage(ServerMessage.JINE_NO_WIN_MODIFY);
         }
 
         internal static bool IsWindowScroll(IWindow window, string command)
@@ -185,7 +185,7 @@ namespace NeedyGirlCMDServer
                     window.nakamiApp.transform.Find("Body/Stuff/ButtonRoot/ConfirmButton").GetComponent<Button>().onClick.Invoke();
                     return "";
                 }
-                catch { return "This command is invalid for this type of window."; }
+                catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
             }
             if (window.appType == AppType.Uratter)
             {
@@ -204,7 +204,7 @@ namespace NeedyGirlCMDServer
                     }
                     return "";
                 }
-                catch { return "This command is invalid for this type of window."; }
+                catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
             }
             if (window.appType == AppType.Ideon_taiki)
             {
@@ -213,7 +213,7 @@ namespace NeedyGirlCMDServer
                     window.nakamiApp.transform.Find("Body/Scroll View/start").GetComponent<Button>().onClick.Invoke();
                     return "";
                 }
-                catch { return "This command is invalid for this type of window."; }
+                catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
             }
             if (window.appType == AppType.Dinder)
             {
@@ -222,7 +222,7 @@ namespace NeedyGirlCMDServer
                     window.nakamiApp.transform.Find("BG/ButtonRoot/ActionButton").GetComponent<Button>().onClick.Invoke();
                     return "";
                 }
-                catch { return "This command is invalid for this type of window."; }
+                catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
             }
             if (window.appType == AppType.NetaChoose)
             {
@@ -236,7 +236,7 @@ namespace NeedyGirlCMDServer
                     okButton.onClick.Invoke();
                     return "";
                 }
-                catch { return "This command is invalid for this type of window."; }
+                catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
             }
             try
             {
@@ -252,7 +252,7 @@ namespace NeedyGirlCMDServer
                 }
                 return "";
             }
-            catch { return "This command is invalid for this type of window."; }
+            catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
         }
 
         internal static string ClickCancelButton(IWindow window)
@@ -275,7 +275,7 @@ namespace NeedyGirlCMDServer
                     window.nakamiApp.transform.Find("Body/Stuff/CloseButton").GetComponent<Button>().onClick.Invoke();
                     return "";
                 }
-                catch { return "This command is invalid for this type of window."; }
+                catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
             }
             if (window.appType == AppType.Dinder)
             {
@@ -284,7 +284,7 @@ namespace NeedyGirlCMDServer
                     window.nakamiApp.transform.Find("BG/ButtonRoot/Nope").GetComponent<Button>().onClick.Invoke();
                     return "";
                 }
-                catch { return "This command is invalid for this type of window."; }
+                catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
             }
             if (window.appType == AppType.NetaChoose)
             {
@@ -298,14 +298,14 @@ namespace NeedyGirlCMDServer
                     cancelButton.onClick.Invoke();
                     return "";
                 }
-                catch { return "This command is invalid for this type of window."; }
+                catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
             }
             try
             {
                 window.nakamiApp.transform.Find("Body/ButtonRoot/CloseButton").GetComponent<Button>().onClick.Invoke();
                 return "";
             }
-            catch { return "This command is invalid for this type of window."; }
+            catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
         }
 
         internal static IWindow GetActiveWindow()

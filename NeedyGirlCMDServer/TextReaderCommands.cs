@@ -7,8 +7,6 @@ namespace NeedyGirlCMDServer
 {
     internal class TextReaderCommands
     {
-        const string TEXT_NOT_FOUND = "No such file was found.";
-        const string NO_PERMISSIONS = "You do not have permission to open this file.";
         const string ENDING_HINT = "netshuthint";
         internal static string OpenTextDoc(string input)
         {
@@ -19,7 +17,7 @@ namespace NeedyGirlCMDServer
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
             if (!isDataActive)
             {
-                return MsgManager.INVALID_CMD;
+                return MsgManager.SendMessage(ServerMessage.INVALID_CMD);
             }
             if (eventManager.isTestScene)
             {
@@ -42,7 +40,7 @@ namespace NeedyGirlCMDServer
                         eventManager.LoveNikki1.GetComponent<Shortcut>()._shortcut.onClick.Invoke();
                         break;
                     default:
-                        return TEXT_NOT_FOUND;
+                        return MsgManager.SendMessage(ServerMessage.TEXT_NOT_FOUND);
                 }
             }
             else if (ValidSecretTitle(title))
@@ -60,10 +58,10 @@ namespace NeedyGirlCMDServer
                     eventManager.PsycheNikki3.GetComponent<Shortcut>()._shortcut.onClick.Invoke();
                 else if (eventManager.psycheCount >= 4 && ValidLogFourTitle(title))
                     eventManager.PsycheNikki4.GetComponent<Shortcut>()._shortcut.onClick.Invoke();
-                else return TEXT_NOT_FOUND;
+                else return MsgManager.SendMessage(ServerMessage.TEXT_NOT_FOUND);
 
             }
-            else return TEXT_NOT_FOUND;
+            else return MsgManager.SendMessage(ServerMessage.TEXT_NOT_FOUND);
             return "";
         }
         internal static string ReadTextDoc(string input)
@@ -100,7 +98,7 @@ namespace NeedyGirlCMDServer
                         case 4:
                             return NgoEx.EventTextTypeToText(NGO.EventTextType.Event_Diary001, lang);
                         default:
-                            return TEXT_NOT_FOUND;
+                            return MsgManager.SendMessage(ServerMessage.TEXT_NOT_FOUND);
                     }
                 }
                 switch (eventManager.loveDiary)
@@ -114,7 +112,7 @@ namespace NeedyGirlCMDServer
                     case 4:
                         return NgoEx.EventTextTypeToText(NGO.EventTextType.Event_Diary001, lang);
                     default:
-                        return TEXT_NOT_FOUND;
+                        return MsgManager.SendMessage(ServerMessage.TEXT_NOT_FOUND);
                 }
             }
             else if (ValidSecretTitle(title))
@@ -132,10 +130,10 @@ namespace NeedyGirlCMDServer
                     return NgoEx.EventTextTypeToText(NGO.EventTextType.Event_Psyche_Nikki_3, lang);
                 else if (eventManager.psycheCount >= 4 && ValidLogFourTitle(title))
                     return NgoEx.EventTextTypeToText(NGO.EventTextType.Event_Psyche_Nikki_4, lang);
-                else return TEXT_NOT_FOUND;
+                else return MsgManager.SendMessage(ServerMessage.TEXT_NOT_FOUND);
 
             }
-            else return TEXT_NOT_FOUND;
+            else return MsgManager.SendMessage(ServerMessage.TEXT_NOT_FOUND);
         }
 
         static string OpenText_Debug(string[] commands)
@@ -168,7 +166,7 @@ namespace NeedyGirlCMDServer
                         windowManager.NewWindow(AppType.Event_Diary001);
                         break;
                     default:
-                        return TEXT_NOT_FOUND;
+                        return MsgManager.SendMessage(ServerMessage.TEXT_NOT_FOUND);
                 }
                 return "";
             }
@@ -188,7 +186,7 @@ namespace NeedyGirlCMDServer
                 eventManager.PsycheNikki3.GetComponent<Shortcut>()._shortcut.onClick.Invoke();
             else if (ValidLogFourTitle(title))
                 eventManager.PsycheNikki4.GetComponent<Shortcut>()._shortcut.onClick.Invoke();
-            else return TEXT_NOT_FOUND;
+            else return MsgManager.SendMessage(ServerMessage.TEXT_NOT_FOUND);
             return "";
         }
 
@@ -200,11 +198,11 @@ namespace NeedyGirlCMDServer
             {
                 if (commands.Length < 3)
                 {
-                    return "Opening this file while debugging must require a number.";
+                    return MsgManager.SendMessage(ServerMessage.TEXT_DEBUG_MISSING_ARGS);
                 }
                 if (!int.TryParse(commands[2], out int level))
                 {
-                    return "Not a valid number.";
+                    return MsgManager.SendMessage(ServerMessage.TEXT_DEBUG_ARGS_NAN);
                 }
                 switch (level)
                 {
@@ -217,7 +215,7 @@ namespace NeedyGirlCMDServer
                     case 4:
                         return NgoEx.EventTextTypeToText(NGO.EventTextType.Event_Diary004, lang);
                     default:
-                        return TEXT_NOT_FOUND;
+                        return MsgManager.SendMessage(ServerMessage.TEXT_NOT_FOUND);
                 }
             }
             else if (ValidSecretTitle(title))
@@ -236,7 +234,7 @@ namespace NeedyGirlCMDServer
                 return NgoEx.EventTextTypeToText(NGO.EventTextType.Event_Psyche_Nikki_3, lang);
             else if (ValidLogFourTitle(title))
                 return NgoEx.EventTextTypeToText(NGO.EventTextType.Event_Psyche_Nikki_4, lang);
-            else return TEXT_NOT_FOUND;
+            else return MsgManager.SendMessage(ServerMessage.TEXT_NOT_FOUND);
         }
 
         static string OpenSecret()
@@ -244,7 +242,7 @@ namespace NeedyGirlCMDServer
             GameObject secret = GameObject.Find("ShortCutParent").transform.Find("himitu").gameObject;
             GameObject otherSecret = GameObject.Find("himitu");
             if (otherSecret.GetComponent<EventKakusinikuru>().enabled)
-                return NO_PERMISSIONS;
+                return MsgManager.SendMessage(ServerMessage.TEXT_NO_PERMISSIONS);
             secret.GetComponent<Shortcut>()._shortcut.onClick.Invoke();
             return "";
         }
@@ -254,7 +252,7 @@ namespace NeedyGirlCMDServer
             GameObject secret = GameObject.Find("ShortCutParent").transform.Find("himitu").gameObject;
             GameObject otherSecret = GameObject.Find("himitu");
             if (otherSecret.GetComponent<EventKakusinikuru>().enabled)
-                return NO_PERMISSIONS;
+                return MsgManager.SendMessage(ServerMessage.TEXT_NO_PERMISSIONS);
             secret.GetComponent<Shortcut>()._shortcut.onClick.Invoke();
             return NgoEx.SystemTextFromType(NGO.SystemTextType.System_secret_Contents, lang);
         }

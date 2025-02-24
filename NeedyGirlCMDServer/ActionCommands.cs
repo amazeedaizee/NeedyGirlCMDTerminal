@@ -68,11 +68,11 @@ namespace NeedyGirlCMDServer
             int dayPart = SingletonMonoBehaviour<StatusManager>.Instance.GetStatus(StatusType.DayPart);
             if (!isDataActive)
             {
-                return MsgManager.CMD_SPECIFIC_BUSY;
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             }
             if (commands.Length < 2)
             {
-                return MsgManager.CMD_WRONG_ARGS;
+                return MsgManager.SendMessage(ServerMessage.CMD_WRONG_ARGS);
             }
             if (CommandManager.IsInputMatchCmd(commands[1], streamAction))
             {
@@ -81,9 +81,9 @@ namespace NeedyGirlCMDServer
                     return ListAvailableStreams();
                 }
                 if (dayPart > 2 && eventManager.nowEnding != NGO.EndingType.Ending_Ideon && eventManager.nowEnding != NGO.EndingType.Ending_Sucide)
-                    return "It's currently too late to stream.";
+                    return MsgManager.SendMessage(ServerMessage.ACT_STREAM_LATE);
                 else if (dayPart < 2 && !(eventManager.isHorror && horrorShortcuts.interactable))
-                    return "You can only stream at night.";
+                    return MsgManager.SendMessage(ServerMessage.ACT_STREAM_EARLY);
                 return ExecuteStream(commands, eventManager, horrorShortcuts);
             }
             if ((canSpecialSex = CanExecuteSpecialSex(commands)) != "")
@@ -95,7 +95,7 @@ namespace NeedyGirlCMDServer
                 if (CommandManager.IsInputMatchCmd(commands[1], outsideAction) && SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.GoOut) && !SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.GoOut)._close.interactable)
                     return ExecuteGoOutAction();
 
-                return MsgManager.CMD_SPECIFIC_BUSY;
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             }
             if (commands.Length > 3 && (commands[3] == "f" || commands[3] == "force"))
                 isForceAction = true;
@@ -237,7 +237,7 @@ namespace NeedyGirlCMDServer
             {
                 return ExecuteGoOutAction();
             }
-            return "Invalid action.";
+            return MsgManager.SendMessage(ServerMessage.ACT_INVALID);
 
 
             string ExecuteGoOutAction()
@@ -315,7 +315,7 @@ namespace NeedyGirlCMDServer
                 }
                 if (eventManager.isOpenGinga && SingletonMonoBehaviour<StatusManager>.Instance.isTodayGangimari && commands[2] == "galacticrail")
                     return ExecuteAction(ActionType.OdekakeGinga, isForceAction, horrorShortcuts);
-                return "Invalid action.";
+                return MsgManager.SendMessage(ServerMessage.ACT_INVALID);
             }
 
         }
@@ -335,7 +335,7 @@ namespace NeedyGirlCMDServer
                     return "<3";
                 }
             }
-            return MsgManager.CMD_SPECIFIC_BUSY;
+            return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
         }
 
         static void ExecuteSpecialSex(WindowManager windowManager, EventManager eventManager)
@@ -426,22 +426,22 @@ namespace NeedyGirlCMDServer
             }
             if (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable || !eventManager.shortcuts.interactable)
             {
-                return MsgManager.CMD_SPECIFIC_BUSY;
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             }
             if (eventManager.nowEnding != NGO.EndingType.Ending_None)
             {
-                return "Can't stream anything specific now.";
+                return MsgManager.SendMessage(ServerMessage.ACT_STREAM_END_ACTIVE);
             }
             if (eventManager.kyuusiCount > 0)
                 return NgoEx.GetToolTipText(NgoEx.getToolTip(TooltipType.tooltip_kyuusi), lang);
             streamTopic = GetStreamTopic(commands[2]);
             if (streamTopic == AlphaType.none)
             {
-                return "Invalid stream topic.";
+                return MsgManager.SendMessage(ServerMessage.ACT_INVALID);
             }
             if (!TryGetStreamLevel(netaManager, streamTopic, out level))
             {
-                return "No new stream for this topic exists.";
+                return MsgManager.SendMessage(ServerMessage.ACT_STREAM_NO_NEW);
             }
             var usedStream = netaManager.usedAlpha.Find(s => s.alphaType == streamTopic && s.level == level);
             var gotStream = netaManager.GotAlpha.Find(s => s.alphaType == streamTopic && s.level == level);
@@ -455,7 +455,7 @@ namespace NeedyGirlCMDServer
             }
             if (usedStream != null)
             {
-                return "This stream has already been done.";
+                return MsgManager.SendMessage(ServerMessage.ACT_STREAM_USED);
             }
             if (streamTopic == AlphaType.Angel && level == 5 && IsDarkAngelPossible(netaManager))
             {
@@ -463,11 +463,11 @@ namespace NeedyGirlCMDServer
             }
             else if (gotStream == null)
             {
-                return "This stream has not been found yet.";
+                return MsgManager.SendMessage(ServerMessage.ACT_STREAM_NOT_FOUND);
             }
             if (streamTopic == AlphaType.Angel && usedStream == null && highestStream.level > level)
             {
-                return "This isn't the latest milestone stream!";
+                return MsgManager.SendMessage(ServerMessage.ACT_STREAM_ANGEL_OUTDATED);
             }
 
             SingletonMonoBehaviour<EventManager>.Instance.StartHaishin(streamTopic, level, BetaType.none);

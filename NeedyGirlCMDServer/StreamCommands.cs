@@ -33,7 +33,8 @@ namespace NeedyGirlCMDServer
 
             if (isBootActive)
             {
-                if (!SingletonMonoBehaviour<Boot>.Instance.Login.interactable) return MsgManager.CMD_SPECIFIC_BUSY;
+                if (!SingletonMonoBehaviour<Boot>.Instance.Login.interactable)
+                    return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
                 if (commands.Length == 1) return OpenStreamGen();
                 if (CommandManager.IsInputMatchCmd(commands[1], streamGenAdd))
                 {
@@ -48,11 +49,12 @@ namespace NeedyGirlCMDServer
                 {
                     var anim = "";
                     var text = "";
-                    if (commands.Length < 3) return MsgManager.CMD_MISSING_ARGS;
+                    if (commands.Length < 3)
+                        return MsgManager.SendMessage(ServerMessage.CMD_MISSING_ARGS);
                     var others = seperator.Split(commands[2].Trim(), 3);
                     if (!int.TryParse(others[0], out int idx))
                     {
-                        return "Index number must be a number.";
+                        return MsgManager.SendMessage(ServerMessage.STREAM_GEN_IDX_NAN);
                     }
                     if (commands.Length > 3) anim = others[1];
                     if (commands.Length == 5) text = others[2];
@@ -60,21 +62,21 @@ namespace NeedyGirlCMDServer
                 }
                 if (CommandManager.IsInputMatchCmd(commands[1], streamGenDelete))
                 {
-                    if (commands.Length < 3) return MsgManager.CMD_MISSING_ARGS;
+                    if (commands.Length < 3) return MsgManager.SendMessage(ServerMessage.CMD_MISSING_ARGS);
                     var others = seperator.Split(commands[2].Trim(), 2);
                     if (!int.TryParse(others[0], out int idx))
                     {
-                        return "Index number must be a number.";
+                        return MsgManager.SendMessage(ServerMessage.STREAM_GEN_IDX_NAN);
                     }
                     return RemoveKey(idx - 1);
                 }
                 if (CommandManager.IsInputMatchCmd(commands[1], streamSpeed))
                 {
-                    if (commands.Length < 3) return MsgManager.CMD_MISSING_ARGS;
+                    if (commands.Length < 3) return MsgManager.SendMessage(ServerMessage.CMD_MISSING_ARGS);
                     var others = seperator.Split(commands[2].Trim(), 2);
                     if (!int.TryParse(others[0], out int speed))
                     {
-                        return "Speed number must be a number.";
+                        return MsgManager.SendMessage(ServerMessage.STREAM_SPEED_NAN);
                     }
                     return ChangeGenSpeed(speed);
                 }
@@ -87,21 +89,21 @@ namespace NeedyGirlCMDServer
             {
                 if (!isDataActive)
                 {
-                    return MsgManager.CMD_SPECIFIC_BUSY;
+                    return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
                 }
                 live = SingletonMonoBehaviour<Live>.Instance;
-                if (!live) return "No stream is currently active.";
+                if (!live) return MsgManager.SendMessage(ServerMessage.STREAM_INACTIVE);
                 if (CommandManager.IsInputMatchCmd(commands[1], streamSkip))
                 {
                     return SkipStream(live);
                 }
                 if (CommandManager.IsInputMatchCmd(commands[1], streamSpeed))
                 {
-                    if (commands.Length < 3) return MsgManager.CMD_MISSING_ARGS;
+                    if (commands.Length < 3) return MsgManager.SendMessage(ServerMessage.CMD_MISSING_ARGS);
                     var others = seperator.Split(commands[2].Trim(), 2);
                     if (!int.TryParse(others[0], out int speed))
                     {
-                        return "Speed number must be a number.";
+                        return MsgManager.SendMessage(ServerMessage.STREAM_SPEED_NAN);
                     }
                     return ChangeSpeed(live, speed);
                 }
@@ -110,7 +112,7 @@ namespace NeedyGirlCMDServer
                     var others = seperator.Split(commands[2].Trim(), 3);
                     if (others.Length < 2)
                     {
-                        return "The comment command requires at least 2 other arguments.";
+                        return MsgManager.SendMessage(ServerMessage.STREAM_COMM_MISSING_ARGS);
                     }
                     if (CommandManager.IsInputMatchCmd(others[0], commentSelect))
                     {
@@ -120,7 +122,7 @@ namespace NeedyGirlCMDServer
                         }
                         if (!int.TryParse(others[1], out int selectedChat))
                         {
-                            return "Comment number must be a number.";
+                            return MsgManager.SendMessage(ServerMessage.STREAM_COMM_IDX_NAN);
                         }
                         return SelectComment(live, selectedChat - 1);
                     }
@@ -132,20 +134,20 @@ namespace NeedyGirlCMDServer
                         }
                         if (!int.TryParse(others[1], out int readChat))
                         {
-                            return "Comment number must be a number.";
+                            return MsgManager.SendMessage(ServerMessage.STREAM_COMM_IDX_NAN);
                         }
                         return ReadComment(live, readChat - 1);
                     }
                 }
             }
 
-            return MsgManager.INVALID_CMD;
+            return MsgManager.SendMessage(ServerMessage.INVALID_CMD);
         }
         internal static string SkipStream(Live live)
         {
             if (!live._HaisinSkip.gameObject.activeInHierarchy)
             {
-                return "Stream cannot be skipped.";
+                return MsgManager.SendMessage(ServerMessage.STREAM_UNSKIPPABLE);
             }
             live.NowPlaying.SkipScenario();
             return "";
@@ -153,10 +155,10 @@ namespace NeedyGirlCMDServer
         internal static string ChangeSpeed(Live live, int input)
         {
             if (!(input > 0 && input < 4))
-                return "Speed value has to be 1 to 3.";
+                return MsgManager.SendMessage(ServerMessage.STREAM_SPEED_OUTRANGE);
             if (!live._HaisinSpeed.gameObject.activeInHierarchy)
             {
-                return "Speed cannot be changed right now.";
+                return MsgManager.SendMessage(ServerMessage.STREAM_SPEED_LOCK);
             }
             input--;
             live.setSpeed(input);
@@ -167,15 +169,15 @@ namespace NeedyGirlCMDServer
             Playing playing;
             if (!live.isActiveReaction())
             {
-                return "Stream is currently read-only.";
+                return MsgManager.SendMessage(ServerMessage.STREAM_READ_ONLY);
             }
             if (input >= live._selectableComments.Count)
             {
-                return "Number exceeds the amount of chat comments right now.";
+                return MsgManager.SendMessage(ServerMessage.STREAM_COMM_OVERRANGE);
             }
             if (input < 0)
             {
-                return "Number is out of range.";
+                return MsgManager.SendMessage(ServerMessage.STREAM_COMM_UNDERRANGE);
             }
             if (!live._selectableComments[input].isHiroizumi)
             {
@@ -201,18 +203,18 @@ namespace NeedyGirlCMDServer
             string message;
             if (input >= live._selectableComments.Count)
             {
-                return "Number exceeds the amount of chat comments right now.";
+                return MsgManager.SendMessage(ServerMessage.STREAM_COMM_OVERRANGE);
             }
             if (input < 0)
             {
-                return "Number is out of range.";
+                return MsgManager.SendMessage(ServerMessage.STREAM_COMM_UNDERRANGE);
             }
             if (live._selectableComments[input].isDeleted)
             {
-                return "This comment has been deleted.";
+                return MsgManager.SendMessage(ServerMessage.STREAM_COMM_DELETED);
             }
             message = live._selectableComments[input].honbun;
-            return $"Comment:\n{message}";
+            return MsgManager.SendMessage(ServerMessage.STREAM_COMM_READ, message);
         }
 
         internal static string ReadSuperComment(Live live)
@@ -231,10 +233,10 @@ namespace NeedyGirlCMDServer
             }
             if (comment == null)
             {
-                return "No super chats are active.";
+                return MsgManager.SendMessage(ServerMessage.STREAM_NO_SUPERS);
             }
             message = comment.honbun;
-            return $"Comment:\n{message}";
+            return MsgManager.SendMessage(ServerMessage.STREAM_COMM_READ, message);
         }
 
         internal static string SelectSuperChat(Live live)
@@ -243,7 +245,7 @@ namespace NeedyGirlCMDServer
             LiveComment comment = null;
             if (!live.isActiveReaction())
             {
-                return "Stream is currently read-only.";
+                return MsgManager.SendMessage(ServerMessage.STREAM_READ_ONLY);
             }
             for (int i = live._selectableComments.Count - 1; i >= 0; i--)
             {
@@ -256,7 +258,7 @@ namespace NeedyGirlCMDServer
             }
             if (comment == null)
             {
-                return "No super chats are active.";
+                return MsgManager.SendMessage(ServerMessage.STREAM_NO_SUPERS);
             }
             playing = comment.playing;
             comment.hirou(playing);
@@ -274,7 +276,7 @@ namespace NeedyGirlCMDServer
         internal static string AddKey(string anim, string text)
         {
             bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.ManualHaishin);
-            if (!isWindowActive) return "This window isn't active yet.";
+            if (!isWindowActive) return MsgManager.SendMessage(ServerMessage.STREAM_GEN_INACTIVE);
 
             var win = SingletonMonoBehaviour<Live_gen>.Instance;
             int len = win.textInputs.Count;
@@ -292,14 +294,14 @@ namespace NeedyGirlCMDServer
         internal static string EditKey(int idx, string anim, string text)
         {
             bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.ManualHaishin);
-            if (!isWindowActive) return "This window isn't active yet.";
+            if (!isWindowActive) return MsgManager.SendMessage(ServerMessage.STREAM_GEN_INACTIVE);
 
             var win = SingletonMonoBehaviour<Live_gen>.Instance;
             int len = win.textInputs.Count;
             if (idx < 0 || idx >= len)
             {
 
-                return "Index is out of bounds.";
+                return MsgManager.SendMessage(ServerMessage.STREAM_GEN_IDX_OUTRANGE);
             }
             var select = win.textInputs[idx];
             foreach (var t in win.textInputs)
@@ -315,13 +317,13 @@ namespace NeedyGirlCMDServer
         internal static string RemoveKey(int idx)
         {
             bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.ManualHaishin);
-            if (!isWindowActive) return "This window isn't active yet.";
+            if (!isWindowActive) return MsgManager.SendMessage(ServerMessage.STREAM_GEN_INACTIVE);
 
             var win = SingletonMonoBehaviour<Live_gen>.Instance;
             int len = win.textInputs.Count;
             if (idx < 0 || idx >= len)
             {
-                return "Index is out of bounds.";
+                return MsgManager.SendMessage(ServerMessage.STREAM_GEN_IDX_OUTRANGE);
             }
             var select = win.textInputs[idx];
             foreach (var t in win.textInputs)
@@ -335,10 +337,10 @@ namespace NeedyGirlCMDServer
         internal static string ChangeGenSpeed(int idx)
         {
             bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.ManualHaishin);
-            if (!isWindowActive) return "This window isn't active yet.";
+            if (!isWindowActive) return MsgManager.SendMessage(ServerMessage.STREAM_GEN_INACTIVE);
 
             var win = SingletonMonoBehaviour<Live_gen>.Instance;
-            if (idx < 1 || idx > 3) return "Index is out of bounds.";
+            if (idx < 1 || idx > 3) return MsgManager.SendMessage(ServerMessage.STREAM_GEN_IDX_OUTRANGE);
             win.setSpeed(idx - 1);
             return "";
         }
@@ -346,7 +348,7 @@ namespace NeedyGirlCMDServer
         internal static string StartGenStream()
         {
             bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.ManualHaishin);
-            if (!isWindowActive) return "This window isn't active yet.";
+            if (!isWindowActive) return MsgManager.SendMessage(ServerMessage.STREAM_GEN_INACTIVE);
 
             var win = SingletonMonoBehaviour<Live_gen>.Instance;
             win.readline();
@@ -355,7 +357,7 @@ namespace NeedyGirlCMDServer
         internal static string RestartGenStream()
         {
             bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.ManualHaishin);
-            if (!isWindowActive) return "This window isn't active yet.";
+            if (!isWindowActive) return MsgManager.SendMessage(ServerMessage.STREAM_GEN_INACTIVE);
 
             var win = SingletonMonoBehaviour<Live_gen>.Instance;
             win.rewind();
@@ -365,7 +367,7 @@ namespace NeedyGirlCMDServer
         internal static string ResetGenStream()
         {
             bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.ManualHaishin);
-            if (!isWindowActive) return "This window isn't active yet.";
+            if (!isWindowActive) return MsgManager.SendMessage(ServerMessage.STREAM_GEN_INACTIVE);
 
             var win = SingletonMonoBehaviour<Live_gen>.Instance;
             win.clear();
@@ -375,7 +377,7 @@ namespace NeedyGirlCMDServer
         internal static string GreenGenStream()
         {
             bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.ManualHaishin);
-            if (!isWindowActive) return "This window isn't active yet.";
+            if (!isWindowActive) return MsgManager.SendMessage(ServerMessage.STREAM_GEN_INACTIVE);
 
             var win = SingletonMonoBehaviour<Live_gen>.Instance;
             win.toggleGB();

@@ -29,6 +29,7 @@ namespace NeedyGirlCMDServer
 
         public void Start()
         {
+            MsgManager.InitializeMsgs();
             MyPicturesCommands.resourceList = ImageViewerHelper.LoadResourcesList();
             logger.LogInfo("Starting...");
             ConnectionManager.StartServer();

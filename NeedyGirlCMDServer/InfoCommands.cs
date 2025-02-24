@@ -15,7 +15,7 @@ namespace NeedyGirlCMDServer
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
             if (!isDataActive)
             {
-                return MsgManager.CMD_SPECIFIC_BUSY;
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             }
 
             if (SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable && SingletonMonoBehaviour<EventManager>.Instance.nowEnding != EndingType.Ending_Completed)
@@ -85,14 +85,14 @@ namespace NeedyGirlCMDServer
             if (stressState != "")
                 info += $"{stressState}\n";
             if (breakCount > 0)
-                info += "Ame is currently on hiatus.\n";
+                info += MsgManager.SendMessage(ServerMessage.INFO_HIATUS);
             if (hasSeenLight)
             {
-                info += "Ame has seen the light.\n";
+                info += MsgManager.SendMessage(ServerMessage.INFO_RELIGION);
             }
             if (hasGalaxyIdea)
             {
-                info += "Ame likes trains.\n";
+                info += MsgManager.SendMessage(ServerMessage.INFO_GALACTIC_RAIL);
             }
 
             return info;
@@ -100,14 +100,14 @@ namespace NeedyGirlCMDServer
 
         static string SetStressPoint(EventManager eventManager, StatusManager statusManager)
         {
-            if (eventManager.isHorror && statusManager.GetStatus(StatusType.DayIndex) > 28)
-                return "Ame has completely lost it.";
+            if (eventManager.isHorror && statusManager.GetStatus(StatusType.DayIndex) > 27)
+                return MsgManager.SendMessage(ServerMessage.INFO_STRESS_HORROR);
             if (eventManager.isHakkyo)
-                return "Ame is currently on edge.";
+                return MsgManager.SendMessage(ServerMessage.INFO_STRESS_BREAK);
             if (eventManager.isWristCut)
-                return "Ame is self-destructing.";
+                return MsgManager.SendMessage(ServerMessage.INFO_STRESS_CUT);
             if (eventManager.beforeWristCut)
-                return "Ame is close to breaking!";
+                return MsgManager.SendMessage(ServerMessage.INFO_STRESS_BEFORE);
             return "";
         }
 
@@ -116,17 +116,17 @@ namespace NeedyGirlCMDServer
             switch (eventManager.Trauma)
             {
                 case NGO.JineType.Event_LongLINE001:
-                    return "Parents";
+                    return MsgManager.SendMessage(ServerMessage.INFO_TRAUMA_1);
                 case NGO.JineType.Event_LongLINE002:
-                    return "Poverty";
+                    return MsgManager.SendMessage(ServerMessage.INFO_TRAUMA_2);
                 case NGO.JineType.Event_LongLINE003:
-                    return "School";
+                    return MsgManager.SendMessage(ServerMessage.INFO_TRAUMA_3);
                 case NGO.JineType.Event_LongLINE004:
-                    return "Marriage";
+                    return MsgManager.SendMessage(ServerMessage.INFO_TRAUMA_4);
                 case NGO.JineType.Event_LongLINE005:
-                    return "Health";
+                    return MsgManager.SendMessage(ServerMessage.INFO_TRAUMA_5);
                 default:
-                    return "Nothing (she is fine)";
+                    return MsgManager.SendMessage(ServerMessage.INFO_TRAUMA_NONE);
             }
         }
 
@@ -139,7 +139,7 @@ namespace NeedyGirlCMDServer
             end = eventManager.nowEnding;
             if (eventManager.nowEnding == NGO.EndingType.Ending_None)
             {
-                return "No ending is happening!";
+                return MsgManager.SendMessage(ServerMessage.INFO_ENDING_NONE);
             }
             endingInfo += $"{GetEndingTitle(end, lang)}\n\n" +
                          $"{GetEndingDesc(end, lang)}\n\n" +

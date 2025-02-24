@@ -12,23 +12,23 @@ namespace NeedyGirlCMDServer
             Settings settings = SingletonMonoBehaviour<Settings>.instance;
             if (commands.Length != 2)
             {
-                return MsgManager.CMD_WRONG_ARGS;
+                return MsgManager.SendMessage(ServerMessage.CMD_WRONG_ARGS);
             }
             if (SingletonMonoBehaviour<EndingOmake>.Instance == null)
             {
-                return MsgManager.CMD_SPECIFIC_BUSY;
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             }
             else if (!int.TryParse(commands[1], out int num))
             {
-                return "Specified zip number is not a number.";
+                return MsgManager.SendMessage(ServerMessage.ZIP_NUM_NAN);
             }
             else if (num < 1 || num > 30)
             {
-                return "Specified zip number is out of range. (1-30)";
+                return MsgManager.SendMessage(ServerMessage.ZIP_NUM_OUTRANGE);
             }
             else if (settings.unLockedZip.Contains(num))
             {
-                return "This zip is already open!";
+                return MsgManager.SendMessage(ServerMessage.ZIP_OPENED);
             }
             else
             {

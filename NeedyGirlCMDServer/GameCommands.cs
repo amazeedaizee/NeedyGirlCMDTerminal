@@ -130,13 +130,13 @@ namespace NeedyGirlCMDServer
                 !SingletonMonoBehaviour<EventManager>.Instance.isTestScene &&
                 !SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable)
             {
-                return "Can't restart now.";
+                return MsgManager.SendMessage(ServerMessage.RESTART_BUSY);
             }
             if (commands.Length == 2 && (commands[1] == "f" || commands[1] == "force"))
             {
                 if (!isDataActive) SceneManager.LoadScene("BiosToLoad");
                 else rebootDialog.OnSubmit();
-                return "Restarted to the boot screen.";
+                return MsgManager.SendMessage(ServerMessage.RESTART_CONFIRMED);
             }
             else if (isDataActive &&
                 (SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable ||
@@ -151,7 +151,7 @@ namespace NeedyGirlCMDServer
                 }
                 return "";
             }
-            return "Can't show the Restart dialog now.";
+            return MsgManager.SendMessage(ServerMessage.RESTART_DIALOG_BUSY);
         }
 
         internal static string ShutDownGame(string input)
@@ -176,7 +176,7 @@ namespace NeedyGirlCMDServer
                 }
                 return "";
             }
-            return "Can't show the Shutdown dialog now.";
+            return MsgManager.SendMessage(ServerMessage.RESTART_SDOWN_DIALOG_BUSY);
         }
     }
 }

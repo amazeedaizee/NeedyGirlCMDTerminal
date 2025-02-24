@@ -15,11 +15,11 @@ namespace NeedyGirlCMDServer
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
             if (!isDataActive)
             {
-                return MsgManager.CMD_SPECIFIC_BUSY;
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             }
             if (!SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Webcam))
             {
-                return "Webcam is not currently active.";
+                return MsgManager.SendMessage(ServerMessage.WEBCAM_NOT_ACTIVE);
             }
             ame = SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.Webcam);
             if (commands.Length == 1)
@@ -39,14 +39,15 @@ namespace NeedyGirlCMDServer
                     {
                         if (num < 1)
                         {
-                            return "Number can't be zero or negative";
+                            return MsgManager.SendMessage(ServerMessage.WEBCAM_PAT_OUTRANGE);
                         }
                         for (int i = 0; i < num; i++)
                         {
                             await UniTask.Delay(200);
                             head._button.onClick.Invoke();
+                            head._button.onClick.Invoke();
                         }
-                        return $"Headpatted {num} times";
+                        return MsgManager.SendMessage(ServerMessage.WEBCAM_PAT_COUNT, num);
                     }
                     else head._button.onClick.Invoke();
                 }
