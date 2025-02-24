@@ -16,7 +16,7 @@ namespace NeedyGirlCMDServer
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
             if (!isDataActive)
             {
-                return "Can't do this command now.";
+                return ErrorMessages.CMD_SPECIFIC_BUSY;
             }
             if (!GameObject.Find("EndingCover").transform.Find("jimaku").gameObject.activeInHierarchy)
             {
@@ -44,7 +44,7 @@ namespace NeedyGirlCMDServer
                     }
                 }
 
-                return "Can't do this command now.";
+                return return ErrorMessages.CMD_SPECIFIC_BUSY; ;
             }
             try
             {
