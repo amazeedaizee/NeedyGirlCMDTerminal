@@ -15,7 +15,7 @@ namespace NeedyGirlCMDServer
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
             if (!isDataActive)
             {
-                return ErrorMessages.CMD_SPECIFIC_BUSY;
+                return MsgManager.CMD_SPECIFIC_BUSY;
             }
 
             if (SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable && SingletonMonoBehaviour<EventManager>.Instance.nowEnding != EndingType.Ending_Completed)

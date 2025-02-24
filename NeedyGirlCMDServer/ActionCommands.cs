@@ -68,11 +68,11 @@ namespace NeedyGirlCMDServer
             int dayPart = SingletonMonoBehaviour<StatusManager>.Instance.GetStatus(StatusType.DayPart);
             if (!isDataActive)
             {
-                return ErrorMessages.CMD_SPECIFIC_BUSY;
+                return MsgManager.CMD_SPECIFIC_BUSY;
             }
             if (commands.Length < 2)
             {
-                return ErrorMessages.CMD_WRONG_ARGS;
+                return MsgManager.CMD_WRONG_ARGS;
             }
             if (CommandManager.IsInputMatchCmd(commands[1], streamAction))
             {
@@ -95,7 +95,7 @@ namespace NeedyGirlCMDServer
                 if (CommandManager.IsInputMatchCmd(commands[1], outsideAction) && SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.GoOut) && !SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.GoOut)._close.interactable)
                     return ExecuteGoOutAction();
 
-                return ErrorMessages.CMD_SPECIFIC_BUSY;
+                return MsgManager.CMD_SPECIFIC_BUSY;
             }
             if (commands.Length > 3 && (commands[3] == "f" || commands[3] == "force"))
                 isForceAction = true;
@@ -335,7 +335,7 @@ namespace NeedyGirlCMDServer
                     return "<3";
                 }
             }
-            return ErrorMessages.CMD_SPECIFIC_BUSY;
+            return MsgManager.CMD_SPECIFIC_BUSY;
         }
 
         static void ExecuteSpecialSex(WindowManager windowManager, EventManager eventManager)
@@ -426,7 +426,7 @@ namespace NeedyGirlCMDServer
             }
             if (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable || !eventManager.shortcuts.interactable)
             {
-                return ErrorMessages.CMD_SPECIFIC_BUSY;
+                return MsgManager.CMD_SPECIFIC_BUSY;
             }
             if (eventManager.nowEnding != NGO.EndingType.Ending_None)
             {

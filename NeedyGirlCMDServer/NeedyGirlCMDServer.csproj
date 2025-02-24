@@ -93,7 +93,7 @@
     <Compile Include="CommandManager.cs" />
     <Compile Include="ConnectionManager.cs" />
     <Compile Include="DebugCommands.cs" />
-    <Compile Include="ErrorMessages.cs" />
+    <Compile Include="MsgManager.cs" />
     <Compile Include="GameCommands.cs" />
     <Compile Include="GamePatcher.cs" />
     <Compile Include="InfoCommands.cs" />
@@ -106,6 +106,11 @@
     <Compile Include="NotifCommands.cs" />
     <Compile Include="OptionsCommands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
     <Compile Include="StreamCommands.cs" />
     <Compile Include="TextReaderCommands.cs" />
     <Compile Include="WebcamCommands.cs" />
@@ -115,6 +120,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TweetCommands.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource1.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

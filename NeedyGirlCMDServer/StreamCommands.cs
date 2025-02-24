@@ -33,7 +33,7 @@ namespace NeedyGirlCMDServer
 
             if (isBootActive)
             {
-                if (!SingletonMonoBehaviour<Boot>.Instance.Login.interactable) return ErrorMessages.CMD_SPECIFIC_BUSY;
+                if (!SingletonMonoBehaviour<Boot>.Instance.Login.interactable) return MsgManager.CMD_SPECIFIC_BUSY;
                 if (commands.Length == 1) return OpenStreamGen();
                 if (CommandManager.IsInputMatchCmd(commands[1], streamGenAdd))
                 {
@@ -48,7 +48,7 @@ namespace NeedyGirlCMDServer
                 {
                     var anim = "";
                     var text = "";
-                    if (commands.Length < 3) return ErrorMessages.CMD_MISSING_ARGS;
+                    if (commands.Length < 3) return MsgManager.CMD_MISSING_ARGS;
                     var others = seperator.Split(commands[2].Trim(), 3);
                     if (!int.TryParse(others[0], out int idx))
                     {
@@ -60,7 +60,7 @@ namespace NeedyGirlCMDServer
                 }
                 if (CommandManager.IsInputMatchCmd(commands[1], streamGenDelete))
                 {
-                    if (commands.Length < 3) return ErrorMessages.CMD_MISSING_ARGS;
+                    if (commands.Length < 3) return MsgManager.CMD_MISSING_ARGS;
                     var others = seperator.Split(commands[2].Trim(), 2);
                     if (!int.TryParse(others[0], out int idx))
                     {
@@ -70,7 +70,7 @@ namespace NeedyGirlCMDServer
                 }
                 if (CommandManager.IsInputMatchCmd(commands[1], streamSpeed))
                 {
-                    if (commands.Length < 3) return ErrorMessages.CMD_MISSING_ARGS;
+                    if (commands.Length < 3) return MsgManager.CMD_MISSING_ARGS;
                     var others = seperator.Split(commands[2].Trim(), 2);
                     if (!int.TryParse(others[0], out int speed))
                     {
@@ -87,7 +87,7 @@ namespace NeedyGirlCMDServer
             {
                 if (!isDataActive)
                 {
-                    return ErrorMessages.CMD_SPECIFIC_BUSY;
+                    return MsgManager.CMD_SPECIFIC_BUSY;
                 }
                 live = SingletonMonoBehaviour<Live>.Instance;
                 if (!live) return "No stream is currently active.";
@@ -97,7 +97,7 @@ namespace NeedyGirlCMDServer
                 }
                 if (CommandManager.IsInputMatchCmd(commands[1], streamSpeed))
                 {
-                    if (commands.Length < 3) return ErrorMessages.CMD_MISSING_ARGS;
+                    if (commands.Length < 3) return MsgManager.CMD_MISSING_ARGS;
                     var others = seperator.Split(commands[2].Trim(), 2);
                     if (!int.TryParse(others[0], out int speed))
                     {
@@ -139,7 +139,7 @@ namespace NeedyGirlCMDServer
                 }
             }
 
-            return ErrorMessages.INVALID_CMD;
+            return MsgManager.INVALID_CMD;
         }
         internal static string SkipStream(Live live)
         {

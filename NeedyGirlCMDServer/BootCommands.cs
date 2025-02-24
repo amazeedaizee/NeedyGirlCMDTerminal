@@ -21,7 +21,7 @@ namespace NeedyGirlCMDServer
             }
             if (commands.Length < 2)
             {
-                return ErrorMessages.CMD_WRONG_ARGS;
+                return MsgManager.CMD_WRONG_ARGS;
             }
             boot = SingletonMonoBehaviour<Boot>.Instance;
             if (!boot.Caution.interactable)
@@ -35,7 +35,7 @@ namespace NeedyGirlCMDServer
             else
             {
 
-                return ErrorMessages.INVALID_CMD;
+                return MsgManager.INVALID_CMD;
             }
             return "";
         }
@@ -49,7 +49,7 @@ namespace NeedyGirlCMDServer
             string[] commands = input.Split(seperator, 4);
             if (commands.Length < 2)
             {
-                return ErrorMessages.CMD_WRONG_ARGS;
+                return MsgManager.CMD_WRONG_ARGS;
             }
             if (boot.Caution.interactable)
             {

@@ -44,7 +44,7 @@ namespace NeedyGirlCMDServer
                         {
                             if ((SceneManager.GetActiveScene().name == "BiosToLoad" && !SingletonMonoBehaviour<Boot>.Instance.Login.interactable) ||
                                 (SceneManager.GetActiveScene().name != "ChooseZip" && SceneManager.GetActiveScene().name != "BiosToLoad" && !SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable))
-                                return ErrorMessages.CMD_SPECIFIC_BUSY;
+                                return MsgManager.CMD_SPECIFIC_BUSY;
                             SingletonMonoBehaviour<WindowManager>.Instance.NewWindow(AppType.ControlPanel);
                         }
                         else SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.ControlPanel).Touched();
@@ -66,7 +66,7 @@ namespace NeedyGirlCMDServer
                     }
                     return "";
                 }
-                return ErrorMessages.CMD_WRONG_ARGS;
+                return MsgManager.CMD_WRONG_ARGS;
             }
             if (CommandManager.IsInputMatchCmd(commands[1], optionLang))
             {
@@ -86,7 +86,7 @@ namespace NeedyGirlCMDServer
             }
             else
             {
-                return ErrorMessages.INVALID_CMD;
+                return MsgManager.INVALID_CMD;
             }
         }
 

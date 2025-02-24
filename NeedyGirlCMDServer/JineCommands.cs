@@ -28,14 +28,14 @@ namespace NeedyGirlCMDServer
             bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Jine);
             if (!isDataActive || (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable && !isWindowActive && !isJineRequiredForEnd && !isHorror))
             {
-                return ErrorMessages.CMD_SPECIFIC_BUSY;
+                return MsgManager.CMD_SPECIFIC_BUSY;
             }
             if (commands.Length == 1)
             {
                 if (!isWindowActive)
                 {
                     if (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable)
-                        return ErrorMessages.CMD_SPECIFIC_BUSY;
+                        return MsgManager.CMD_SPECIFIC_BUSY;
                     SingletonMonoBehaviour<WindowManager>.Instance.NewWindow(AppType.Jine);
                 }
                 else SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.Jine).Touched();
@@ -90,7 +90,7 @@ namespace NeedyGirlCMDServer
                 if (count[0] == "count")
                     return HistoryCount();
             }
-            return ErrorMessages.INVALID_CMD;
+            return MsgManager.INVALID_CMD;
         }
 
         internal static string HistoryCount()

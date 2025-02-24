@@ -27,7 +27,7 @@ namespace NeedyGirlCMDServer
                 {
                     if ((SceneManager.GetActiveScene().name == "BiosToLoad" && !SingletonMonoBehaviour<Boot>.Instance.Login.interactable) ||
     (SceneManager.GetActiveScene().name != "ChooseZip" && SceneManager.GetActiveScene().name != "BiosToLoad" && !SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable))
-                        return ErrorMessages.CMD_SPECIFIC_BUSY;
+                        return MsgManager.CMD_SPECIFIC_BUSY;
                     SingletonMonoBehaviour<WindowManager>.Instance.NewWindow(AppType.MyPicture);
                 }
                 else SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.MyPicture).Touched();
@@ -75,7 +75,7 @@ namespace NeedyGirlCMDServer
                 }
 
             }
-            return ErrorMessages.INVALID_CMD;
+            return MsgManager.INVALID_CMD;
         }
         internal static string ViewPicture(string picName)
         {

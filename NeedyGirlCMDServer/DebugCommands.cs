@@ -47,7 +47,7 @@ namespace NeedyGirlCMDServer
             }
             if (commands.Length < 3)
             {
-                return ErrorMessages.CMD_WRONG_ARGS;
+                return MsgManager.CMD_WRONG_ARGS;
             }
             if (activeScene == "Window2DTestScene")
             {
@@ -68,7 +68,7 @@ namespace NeedyGirlCMDServer
             {
                 if (commands.Length < 4)
                 {
-                    return ErrorMessages.CMD_WRONG_ARGS;
+                    return MsgManager.CMD_WRONG_ARGS;
                 }
                 else return ChangeStatusToNumber(commands);
             }

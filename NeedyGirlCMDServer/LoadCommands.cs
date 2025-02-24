@@ -16,7 +16,7 @@ namespace NeedyGirlCMDServer
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
             if (!isDataActive || settings.saveNumber < 0 || settings.saveNumber > 3 || !SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable)
             {
-                return ErrorMessages.CMD_SPECIFIC_BUSY;
+                return MsgManager.CMD_SPECIFIC_BUSY;
             }
             day = SingletonMonoBehaviour<StatusManager>.Instance.GetStatus(StatusType.DayIndex);
             user = settings.saveNumber;
@@ -40,7 +40,7 @@ namespace NeedyGirlCMDServer
             var seperator = new Regex(@"\s+");
             string[] commands = seperator.Split(input, 4);
             if (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable)
-                return ErrorMessages.CMD_SPECIFIC_BUSY;
+                return MsgManager.CMD_SPECIFIC_BUSY;
             if (commands.Length == 1)
             {
                 bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Jine);

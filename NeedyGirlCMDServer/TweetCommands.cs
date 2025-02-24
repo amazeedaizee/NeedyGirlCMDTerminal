@@ -25,7 +25,7 @@ namespace NeedyGirlCMDServer
             bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Poketter);
             if (!isDataActive || (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable && !isWindowActive))
             {
-                return ErrorMessages.CMD_SPECIFIC_BUSY;
+                return MsgManager.CMD_SPECIFIC_BUSY;
             }
             if (commands.Length == 1)
             {
@@ -56,7 +56,7 @@ namespace NeedyGirlCMDServer
             }
             if (commands.Length < 3)
             {
-                return ErrorMessages.CMD_WRONG_ARGS;
+                return MsgManager.CMD_WRONG_ARGS;
             }
             if (CommandManager.IsInputMatchCmd(commands[1], tweetRead))
             {
@@ -67,7 +67,7 @@ namespace NeedyGirlCMDServer
             {
                 if (SingletonMonoBehaviour<EventManager>.Instance.nowEnding == NGO.EndingType.Ending_Happy && SingletonMonoBehaviour<WindowManager>.Instance.isAppActive(AppType.Uratter))
                     return FollowUser(commands[2]);
-                return ErrorMessages.CMD_SPECIFIC_BUSY;
+                return MsgManager.CMD_SPECIFIC_BUSY;
             }
             if (commands[1] == "history")
             {
@@ -75,7 +75,7 @@ namespace NeedyGirlCMDServer
                 if (count[0] == "count")
                     return HistoryCount();
             }
-            return ErrorMessages.INVALID_CMD;
+            return MsgManager.INVALID_CMD;
         }
 
         internal static string HistoryCount()

@@ -12,11 +12,11 @@ namespace NeedyGirlCMDServer
             Settings settings = SingletonMonoBehaviour<Settings>.instance;
             if (commands.Length != 2)
             {
-                return ErrorMessages.CMD_WRONG_ARGS;
+                return MsgManager.CMD_WRONG_ARGS;
             }
             if (SingletonMonoBehaviour<EndingOmake>.Instance == null)
             {
-                return ErrorMessages.CMD_SPECIFIC_BUSY;
+                return MsgManager.CMD_SPECIFIC_BUSY;
             }
             else if (!int.TryParse(commands[1], out int num))
             {
