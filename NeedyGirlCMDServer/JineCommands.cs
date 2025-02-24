@@ -22,11 +22,12 @@ namespace NeedyGirlCMDServer
             var seperator = new Regex(@"\s+");
             string[] commands = seperator.Split(input, 3);
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
+            if (!isDataActive) return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             EndingType currentEnding = SingletonMonoBehaviour<EventManager>.Instance.nowEnding;
             bool isHorror = SingletonMonoBehaviour<EventManager>.Instance.isHorror;
             bool isJineRequiredForEnd = currentEnding == EndingType.Ending_Work || currentEnding == EndingType.Ending_Needy || currentEnding == EndingType.Ending_Normal || currentEnding == EndingType.Ending_Yarisute;
             bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Jine);
-            if (!isDataActive || (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable && !isWindowActive && !isJineRequiredForEnd && !isHorror))
+            if (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable && !isWindowActive && !isJineRequiredForEnd && !isHorror)
             {
                 return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             }
