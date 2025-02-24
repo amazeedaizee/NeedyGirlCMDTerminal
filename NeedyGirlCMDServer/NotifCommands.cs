@@ -13,13 +13,13 @@ namespace NeedyGirlCMDServer
             Notification notif;
             RectTransform notifList;
             int notifIndex;
-            var idea = SingletonMonoBehaviour<NetaManager>.Instance._chipGet;
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
-            notifList = SingletonMonoBehaviour<NotificationManager>.Instance._notiferParent;
             if (!isDataActive)
             {
                 return ErrorMessages.CMD_SPECIFIC_BUSY;
             }
+            var idea = SingletonMonoBehaviour<NetaManager>.Instance._chipGet;
+            notifList = SingletonMonoBehaviour<NotificationManager>.Instance._notiferParent;
             if (notifList.childCount == 0 && idea._cover.alpha == 0f)
             {
                 return "No notifications are active.";

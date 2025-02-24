@@ -62,7 +62,7 @@ namespace NeedyGirlCMDServer
             if (user == 0 && boot.Data0.gameObject.activeInHierarchy)
             {
                 adieu = new();
-                adieu._submitButton.onClick.Invoke();
+                adieu.OnSubmit();
                 return "...";
             }
             if (!(user > 0 && user < 4) && !boot.ChooseDay.interactable)

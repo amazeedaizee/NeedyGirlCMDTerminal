@@ -81,7 +81,7 @@ namespace NeedyGirlCMDServer
                 }
                 if (dayPart > 2 && eventManager.nowEnding != NGO.EndingType.Ending_Ideon && eventManager.nowEnding != NGO.EndingType.Ending_Sucide)
                     return "It's currently too late to stream.";
-                else if (dayPart < 2)
+                else if (dayPart < 2 && !(eventManager.isHorror && horrorShortcuts.interactable))
                     return "You can only stream at night.";
                 return ExecuteStream(commands, eventManager, horrorShortcuts);
             }
@@ -384,12 +384,7 @@ namespace NeedyGirlCMDServer
                         return "...";
                     }
                 }
-                else if (eventManager.isGedatsu)
-                {
-                    eventManager.nowEnding = NGO.EndingType.Ending_Kyouso;
-                    eventManager.AddEvent<Action_HaishinStart>();
-                    return "";
-                }
+
                 else if (eventManager.nowEnding == NGO.EndingType.Ending_Ideon && SingletonMonoBehaviour<WindowManager>.Instance.TaskBarList.Exists(t => t.window.appType == AppType.Ideon_taiki))
                 {
                     eventManager.AddEvent<HaishinStart_Ideon>();
@@ -398,6 +393,14 @@ namespace NeedyGirlCMDServer
                 else if (eventManager.isHorror && horrorShortcuts.interactable)
                 {
                     SingletonMonoBehaviour<WindowManager>.Instance.NewWindow(AppType.Hakkyo);
+                    return "";
+                }
+                else if (eventManager.kyuusiCount > 0)
+                    return "Not right now...";
+                else if (eventManager.isGedatsu)
+                {
+                    eventManager.nowEnding = NGO.EndingType.Ending_Kyouso;
+                    eventManager.AddEvent<Action_HaishinStart>();
                     return "";
                 }
                 else
@@ -439,6 +442,8 @@ namespace NeedyGirlCMDServer
             var usedStream = netaManager.usedAlpha.Find(s => s.alphaType == streamTopic && s.level == level);
             var gotStream = netaManager.GotAlpha.Find(s => s.alphaType == streamTopic && s.level == level);
             var highestStream = netaManager.GotAlpha.FindLast(s => s.alphaType == streamTopic);
+            if (eventManager.kyuusiCount > 0)
+                return "Not right now...";
             if (eventManager.isGedatsu)
             {
                 eventManager.nowEnding = NGO.EndingType.Ending_Kyouso;
@@ -461,6 +466,7 @@ namespace NeedyGirlCMDServer
             {
                 return "This isn't the latest milestone stream!";
             }
+
             SingletonMonoBehaviour<EventManager>.Instance.StartHaishin(streamTopic, level, BetaType.none);
             return "";
         }
@@ -504,7 +510,7 @@ namespace NeedyGirlCMDServer
             return streamList;
         }
 
-        static AlphaType GetStreamTopic(string topic)
+        internal static AlphaType GetStreamTopic(string topic)
         {
             if (CommandManager.IsInputMatchCmd(topic, streamChat))
                 return AlphaType.Zatudan;

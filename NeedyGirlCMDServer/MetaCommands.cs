@@ -1,4 +1,5 @@
 ﻿using ngov3;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,6 +20,30 @@ namespace NeedyGirlCMDServer
             }
             if (!GameObject.Find("EndingCover").transform.Find("jimaku").gameObject.activeInHierarchy)
             {
+                string[] streamAction = { "stream", "s", "1" };
+                var seperator = new Regex(@"\s+");
+                var input = seperator.Split(command, 4);
+                if (input.Length > 2)
+                {
+                    if (CommandManager.IsInputMatchCmd(input[0], CommandManager.actionCommand))
+                    {
+                        if (CommandManager.IsInputMatchCmd(input[1], streamAction))
+                        {
+                            if (ActionCommands.GetStreamTopic(input[2]) != AlphaType.none)
+                            {
+                                // dud stream
+                                if (SingletonMonoBehaviour<EventManager>.Instance.shortcuts.interactable)
+                                {
+                                    SingletonMonoBehaviour<EventManager>.Instance.StartHaishin(AlphaType.first, 1, BetaType.none);
+                                    return "";
+                                }
+
+
+                            }
+                        }
+                    }
+                }
+
                 return "Can't do this command now.";
             }
             try

@@ -18,7 +18,7 @@ namespace NeedyGirlCMDServer
                 return ErrorMessages.CMD_SPECIFIC_BUSY;
             }
 
-            if (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable)
+            if (SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable && SingletonMonoBehaviour<EventManager>.Instance.nowEnding != EndingType.Ending_Completed)
             {
                 bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.TaskManager);
                 if (!isWindowActive)

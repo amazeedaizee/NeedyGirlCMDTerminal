@@ -56,7 +56,7 @@ namespace NeedyGirlCMDServer
                     }
                     if (commands.Length > 3) anim = others[1];
                     if (commands.Length == 5) text = others[2];
-                    return EditKey(idx, anim, text);
+                    return EditKey(idx - 1, anim, text);
                 }
                 if (CommandManager.IsInputMatchCmd(commands[1], streamGenDelete))
                 {
@@ -66,7 +66,7 @@ namespace NeedyGirlCMDServer
                     {
                         return "index number must be a number.";
                     }
-                    return RemoveKey(idx);
+                    return RemoveKey(idx - 1);
                 }
                 if (CommandManager.IsInputMatchCmd(commands[1], streamSpeed))
                 {
@@ -122,7 +122,7 @@ namespace NeedyGirlCMDServer
                         {
                             return "Comment number must be a number.";
                         }
-                        return SelectComment(live, selectedChat);
+                        return SelectComment(live, selectedChat - 1);
                     }
                     if (CommandManager.IsInputMatchCmd(others[0], commentRead))
                     {
@@ -134,7 +134,7 @@ namespace NeedyGirlCMDServer
                         {
                             return "Comment number must be a number.";
                         }
-                        return ReadComment(live, readChat);
+                        return ReadComment(live, readChat - 1);
                     }
                 }
             }
@@ -173,12 +173,20 @@ namespace NeedyGirlCMDServer
             {
                 return "Number exceeds the amount of chat comments right now.";
             }
+            if (input < 0)
+            {
+                return "Number is out of range.";
+            }
             if (!live._selectableComments[input].isHiroizumi)
             {
                 playing = live._selectableComments[input].playing;
-                if (playing.color != SuperchatType.White)
+                if (playing.henji != "")
                 {
                     live._selectableComments[input].hirou(playing);
+                }
+                else if (SingletonMonoBehaviour<EventManager>.Instance.nowEnding == NGO.EndingType.Ending_KowaiInternet)
+                {
+                    live._selectableComments[input].highlighted();
                 }
                 else
                 {
@@ -195,6 +203,10 @@ namespace NeedyGirlCMDServer
             {
                 return "Number exceeds the amount of chat comments right now.";
             }
+            if (input < 0)
+            {
+                return "Number is out of range.";
+            }
             if (live._selectableComments[input].isDeleted)
             {
                 return "This comment has been deleted.";
@@ -208,10 +220,10 @@ namespace NeedyGirlCMDServer
             string message;
             Playing playing;
             LiveComment comment = null;
-            for (int i = 0; i < live._selectableComments.Count; i++)
+            for (int i = live._selectableComments.Count - 1; i >= 0; i--)
             {
                 playing = live._selectableComments[i].playing;
-                if (playing.color != SuperchatType.White)
+                if (playing.henji != "")
                 {
                     comment = live._selectableComments[i];
                     break;
@@ -233,10 +245,10 @@ namespace NeedyGirlCMDServer
             {
                 return "Stream is currently read-only.";
             }
-            for (int i = 0; i < live._selectableComments.Count; i++)
+            for (int i = live._selectableComments.Count - 1; i >= 0; i--)
             {
                 playing = live._selectableComments[i].playing;
-                if (playing.color != SuperchatType.White && !live._selectableComments[i].isHiroizumi)
+                if (playing.henji != "" && !live._selectableComments[i].isHiroizumi)
                 {
                     comment = live._selectableComments[i];
                     break;
