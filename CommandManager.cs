@@ -67,13 +67,13 @@ namespace NeedyGirlCMDTerminal
             var input = Console.In;
             state = CommandState.AwaitingInput;
             ConnectionManager.ns.ReadTimeout = 4;
-            ConnectionManager.pipe.Client.Poll(5, System.Net.Sockets.SelectMode.SelectWrite);
-            if (!ConnectionManager.pipe.Connected)
+            if (!ConnectionManager.pipe.Client.Poll(5, System.Net.Sockets.SelectMode.SelectWrite))
             {
                 ConnectionManager.isRunning = false;
             }
             if (!ConnectionManager.isRunning)
                 return;
+            ConnectionManager.ns.ReadTimeout = Timeout.Infinite;
             Task.Run(ExitCommandWrite);
             Task.Run(ReceiveCommand);
             Console.Write(P_CHAN_INPUT);
@@ -130,8 +130,7 @@ namespace NeedyGirlCMDTerminal
                 }
             }
             ConnectionManager.ns.ReadTimeout = 4;
-            ConnectionManager.pipe.Client.Poll(5, System.Net.Sockets.SelectMode.SelectRead);
-            if (!ConnectionManager.pipe.Connected)
+            if (!ConnectionManager.pipe.Client.Poll(5, System.Net.Sockets.SelectMode.SelectRead))
             {
                 ConnectionManager.isRunning = false;
                 return;
