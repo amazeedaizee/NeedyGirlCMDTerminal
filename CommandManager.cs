@@ -66,14 +66,16 @@ namespace NeedyGirlCMDTerminal
             string command;
             var input = Console.In;
             state = CommandState.AwaitingInput;
-            ConnectionManager.ns.ReadTimeout = 4;
-            if (!ConnectionManager.pipe.Client.Poll(5, System.Net.Sockets.SelectMode.SelectWrite))
-            {
-                ConnectionManager.isRunning = false;
-            }
             if (!ConnectionManager.isRunning)
                 return;
-            ConnectionManager.ns.ReadTimeout = Timeout.Infinite;
+            ConnectionManager.ns.WriteTimeout = 1;
+            ConnectionManager.pipe.Client.Poll(-1, System.Net.Sockets.SelectMode.SelectWrite);
+            if (!ConnectionManager.pipe.Connected)
+            {
+                ConnectionManager.isRunning = false;
+                return;
+            }
+            ConnectionManager.ns.WriteTimeout = Timeout.Infinite;
             Task.Run(ExitCommandWrite);
             Task.Run(ReceiveCommand);
             Console.Write(P_CHAN_INPUT);
@@ -129,12 +131,6 @@ namespace NeedyGirlCMDTerminal
                     return;
                 }
             }
-            ConnectionManager.ns.ReadTimeout = 4;
-            if (!ConnectionManager.pipe.Client.Poll(5, System.Net.Sockets.SelectMode.SelectRead))
-            {
-                ConnectionManager.isRunning = false;
-                return;
-            }
             Task.Run(ExitCommandRead);
             while ((message = await streamReader.ReadLineAsync()) != ">")
             {
@@ -185,7 +181,6 @@ namespace NeedyGirlCMDTerminal
         }
         internal static async Task ExitCommandWrite()
         {
-
             await Task.WhenAny(Task.Delay(TEN_MINUTES), CheckIfAwaitingInput());
             if (!ConnectionManager.isRunning)
                 return;
@@ -207,15 +202,15 @@ namespace NeedyGirlCMDTerminal
 
         internal static async Task ExitCommandRead()
         {
-            ConnectionManager.ns.ReadTimeout = 5;
-            await Task.WhenAny(Task.Delay(4), CheckIfReadingInput());
+            ConnectionManager.ns.ReadTimeout = 2;
+            await Task.WhenAny(Task.Delay(1), CheckIfReadingInput());
             if (!ConnectionManager.isRunning)
                 return;
             if (state != CommandState.ReadingInput)
                 return;
-            if (ConnectionManager.pipe.Client.Poll(1, System.Net.Sockets.SelectMode.SelectRead))
+            ConnectionManager.pipe.Client.Poll(1, System.Net.Sockets.SelectMode.SelectRead);
+            if (!ConnectionManager.pipe.Connected)
             {
-                Console.WriteLine("\n");
                 Console.WriteLine(READ_OUT_MSG);
                 state = CommandState.TimedOut;
             }
