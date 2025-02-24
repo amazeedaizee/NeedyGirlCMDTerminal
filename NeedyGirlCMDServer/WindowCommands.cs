@@ -1,4 +1,5 @@
-﻿using ngov3;
+﻿using NGO;
+using ngov3;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -39,14 +40,22 @@ namespace NeedyGirlCMDServer
             {
                 return ClickCancelButton(window);
             }
+            if (window.appType == AppType.Jine)
+            {
+                EndingType currentEnding = SingletonMonoBehaviour<EventManager>.Instance.nowEnding;
+                bool isHorror = SingletonMonoBehaviour<EventManager>.Instance.isHorror;
+                bool isJineRequiredForEnd = currentEnding == EndingType.Ending_Work || currentEnding == EndingType.Ending_Needy || currentEnding == EndingType.Ending_Normal || currentEnding == EndingType.Ending_Yarisute;
+                if (isJineRequiredForEnd || isHorror)
+                    return "Can't modify the Jine window now.";
+            }
             ChangeWindowState(window, commands[0]);
             return "";
         }
         internal static string SelectWindowCommand(string input)
         {
             IWindow window = null;
-            char[] seperator = { ' ' };
-            string[] commands = input.Split(seperator, 2);
+            var seperator = new Regex(@"\s+");
+            string[] commands = seperator.Split(input, 2);
             if (commands[0] == "toggleall")
             {
                 ToggleWindows();
@@ -68,18 +77,20 @@ namespace NeedyGirlCMDServer
             }
             else if (int.TryParse(commands[0], out int index))
             {
-                if (commands.Length > 2)
+                if (commands.Length > 1)
                 {
                     window = GetWindowByIndex(index);
                 }
                 else
                 {
                     SwitchWindow(index - 1);
+                    return "";
                 }
             }
             if (window != null && commands.Length > 1)
             {
-                return SelectWindowCommand(commands[1], window);
+                string com = commands[1];
+                return SelectWindowCommand(com, window);
             }
             else if (window != null && commands.Length == 1)
                 return "";
@@ -157,6 +168,7 @@ namespace NeedyGirlCMDServer
         {
             Transform transform;
             Button okButton;
+            Initializer.logger.LogInfo("AppType: " + window.appType.ToString());
             //if (window.appType == AppType.TimePassDialog)
             //{
             //    try
@@ -171,6 +183,25 @@ namespace NeedyGirlCMDServer
                 try
                 {
                     window.nakamiApp.transform.Find("Body/Stuff/ButtonRoot/ConfirmButton").GetComponent<Button>().onClick.Invoke();
+                    return "";
+                }
+                catch { return "This command is invalid for this type of window."; }
+            }
+            if (window.appType == AppType.Uratter)
+            {
+                try
+                {
+                    var ame = SingletonMonoBehaviour<EndingHappyUraUra>.Instance._uraUraAccount;
+                    var follow = SingletonMonoBehaviour<EndingHappyUraUra>.Instance._followRequest;
+                    var followers = SingletonMonoBehaviour<EndingHappyUraUra>.Instance._followers;
+                    if (followers.activeInHierarchy)
+                    {
+                        ame.onClick.Invoke();
+                    }
+                    else
+                    {
+                        follow.onClick.Invoke();
+                    }
                     return "";
                 }
                 catch { return "This command is invalid for this type of window."; }
@@ -227,6 +258,7 @@ namespace NeedyGirlCMDServer
         internal static string ClickCancelButton(IWindow window)
         {
             Button cancelButton;
+            Initializer.logger.LogInfo("AppType: " + window.appType.ToString());
             //if (window.appType == AppType.TimePassDialog)
             //{
             //    try
@@ -286,6 +318,7 @@ namespace NeedyGirlCMDServer
             var taskList = SingletonMonoBehaviour<WindowManager>.Instance.TaskBarList;
             try
             {
+                input--;
                 if (input < 0)
                 {
                     input = 0;
@@ -347,16 +380,17 @@ namespace NeedyGirlCMDServer
 
         internal static bool ChangeWindowState(IWindow window, string state)
         {
+
             try
             {
-                if (CommandManager.IsInputMatchCmd(state, windowMin))
+                if (CommandManager.IsInputMatchCmd(state, windowMin) && window.windowState != WindowState.minimized)
                 {
                     if (!window._minimize.interactable)
                         return false;
                     window._minimize.onClick.Invoke();
                     return true;
                 }
-                if (CommandManager.IsInputMatchCmd(state, windowMax))
+                if (CommandManager.IsInputMatchCmd(state, windowMax) && window.windowState != WindowState.maximized)
                 {
                     if (!window._maximize.interactable)
                         return false;
