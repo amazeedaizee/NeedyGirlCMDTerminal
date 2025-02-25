@@ -17,7 +17,7 @@ namespace NeedyGirlCMDTerminal
     {
         const int TEN_MINUTES = 60000 * 10;
         const string P_CHAN_INPUT = @"NGO:\Users\P> ";
-        const string TIME_OUT_MSG = "Disconnected due to idling! Press the Enter/Return key to continue.\n";
+        const string TIME_OUT_MSG = "Disconnected due to idling!\n";
         const string READ_OUT_MSG = "Disconnected due to no response from the server!\n";
         static string _currentCommand;
         static ConsoleKey restartKey;

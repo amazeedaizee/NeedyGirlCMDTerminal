@@ -62,6 +62,7 @@
     <Compile Remove="NeedyGirlCMDServer\obj\Release\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
     <Compile Remove="NeedyGirlCMDServer\OptionsCommands.cs" />
     <Compile Remove="NeedyGirlCMDServer\Properties\AssemblyInfo.cs" />
+    <Compile Remove="NeedyGirlCMDServer\Resource.Designer.cs" />
     <Compile Remove="NeedyGirlCMDServer\StreamCommands.cs" />
     <Compile Remove="NeedyGirlCMDServer\TextReaderCommands.cs" />
     <Compile Remove="NeedyGirlCMDServer\TweetCommands.cs" />
@@ -71,6 +72,10 @@
     <Compile Remove="NeedyGirlCMDServer\ZipCommands.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Remove="NeedyGirlCMDServer\Resource.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="NeedyGirlCMDServer\serv_messages.json" />
     <None Remove="Resources\angelASCIIart.txt" />
     <None Remove="Resources\Help_action_main.txt" />
     <None Remove="Resources\Help_action_parent.txt" />

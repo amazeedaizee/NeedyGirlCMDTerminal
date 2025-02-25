@@ -1,11 +1,12 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Reflection;
 
 namespace NeedyGirlCMDTerminal
 {
     internal class TableOfContents
     {
         const string HELP_NOT_FOUND = "Could not find help page for this command!";
-
+        const string resRoot = "NeedyGirlCMDTerminal.Resources.";
         readonly static string[] helpCommand = { "help" };
         readonly static string[] parentCommand = { "parent" };
         readonly static string[] commandCommand = { "command" };
@@ -35,114 +36,155 @@ namespace NeedyGirlCMDTerminal
 
         internal static string GetHelpPage(string[] commands)
         {
+            var ass = Assembly.GetExecutingAssembly();
+            Stream? stream = null;
             string page = HELP_NOT_FOUND;
+            //Console.Write(string.Join('|', ass.GetManifestResourceNames()));
             if (commands[0] != helpCommand[0])
             {
                 return "";
             }
             if (commands.Length == 1)
             {
-                page = Resource.Help_help;
+                stream = ass.GetManifestResourceStream(resRoot + "Help_help.txt");
+                // page = Resource.Help_help;
             }
             else if (IsInputMatchCmd(commands[1], commandCommand))
             {
-                page = Resource.Help_help_command;
+                stream = ass.GetManifestResourceStream(resRoot + "Help_help_command.txt");
+                // page = Resource.Help_help_command;
             }
             else if (IsInputMatchCmd(commands[1], actionCommand))
             {
                 if (commands.Length == 3 && IsInputMatchCmd(commands[2], parentCommand))
                 {
-                    page = Resource.Help_action_parent;
+                    stream = ass.GetManifestResourceStream(resRoot + "Help_action_parent.txt");
+                    //page = Resource.Help_action_parent;
                 }
-                else page = Resource.Help_action_main;
+                else
+                {
+                    stream = ass.GetManifestResourceStream(resRoot + "Help_action_main.txt");
+                    // page = Resource.Help_action_main;
+                }
             }
             else if (IsInputMatchCmd(commands[1], cautionCommand))
             {
-                page = Resource.Help_caution;
+                stream = ass.GetManifestResourceStream(resRoot + "Help_caution.txt");
+                // page = Resource.Help_caution;
             }
             else if (IsInputMatchCmd(commands[1], cutCommand))
             {
-                page = Resource.Help_cut;
+                stream = ass.GetManifestResourceStream(resRoot + "Help_cut.txt");
+                // page = Resource.Help_cut;
             }
             else if (IsInputMatchCmd(commands[1], debugCommand))
             {
-                page = Resource.Help_debug;
+                stream = ass.GetManifestResourceStream(resRoot + "Help_debug.txt");
+                // page = Resource.Help_debug;
             }
             else if (IsInputMatchCmd(commands[1], endingCommand))
             {
-                page = Resource.Help_ending;
+                stream = ass.GetManifestResourceStream(resRoot + "Help_ending.txt");
+                // page = Resource.Help_ending;
             }
             else if (IsInputMatchCmd(commands[1], infoCommand))
             {
-                page = Resource.Help_info;
+                stream = ass.GetManifestResourceStream(resRoot + "Help_info.txt");
+                // page = Resource.Help_info;
             }
             else if (IsInputMatchCmd(commands[1], jineCommand))
             {
-                page = Resource.Help_jine;
+                stream = ass.GetManifestResourceStream(resRoot + "Help_jine.txt");
+                // page = Resource.Help_jine;
             }
             else if (IsInputMatchCmd(commands[1], loadCommand))
             {
-                page = Resource.Help_load;
+                stream = ass.GetManifestResourceStream(resRoot + "Help_load.txt");
+                // page = Resource.Help_load;
             }
             else if (IsInputMatchCmd(commands[1], loginCommand))
             {
-                page = Resource.Help_login;
+                stream = ass.GetManifestResourceStream(resRoot + "Help_login.txt");
+                // page = Resource.Help_login;
             }
             else if (IsInputMatchCmd(commands[1], notifCommand))
             {
-                page = Resource.Help_notif;
+                stream = ass.GetManifestResourceStream(resRoot + "Help_notif.txt");
+                // page = Resource.Help_notif;
             }
             else if (IsInputMatchCmd(commands[1], openCommand))
             {
-                page = (Resource.Help_open);
+                stream = ass.GetManifestResourceStream(resRoot + "Help_open.txt");
+                //page = (Resource.Help_open);
             }
             else if (IsInputMatchCmd(commands[1], optionsCommand))
             {
-                page = (Resource.Help_options);
+                stream = ass.GetManifestResourceStream(resRoot + "Help_options.txt");
+                //page = (Resource.Help_options);
             }
             else if (IsInputMatchCmd(commands[1], myPicCommand))
             {
-                page = Resource.Help_pic;
+                stream = ass.GetManifestResourceStream(resRoot + "Help_pic.txt");
+                //page = Resource.Help_pic;
             }
             else if (IsInputMatchCmd(commands[1], readCommand))
             {
-                page = (Resource.Help_read);
+                stream = ass.GetManifestResourceStream(resRoot + "Help_read.txt");
+                //page = (Resource.Help_read);
             }
             else if (IsInputMatchCmd(commands[1], reloadCommand))
             {
-                page = (Resource.Help_reload);
+                stream = ass.GetManifestResourceStream(resRoot + "Help_reload.txt");
+                //page = (Resource.Help_reload);
             }
             else if (IsInputMatchCmd(commands[1], resetCommand))
             {
-                page = (Resource.Help_reset);
+                stream = ass.GetManifestResourceStream(resRoot + "Help_reset.txt");
+                // page = (Resource.Help_reset);
             }
             else if (IsInputMatchCmd(commands[1], shutdownCommand))
             {
-                page = (Resource.Help_shutdown);
+                stream = ass.GetManifestResourceStream(resRoot + "Help_shutdown.txt");
+                //page = (Resource.Help_shutdown);
             }
             else if (IsInputMatchCmd(commands[1], streamCommand))
             {
-                page = (Resource.Help_stream);
+                stream = ass.GetManifestResourceStream(resRoot + "Help_stream.txt");
+                //page = (Resource.Help_stream);
             }
             else if (IsInputMatchCmd(commands[1], tweetCommand))
             {
-                page = Resource.Help_tweet;
+                stream = ass.GetManifestResourceStream(resRoot + "Help_tweet.txt");
+                // page = Resource.Help_tweet;
             }
             else if (IsInputMatchCmd(commands[1], unzipCommand))
             {
-                page = Resource.Help_unzip;
+                stream = ass.GetManifestResourceStream(resRoot + "Help_unzip.txt");
+                // page = Resource.Help_unzip;
             }
             else if (IsInputMatchCmd(commands[1], webcamCommand))
             {
-                page = (Resource.Help_webcam);
+                stream = ass.GetManifestResourceStream(resRoot + "Help_webcam.txt");
+                //page = (Resource.Help_webcam);
             }
             else if (IsInputMatchCmd(commands[1], windowCommand))
             {
-                page = (Resource.Help_window);
+                stream = ass.GetManifestResourceStream(resRoot + "Help_window.txt");
+                // page = (Resource.Help_window);
             }
             else if (IsInputMatchCmd(commands[1], videoCommand))
             {
-                page = (Encoding.UTF8.GetString(Resource.Help_video));
+                stream = ass.GetManifestResourceStream(resRoot + "Help_video.txt");
+                //page = Encoding.UTF8.GetString(Resource.Help_video);
+            }
+
+            if (stream != null)
+            {
+                using (StreamReader streamReader = new(stream))
+                {
+                    page = streamReader.ReadToEnd();
+                }
+                stream.Dispose();
             }
             return page;
         }
