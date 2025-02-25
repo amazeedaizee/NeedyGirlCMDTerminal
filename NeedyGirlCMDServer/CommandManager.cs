@@ -34,6 +34,7 @@ namespace NeedyGirlCMDServer
         readonly static string[] unzipCommand = { "unzip" };
         readonly static string[] myPicCommand = { "pic", "picture" };
         readonly static string[] infoCommand = { "info", "i" };
+        readonly static string[] videoCommand = { "video" };
 
         internal static StreamReader streamReader;
         internal static StreamWriter streamWriter;
@@ -226,6 +227,10 @@ namespace NeedyGirlCMDServer
                     message = "This command requires at least two arguments.";
                 }
                 else message = TextReaderCommands.OpenTextDoc(input);
+            }
+            else if (IsInputMatchCmd(input, videoCommand))
+            {
+                message = MyPicturesCommands.ViewVideo();
             }
             else
             {

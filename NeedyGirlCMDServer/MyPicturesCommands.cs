@@ -114,6 +114,23 @@ namespace NeedyGirlCMDServer
             return MsgManager.SendMessage(ServerMessage.PIC_INVALID_FOLDER);
         }
 
+
+        internal static string ViewVideo()
+        {
+
+            bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
+            if (!isDataActive || !SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable)
+            {
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
+            }
+            var history = SingletonMonoBehaviour<PoketterManager>.Instance.history;
+            if (history.Exists(t => t.Type == TweetType.Event_PV_toukou) && SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Poketter))
+            {
+                SingletonMonoBehaviour<PoketterView2D>.Instance._tweetCells.Find(t => t.tweetDrawable.ImageId == "MV_thumbnail").imageButton.onClick.Invoke();
+                return "";
+            }
+            return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
+        }
         internal static bool MatchFolder(string name, PictureFolder f)
         {
             bool isMatch = false;

@@ -1,4 +1,6 @@
-﻿namespace NeedyGirlCMDTerminal
+﻿using System.Text;
+
+namespace NeedyGirlCMDTerminal
 {
     internal class TableOfContents
     {
@@ -7,7 +9,7 @@
         readonly static string[] helpCommand = { "help" };
         readonly static string[] parentCommand = { "parent" };
         readonly static string[] commandCommand = { "command" };
-
+        readonly static string[] videoCommand = { "video" };
         readonly static string[] windowCommand = { "w", "window" };
         readonly static string[] cautionCommand = { "caution" };
         readonly static string[] loadCommand = { "load" };
@@ -137,6 +139,10 @@
             else if (IsInputMatchCmd(commands[1], windowCommand))
             {
                 page = (Resource.Help_window);
+            }
+            else if (IsInputMatchCmd(commands[1], videoCommand))
+            {
+                page = (Encoding.UTF8.GetString(Resource.Help_video));
             }
             return page;
         }
