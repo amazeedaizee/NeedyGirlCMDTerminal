@@ -5,7 +5,9 @@ using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 namespace NeedyGirlCMDServer
 {
@@ -107,20 +109,18 @@ namespace NeedyGirlCMDServer
             {
                 message = MetaCommands.RespondToAngel(input);
             }
+
+            else if (IsInputMatchCmd(input, optionsCommand, true))
+            {
+                message = OptionsCommands.SetOptions(input);
+            }
             else if (SceneManager.GetActiveScene().name == "WindowUITestScene" &&
     SingletonMonoBehaviour<EventManager>.Instance.nowEnding == NGO.EndingType.Ending_Completed &&
     !SingletonMonoBehaviour<WebCamManager>.Instance.hidegirl.Value)
             {
                 message = "...";
             }
-            else if (IsInputMatchCmd(input, cautionCommand, true))
-            {
-                message = BootCommands.CautionCommand(input);
-            }
-            else if (IsInputMatchCmd(input, optionsCommand, true))
-            {
-                message = OptionsCommands.SetOptions(input);
-            }
+
             else if (IsInputMatchCmd(input, helpCommand, true))
             {
                 message = "?>";
@@ -128,6 +128,14 @@ namespace NeedyGirlCMDServer
             else if (SceneManager.GetActiveScene().name.Contains("Window") && SingletonMonoBehaviour<DayPassing2D>.Instance.playingAnimation)
             {
                 message = MsgManager.SendMessage(ServerMessage.CMD_BUSY);
+            }
+            else if (SceneManager.GetActiveScene().name.Contains("Window") && SingletonMonoBehaviour<StatusManager>.Instance.GetStatus(StatusType.DayIndex) == 29 && GameObject.Find("Main Camera").GetComponent<VideoPlayer>().targetCameraAlpha == 1f)
+            {
+                message = MsgManager.SendMessage(ServerMessage.CMD_BUSY);
+            }
+            else if (IsInputMatchCmd(input, cautionCommand, true))
+            {
+                message = BootCommands.CautionCommand(input);
             }
             else if (IsInputMatchCmd(input, okOption))
             {

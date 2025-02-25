@@ -37,6 +37,12 @@ namespace NeedyGirlCMDServer
             {
                 if (SceneManager.GetActiveScene().name.Contains("Window") && SingletonMonoBehaviour<DayPassing2D>.Instance.playingAnimation)
                     return MsgManager.SendMessage(ServerMessage.CMD_BUSY);
+                else if (SceneManager.GetActiveScene().name == "WindowUITestScene" &&
+   SingletonMonoBehaviour<EventManager>.Instance.nowEnding == NGO.EndingType.Ending_Completed &&
+   !SingletonMonoBehaviour<WebCamManager>.Instance.hidegirl.Value)
+                {
+                    return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
+                }
                 bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.ControlPanel);
                 var window = SingletonMonoBehaviour<WindowManager>.Instance.WindowList.Find(t => t.appType == AppType.ControlPanel);
                 if (commands.Length < 2)

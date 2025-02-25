@@ -90,6 +90,9 @@
     <Reference Include="UnityEngine.UIModule">
       <HintPath>..\HelloWorld\Libraries\UnityEngine.UIModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.VideoModule">
+      <HintPath>..\..\1_4_0 libraries\UnityEngine.VideoModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionCommands.cs" />
