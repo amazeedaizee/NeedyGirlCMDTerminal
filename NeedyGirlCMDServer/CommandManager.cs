@@ -253,7 +253,7 @@ namespace NeedyGirlCMDServer
                 return;
             streamReader.DiscardBufferedData();
             streamWriter.WriteLine(message);
-            Initializer.logger.LogMessage("Pinging to the terminal: " + message);
+            //Initializer.logger.LogMessage("Pinging to the terminal: " + message);
             if (message != ">" && message != "?>" && message != "!>")
                 streamWriter.WriteLine(">");
             streamWriter.Flush();

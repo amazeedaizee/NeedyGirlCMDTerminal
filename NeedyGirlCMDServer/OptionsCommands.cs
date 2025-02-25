@@ -1,4 +1,5 @@
 ﻿using ngov3;
+using ngov3.Effect;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -34,6 +35,8 @@ namespace NeedyGirlCMDServer
             string[] commands = seperator.Split(input, 4);
             if (commands.Length < 3)
             {
+                if (SceneManager.GetActiveScene().name.Contains("Window") && SingletonMonoBehaviour<DayPassing2D>.Instance.playingAnimation)
+                    return MsgManager.SendMessage(ServerMessage.CMD_BUSY);
                 bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.ControlPanel);
                 if (commands.Length < 2)
                 {
