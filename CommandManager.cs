@@ -76,7 +76,7 @@ namespace NeedyGirlCMDTerminal
                 return;
             }
             ConnectionManager.ns.WriteTimeout = Timeout.Infinite;
-            Task.Run(ExitCommandWrite);
+            //Task.Run(ExitCommandWrite);
             Task.Run(ReceiveCommand);
             Console.Write(P_CHAN_INPUT);
             _currentCommand = Console.ReadLine();
