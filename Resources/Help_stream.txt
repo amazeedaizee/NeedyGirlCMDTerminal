@@ -114,8 +114,12 @@ Applies an <action> to the selected <comment> in the stream.
           ~~~~~~~~
           Shows the selected comment in the terminal.
 
-<comment>: {super | s}
+<comment>: {super | s} 
            1-(current number of comments) (min/max inclusive)
+
+           super | s
+           ~~~~~~~~
+           Selects the latest super chat.
 
 ====================================================================================
 

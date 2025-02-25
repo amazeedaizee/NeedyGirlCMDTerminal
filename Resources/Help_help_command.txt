@@ -66,6 +66,7 @@ for the game. These only list their main key word:
 > stream
 > tweeter
 > unzip
+> video
 > webcam 
 > window
 

@@ -75,20 +75,6 @@ namespace NeedyGirlCMDTerminal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to                                                      ######@@@@#                     ####           
-        ///                                                  ## ###     @@@@@@##****######    ## @**##         
-        ///                                                #  ##          @@#      @@@ **#@@@#  @@@####  ***   
-        ///                                              #  ##           ##    ****@@@@@@@@@#  ##  #####*****  
-        ///                                             # ##           ##     *    @@@@  #@@   # ## ###********
-        ///   [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string angelASCIIart1 {
-            get {
-                return ResourceManager.GetString("angelASCIIart1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 
         ///ACTION | A: 
         ///
@@ -228,7 +214,8 @@ namespace NeedyGirlCMDTerminal {
         ///
         ///If Blue Screen Is Active
         ///~~~~~~~~~~~~~~~~~~~~~~~~
-        ///Exits out of the Blue Screen and into either the Choose Zip scene or the         /// [rest of string was truncated]&quot;;.
+        ///Exits out of the Blue Screen and into either the Choose Zip scene or the 
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Help_ending {
             get {
@@ -350,10 +337,10 @@ namespace NeedyGirlCMDTerminal {
         ///
         ///&gt; load &lt;data number&gt; &lt;day number&gt;
         ///
-        ///Loads a specific day. Only applies when a data save has not been chosen yet.
+        ///Loads a specific save in a specific day. Only applies when a data save has not been chosen yet.
         ///
         ///&lt;data number&gt;: 1-3  (min/max inclusive)
-        ///&lt;day number&gt;:  1-3 [rest of string was truncated]&quot;;.
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Help_load {
             get {
@@ -419,7 +406,7 @@ namespace NeedyGirlCMDTerminal {
         ///
         ///&gt; open &lt;filename&gt;
         ///
-        ///Opens the selected file that matches &lt;filename&gt;. 
+        ///Opens the selected file that matches &lt;filename&gt;. Case-sensitive.
         ///File has to be an in-game text file.
         ///
         ///====================================================================================
@@ -470,13 +457,15 @@ namespace NeedyGirlCMDTerminal {
         ///&gt; picture {open | o} &lt;picture id&gt;
         ///
         ///Opens a picture with the matching &lt;picture id&gt;. If the picture isn&apos;t available, 
-        ///a placeholder will be shown instead. This can be used even if My Pictures isn&apos;t open.
+        ///a placeholder will be shown instead. Case-sensitive.
+        ///
+        ///This can be used even if My Pictures isn&apos;t open.
         ///
         ///------------------------------------------------------------------------------------
         ///
         ///&gt; picture
         ///
-        ///Opens the My Pictures window.        /// [rest of string was truncated]&quot;;.
+        ///Opens the M [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Help_pic {
             get {
@@ -494,7 +483,7 @@ namespace NeedyGirlCMDTerminal {
         ///
         ///&gt; read &lt;filename&gt;
         ///
-        ///Reads text from the selected file that matches &lt;filename&gt;. 
+        ///Reads text from the selected file that matches &lt;filename&gt;. Case-sensitive.
         ///File has to be an in-game text file.
         ///
         ///====================================================================================
@@ -653,6 +642,16 @@ namespace NeedyGirlCMDTerminal {
         internal static string Help_unzip {
             get {
                 return ResourceManager.GetString("Help_unzip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Help_video {
+            get {
+                object obj = ResourceManager.GetObject("Help_video", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

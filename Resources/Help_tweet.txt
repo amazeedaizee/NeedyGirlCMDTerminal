@@ -51,5 +51,12 @@ Shows a tweet in the terminal.
 
 Shows the count for all tweets in the tweet history in Tweeter.
 
+------------------------------------------------------------------------------------
+
+> tweeter {follow | f} <user>
+
+Follows or sends a follow request to a <user> on Tweeter. 
+Can only be done if a specific window on Tweeter is active.
+
 ====================================================================================
 

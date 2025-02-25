@@ -1,4 +1,5 @@
 ﻿using ngov3;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,11 +16,35 @@ namespace NeedyGirlCMDServer
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
             if (!isDataActive)
             {
-                return "Can't do this command now.";
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             }
             if (!GameObject.Find("EndingCover").transform.Find("jimaku").gameObject.activeInHierarchy)
             {
-                return "Can't do this command now.";
+                string[] streamAction = { "stream", "s", "1" };
+                var seperator = new Regex(@"\s+");
+                var input = seperator.Split(command, 4);
+                if (input.Length > 2)
+                {
+                    if (CommandManager.IsInputMatchCmd(input[0], CommandManager.actionCommand))
+                    {
+                        if (CommandManager.IsInputMatchCmd(input[1], streamAction))
+                        {
+                            if (ActionCommands.GetStreamTopic(input[2]) != AlphaType.none)
+                            {
+                                // dud stream
+                                if (SingletonMonoBehaviour<EventManager>.Instance.shortcuts.interactable)
+                                {
+                                    SingletonMonoBehaviour<EventManager>.Instance.StartHaishin(AlphaType.first, 1, BetaType.none);
+                                    return "";
+                                }
+
+
+                            }
+                        }
+                    }
+                }
+
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY); ;
             }
             try
             {

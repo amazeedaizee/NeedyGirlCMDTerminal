@@ -17,16 +17,16 @@ namespace NeedyGirlCMDServer
             string[] commands = seperator.Split(input, 3);
             if (SceneManager.GetActiveScene().name != "BiosToLoad")
             {
-                return "Scene is not Caution/Login scene.";
+                return MsgManager.SendMessage(ServerMessage.BOOT_SCENE_INVALID);
             }
             if (commands.Length < 2)
             {
-                return ErrorMessages.CMD_WRONG_ARGS;
+                return MsgManager.SendMessage(ServerMessage.CMD_WRONG_ARGS);
             }
             boot = SingletonMonoBehaviour<Boot>.Instance;
             if (!boot.Caution.interactable)
             {
-                return "Caution message is not active.";
+                return MsgManager.SendMessage(ServerMessage.BOOT_CAUTION_INACTIVE);
             }
             if (CommandManager.IsInputMatchCmd(commands[1], cancelOption))
                 Application.Quit();
@@ -35,7 +35,7 @@ namespace NeedyGirlCMDServer
             else
             {
 
-                return ErrorMessages.INVALID_CMD;
+                return MsgManager.SendMessage(ServerMessage.INVALID_CMD);
             }
             return "";
         }
@@ -49,29 +49,29 @@ namespace NeedyGirlCMDServer
             string[] commands = input.Split(seperator, 4);
             if (commands.Length < 2)
             {
-                return ErrorMessages.CMD_WRONG_ARGS;
+                return MsgManager.SendMessage(ServerMessage.CMD_WRONG_ARGS);
             }
             if (boot.Caution.interactable)
             {
-                return "Caution message is still active.";
+                return MsgManager.SendMessage(ServerMessage.BOOT_CAUTION_ACTIVE);
             }
             if (!int.TryParse(commands[1], out user))
             {
-                return "Submitted user is not a number.";
+                return MsgManager.SendMessage(ServerMessage.LOAD_USER_NAN);
             }
             if (user == 0 && boot.Data0.gameObject.activeInHierarchy)
             {
                 adieu = new();
-                adieu._submitButton.onClick.Invoke();
+                adieu.OnSubmit();
                 return "...";
             }
             if (!(user > 0 && user < 4) && !boot.ChooseDay.interactable)
             {
-                return "Submitted user is not between 1 to 3.";
+                return MsgManager.SendMessage(ServerMessage.LOAD_USER_OUTRANGE);
             }
             if (!(user > 0 && user < 31) && boot.ChooseDay.interactable)
             {
-                return "Submitted day is not between 1 to 30.";
+                return MsgManager.SendMessage(ServerMessage.LOAD_DAY_OUTRANGE);
             }
             if (commands.Length == 2)
             {
@@ -93,15 +93,15 @@ namespace NeedyGirlCMDServer
         {
             if (!int.TryParse(num, out int day))
             {
-                return "Submitted day is not a number.";
+                return MsgManager.SendMessage(ServerMessage.LOAD_DAY_NAN);
             }
             if (!(day > 0 && day < 31))
             {
-                return "Submitted day is not between 1 to 30.";
+                return MsgManager.SendMessage(ServerMessage.LOAD_DAY_OUTRANGE);
             }
             if (day > 1 && !SaveRelayer.IsSlotDataExists($"Data{user}_Day{day}{SaveRelayer.EXTENTION}"))
             {
-                return "Submitted user/day combination does not exist.";
+                return MsgManager.SendMessage(ServerMessage.LOAD_SAVE_NOT_FOUND);
             }
             boot.ChooseUser.alpha = 0f;
             boot.ChooseUser.interactable = false;

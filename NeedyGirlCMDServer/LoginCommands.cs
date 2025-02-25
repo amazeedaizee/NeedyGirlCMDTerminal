@@ -18,15 +18,15 @@ namespace NeedyGirlCMDServer
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
             if (!isDataActive)
             {
-                return "Can't do this command now.";
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             }
             if (!loginShortcut.interactable)
             {
-                return "Can't do this command now.";
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             }
             if (commands.Length < 2)
             {
-                return "This command requires one argument.";
+                return MsgManager.SendMessage(ServerMessage.CMD_MISSING_ARGS_ONE);
             }
             if (SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Login))
             {
@@ -48,7 +48,7 @@ namespace NeedyGirlCMDServer
             }
             else
             {
-                return "Wrong password!";
+                return MsgManager.SendMessage(ServerMessage.LOGIN_INVALID);
             }
         }
     }

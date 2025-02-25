@@ -1,0 +1,13 @@
+﻿
+VIDEO: 
+
+Does a command that involves playing a video from the game.
+
+====================================================================================
+
+> video
+
+Plays a music video, only when specific conditions are met. 
+Can only play while the Tweeter window is open.
+
+====================================================================================

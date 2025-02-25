@@ -16,7 +16,7 @@ namespace NeedyGirlCMDServer
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
             if (!isDataActive || settings.saveNumber < 0 || settings.saveNumber > 3 || !SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable)
             {
-                return ErrorMessages.CMD_SPECIFIC_BUSY;
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             }
             day = SingletonMonoBehaviour<StatusManager>.Instance.GetStatus(StatusType.DayIndex);
             user = settings.saveNumber;
@@ -31,7 +31,7 @@ namespace NeedyGirlCMDServer
                 dayLoad._datapath = $"Data{user}_Day{day}";
                 dayLoad.Resume();
             }
-            return "Loading day...";
+            return MsgManager.SendMessage(ServerMessage.LOAD_SUCCESS); ;
         }
         internal static string LoadSave(string input)
         {
@@ -40,7 +40,7 @@ namespace NeedyGirlCMDServer
             var seperator = new Regex(@"\s+");
             string[] commands = seperator.Split(input, 4);
             if (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable)
-                return ErrorMessages.CMD_SPECIFIC_BUSY;
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             if (commands.Length == 1)
             {
                 bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Jine);
@@ -53,27 +53,27 @@ namespace NeedyGirlCMDServer
             }
             if (commands.Length < 3)
             {
-                return "This command when loading a specific day requires two arguments.";
+                return MsgManager.SendMessage(ServerMessage.LOAD_MISSING_ARGS_TWO);
             }
             if (!int.TryParse(commands[1], out int user))
             {
-                return "Data must be a number.";
+                return MsgManager.SendMessage(ServerMessage.LOAD_USER_NAN);
             }
             if (!int.TryParse(commands[2], out int day))
             {
-                return "Day to load must be a number.";
+                return MsgManager.SendMessage(ServerMessage.LOAD_DAY_NAN);
             }
             if (!(user > 0 && user < 4))
             {
-                return "Submitted user is not between 1 to 3.";
+                return MsgManager.SendMessage(ServerMessage.LOAD_USER_OUTRANGE);
             }
             if (!(day > 0 && day < 31))
             {
-                return "Submitted day is not between 1 to 30.";
+                return MsgManager.SendMessage(ServerMessage.LOAD_DAY_OUTRANGE);
             }
             if (day > 1 && !SaveRelayer.IsSlotDataExists($"Data{user}_Day{day}{SaveRelayer.EXTENTION}"))
             {
-                return "Submitted user/day combination does not exist.";
+                return MsgManager.SendMessage(ServerMessage.LOAD_SAVE_NOT_FOUND);
             }
             if (day == 1)
             {
@@ -86,7 +86,7 @@ namespace NeedyGirlCMDServer
                 dayLoad._datapath = $"Data{user}_Day{day}";
                 dayLoad.Resume();
             }
-            return "Loading day...";
+            return MsgManager.SendMessage(ServerMessage.LOAD_SUCCESS); ;
         }
     }
 }

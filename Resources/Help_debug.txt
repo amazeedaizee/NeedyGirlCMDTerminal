@@ -59,7 +59,9 @@ NOTE: <animation> does not check if an animation key is valid. Use at your own r
 
 > debug set <stat> <number>
 	
-Sets a specific stat to the number written. Number must be between 0 and the stat max.
+Sets a specific stat to the number written.
+If number is above stat max, it will be automatically set to stat max.
+If number is below 0, it will be automatically set to 0.
 (Stat max is exclusive to each stat.)
 
 <stat>: [followers, f]                     max: 9999999

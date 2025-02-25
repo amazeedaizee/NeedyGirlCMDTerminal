@@ -1,4 +1,5 @@
-﻿using ngov3;
+﻿using NGO;
+using ngov3;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -39,14 +40,22 @@ namespace NeedyGirlCMDServer
             {
                 return ClickCancelButton(window);
             }
+            if (window.appType == AppType.Jine)
+            {
+                EndingType currentEnding = SingletonMonoBehaviour<EventManager>.Instance.nowEnding;
+                bool isHorror = SingletonMonoBehaviour<EventManager>.Instance.isHorror;
+                bool isJineRequiredForEnd = currentEnding == EndingType.Ending_Work || currentEnding == EndingType.Ending_Needy || currentEnding == EndingType.Ending_Normal || currentEnding == EndingType.Ending_Yarisute;
+                if (isJineRequiredForEnd || isHorror)
+                    return MsgManager.SendMessage(ServerMessage.JINE_NO_WIN_MODIFY);
+            }
             ChangeWindowState(window, commands[0]);
             return "";
         }
         internal static string SelectWindowCommand(string input)
         {
             IWindow window = null;
-            char[] seperator = { ' ' };
-            string[] commands = input.Split(seperator, 2);
+            var seperator = new Regex(@"\s+");
+            string[] commands = seperator.Split(input, 2);
             if (commands[0] == "toggleall")
             {
                 ToggleWindows();
@@ -68,26 +77,32 @@ namespace NeedyGirlCMDServer
             }
             else if (int.TryParse(commands[0], out int index))
             {
-                if (commands.Length > 2)
+                if (commands.Length > 1)
                 {
                     window = GetWindowByIndex(index);
                 }
                 else
                 {
                     SwitchWindow(index - 1);
+                    return "";
                 }
             }
             if (window != null && commands.Length > 1)
             {
-                return SelectWindowCommand(commands[1], window);
+                string com = commands[1];
+                return SelectWindowCommand(com, window);
             }
             else if (window != null && commands.Length == 1)
                 return "";
-            return "Invalid command.";
+            return MsgManager.SendMessage(ServerMessage.JINE_NO_WIN_MODIFY);
         }
 
         internal static bool IsWindowScroll(IWindow window, string command)
         {
+            if (window.windowState == WindowState.minimized)
+            {
+                window.Pop();
+            }
             if (CommandManager.IsInputMatchCmd(command, scrollUp))
             {
                 MoveScroll(window, true);
@@ -157,6 +172,11 @@ namespace NeedyGirlCMDServer
         {
             Transform transform;
             Button okButton;
+            if (window.windowState == WindowState.minimized)
+            {
+                window.Pop();
+            }
+            //Initializer.logger.LogInfo("AppType: " + window.appType.ToString());
             //if (window.appType == AppType.TimePassDialog)
             //{
             //    try
@@ -173,7 +193,26 @@ namespace NeedyGirlCMDServer
                     window.nakamiApp.transform.Find("Body/Stuff/ButtonRoot/ConfirmButton").GetComponent<Button>().onClick.Invoke();
                     return "";
                 }
-                catch { return "This command is invalid for this type of window."; }
+                catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
+            }
+            if (window.appType == AppType.Uratter)
+            {
+                try
+                {
+                    var ame = SingletonMonoBehaviour<EndingHappyUraUra>.Instance._uraUraAccount;
+                    var follow = SingletonMonoBehaviour<EndingHappyUraUra>.Instance._followRequest;
+                    var followers = SingletonMonoBehaviour<EndingHappyUraUra>.Instance._followers;
+                    if (followers.activeInHierarchy)
+                    {
+                        ame.onClick.Invoke();
+                    }
+                    else
+                    {
+                        follow.onClick.Invoke();
+                    }
+                    return "";
+                }
+                catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
             }
             if (window.appType == AppType.Ideon_taiki)
             {
@@ -182,7 +221,7 @@ namespace NeedyGirlCMDServer
                     window.nakamiApp.transform.Find("Body/Scroll View/start").GetComponent<Button>().onClick.Invoke();
                     return "";
                 }
-                catch { return "This command is invalid for this type of window."; }
+                catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
             }
             if (window.appType == AppType.Dinder)
             {
@@ -191,7 +230,7 @@ namespace NeedyGirlCMDServer
                     window.nakamiApp.transform.Find("BG/ButtonRoot/ActionButton").GetComponent<Button>().onClick.Invoke();
                     return "";
                 }
-                catch { return "This command is invalid for this type of window."; }
+                catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
             }
             if (window.appType == AppType.NetaChoose)
             {
@@ -205,7 +244,7 @@ namespace NeedyGirlCMDServer
                     okButton.onClick.Invoke();
                     return "";
                 }
-                catch { return "This command is invalid for this type of window."; }
+                catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
             }
             try
             {
@@ -221,12 +260,17 @@ namespace NeedyGirlCMDServer
                 }
                 return "";
             }
-            catch { return "This command is invalid for this type of window."; }
+            catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
         }
 
         internal static string ClickCancelButton(IWindow window)
         {
             Button cancelButton;
+            if (window.windowState == WindowState.minimized)
+            {
+                window.Pop();
+            }
+            //Initializer.logger.LogInfo("AppType: " + window.appType.ToString());
             //if (window.appType == AppType.TimePassDialog)
             //{
             //    try
@@ -243,7 +287,7 @@ namespace NeedyGirlCMDServer
                     window.nakamiApp.transform.Find("Body/Stuff/CloseButton").GetComponent<Button>().onClick.Invoke();
                     return "";
                 }
-                catch { return "This command is invalid for this type of window."; }
+                catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
             }
             if (window.appType == AppType.Dinder)
             {
@@ -252,7 +296,7 @@ namespace NeedyGirlCMDServer
                     window.nakamiApp.transform.Find("BG/ButtonRoot/Nope").GetComponent<Button>().onClick.Invoke();
                     return "";
                 }
-                catch { return "This command is invalid for this type of window."; }
+                catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
             }
             if (window.appType == AppType.NetaChoose)
             {
@@ -266,14 +310,14 @@ namespace NeedyGirlCMDServer
                     cancelButton.onClick.Invoke();
                     return "";
                 }
-                catch { return "This command is invalid for this type of window."; }
+                catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
             }
             try
             {
                 window.nakamiApp.transform.Find("Body/ButtonRoot/CloseButton").GetComponent<Button>().onClick.Invoke();
                 return "";
             }
-            catch { return "This command is invalid for this type of window."; }
+            catch { return MsgManager.SendMessage(ServerMessage.WINDOW_BUTTON_INVALID); }
         }
 
         internal static IWindow GetActiveWindow()
@@ -286,6 +330,7 @@ namespace NeedyGirlCMDServer
             var taskList = SingletonMonoBehaviour<WindowManager>.Instance.TaskBarList;
             try
             {
+                input--;
                 if (input < 0)
                 {
                     input = 0;
@@ -294,7 +339,7 @@ namespace NeedyGirlCMDServer
                 {
                     input = taskList.Count - 1;
                 }
-                return SingletonMonoBehaviour<WindowManager>.Instance.WindowList[input];
+                return SingletonMonoBehaviour<WindowManager>.Instance.TaskBarList[input].window;
             }
             catch { return null; }
         }
@@ -347,16 +392,19 @@ namespace NeedyGirlCMDServer
 
         internal static bool ChangeWindowState(IWindow window, string state)
         {
+
             try
             {
                 if (CommandManager.IsInputMatchCmd(state, windowMin))
                 {
                     if (!window._minimize.interactable)
                         return false;
-                    window._minimize.onClick.Invoke();
+                    if (window.windowState != WindowState.minimized)
+                        window._minimize.onClick.Invoke();
+                    else window.Pop();
                     return true;
                 }
-                if (CommandManager.IsInputMatchCmd(state, windowMax))
+                if (CommandManager.IsInputMatchCmd(state, windowMax) && window.windowState != WindowState.maximized)
                 {
                     if (!window._maximize.interactable)
                         return false;

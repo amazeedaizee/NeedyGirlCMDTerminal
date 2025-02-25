@@ -27,7 +27,7 @@ namespace NeedyGirlCMDServer
                 {
                     if ((SceneManager.GetActiveScene().name == "BiosToLoad" && !SingletonMonoBehaviour<Boot>.Instance.Login.interactable) ||
     (SceneManager.GetActiveScene().name != "ChooseZip" && SceneManager.GetActiveScene().name != "BiosToLoad" && !SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable))
-                        return ErrorMessages.CMD_SPECIFIC_BUSY;
+                        return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
                     SingletonMonoBehaviour<WindowManager>.Instance.NewWindow(AppType.MyPicture);
                 }
                 else SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.MyPicture).Touched();
@@ -39,7 +39,8 @@ namespace NeedyGirlCMDServer
             }
             else
             {
-                if (!isWindowActive) return "My Pictures window is not open!";
+                if (!isWindowActive)
+                    return MsgManager.SendMessage(ServerMessage.PIC_WIN_INACTIVE);
                 var window = SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.MyPicture);
                 var picController = window.nakamiApp.GetComponent<MyPictureController_Sprit>();
                 if (CommandManager.IsInputMatchCmd(commands[1], backAction))
@@ -52,21 +53,21 @@ namespace NeedyGirlCMDServer
                     if (CommandManager.IsInputMatchCmd(commands[1], goToAction))
                     {
                         if (commands.Length == 2)
-                            return "This command requires at least 3 arguments.";
+                            return MsgManager.SendMessage(ServerMessage.CMD_MISSING_ARGS_THREE);
                         else return ViewFolder(commands[2], picController);
 
                     }
                     else if (commands.Length == 2)
                     {
                         if (!(window._close.interactable || window._maximize.interactable || window._minimize.interactable))
-                            return "Can't modify the My Pictures window now.";
+                            return MsgManager.SendMessage(ServerMessage.PIC_NO_WIN_MODIFY);
                         if (WindowCommands.IsWindowScroll(window, commands[1]))
                         {
                             return "";
                         }
                         if (!WindowCommands.ChangeWindowState(window, commands[1]))
                         {
-                            return "Invalid command for the My Pictures window.";
+                            return MsgManager.SendMessage(ServerMessage.PIC_WIN_INVALID_CMD);
                         }
                         return "";
 
@@ -75,7 +76,7 @@ namespace NeedyGirlCMDServer
                 }
 
             }
-            return ErrorMessages.INVALID_CMD;
+            return MsgManager.SendMessage(ServerMessage.INVALID_CMD);
         }
         internal static string ViewPicture(string picName)
         {
@@ -83,7 +84,7 @@ namespace NeedyGirlCMDServer
             var imageHistory = SingletonMonoBehaviour<Settings>.Instance.imageHistory;
             if (image == null)
             {
-                return "Invalid image ID!";
+                return MsgManager.SendMessage(ServerMessage.PIC_INVALID_ID);
             }
             else if (image != null && !imageHistory.Contains(image.FileName))
             {
@@ -101,7 +102,8 @@ namespace NeedyGirlCMDServer
             {
                 if (MatchFolder(name, f))
                 {
-                    if (f.isLocked) return "This folder has not been unlocked.";
+                    if (f.isLocked)
+                        return MsgManager.SendMessage(ServerMessage.PIC_LOCKED_ZIP);
                     else
                     {
                         picController.StartOpen(f);
@@ -109,9 +111,26 @@ namespace NeedyGirlCMDServer
                     }
                 }
             }
-            return "Could not find folder with that label!";
+            return MsgManager.SendMessage(ServerMessage.PIC_INVALID_FOLDER);
         }
 
+
+        internal static string ViewVideo()
+        {
+
+            bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
+            if (!isDataActive || !SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable)
+            {
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
+            }
+            var history = SingletonMonoBehaviour<PoketterManager>.Instance.history;
+            if (history.Exists(t => t.Type == TweetType.Event_PV_toukou) && SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Poketter))
+            {
+                SingletonMonoBehaviour<PoketterView2D>.Instance._tweetCells.Find(t => t.tweetDrawable.ImageId == "MV_thumbnail").imageButton.onClick.Invoke();
+                return "";
+            }
+            return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
+        }
         internal static bool MatchFolder(string name, PictureFolder f)
         {
             bool isMatch = false;

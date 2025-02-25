@@ -7,7 +7,7 @@ Does a command that involves opening an in-game text file from the game.
 
 > open <filename>
 
-Opens the selected file that matches <filename>. 
+Opens the selected file that matches <filename>. Case-sensitive.
 File has to be an in-game text file.
 
 ====================================================================================
