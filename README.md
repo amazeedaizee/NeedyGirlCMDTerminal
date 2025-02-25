@@ -22,7 +22,7 @@ Please note that this mod is slightly unstable. The game might hang if it's forc
 
 ## Command Terminal
 
-This is the program that can send some commands to the server.
+This is the program that, as a client, can send some commands to the server.
 
 While most commands are handled by the server, the `help` command is specifically handled by the client itself. 
 The `help` command provides a way of explaining to the user some extra info if needed while using the console.
