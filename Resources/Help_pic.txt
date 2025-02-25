@@ -28,7 +28,7 @@ Goes back to the main folder view in the My Pictures window.
 
 > picture {goto | cd} <folder name>
 
-Goes to the specified folder in the My Pictures Window.
+Goes to the specified folder in the My Pictures Window. Case-sensitive.
 
 ------------------------------------------------------------------------------------
 
