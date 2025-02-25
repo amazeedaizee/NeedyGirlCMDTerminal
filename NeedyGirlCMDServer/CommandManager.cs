@@ -56,7 +56,7 @@ namespace NeedyGirlCMDServer
                 try
                 {
                     await ReceiveCommand();
-                    await UniTask.Delay(10);
+                    await UniTask.Delay(1);
                 }
                 catch { }
             }
