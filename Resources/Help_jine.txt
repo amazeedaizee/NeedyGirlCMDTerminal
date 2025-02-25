@@ -46,7 +46,6 @@ position, from left to right.
 > jine {message | msg | m} <message>
 
 Sends a custom <message> in Jine. Only applies if the message box in Jine is active.
-(NOTE: active doesn't always mean visible in this context)
 
 <message> can be anything within the character limits of the terminal.
 

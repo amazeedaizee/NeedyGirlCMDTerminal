@@ -41,7 +41,7 @@ namespace NeedyGirlCMDServer
                     var anim = "";
                     var text = "";
                     var others = seperator.Split(commands[2].Trim(), 2);
-                    if (commands.Length > 2) anim = others[0];
+                    if (commands.Length > 2 && others[0] != "!") anim = others[0];
                     if (others.Length == 2) text = others[1];
                     return AddKey(anim, text);
                 }
@@ -56,7 +56,7 @@ namespace NeedyGirlCMDServer
                     {
                         return MsgManager.SendMessage(ServerMessage.STREAM_GEN_IDX_NAN);
                     }
-                    if (commands.Length > 3) anim = others[1];
+                    if (commands.Length > 3 && others[1] != "!") anim = others[1];
                     if (commands.Length == 5) text = others[2];
                     return EditKey(idx - 1, anim, text);
                 }

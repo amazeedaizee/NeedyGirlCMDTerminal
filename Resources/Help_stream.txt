@@ -89,7 +89,7 @@ NOTE: This command only works if the skip button is visible.
 
 > stream {speed | s} <number>
 
-Sets the current stream spped to the specified number.
+Sets the current stream speed to the specified number.
 
 NOTE: This command only works if the speed button is visible.
 

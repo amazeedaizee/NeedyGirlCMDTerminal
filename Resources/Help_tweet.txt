@@ -58,5 +58,7 @@ Shows the count for all tweets in the tweet history in Tweeter.
 Follows or sends a follow request to a <user> on Tweeter. 
 Can only be done if a specific window on Tweeter is active.
 
+<user> is case-sensitive.
+
 ====================================================================================
 
