@@ -44,6 +44,7 @@ namespace NeedyGirlCMDTerminal
             {
                 Thread.Sleep(100);
             }
+            ConnectionManager.pipe.Close();
             Console.WriteLine("Connection ended!");
             Console.WriteLine("Do you want to try and connect again? (Y/N)");
             do
@@ -54,8 +55,7 @@ namespace NeedyGirlCMDTerminal
             while ((restartKey != ConsoleKey.Y && restartKey != ConsoleKey.N) && !ConnectionManager.isRunning);
             if (restartKey == ConsoleKey.Y)
             {
-                ConnectionManager.pipe.Close();
-                ConnectionManager.pipe = null;
+                //ConnectionManager.pipe = null;
                 ConnectionManager.StartLoad();
             }
             else Environment.Exit(0);
