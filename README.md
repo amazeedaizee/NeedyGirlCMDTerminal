@@ -2,7 +2,7 @@
 
 This repo actually contains the source code for two programs in one:
 
-- A BepInEx mod where the game acts as a server, accepting basic commands from a client as a way to control the game.
+- A BepInEx mod where the game acts as a server, accepting basic commands from one connected client as a way to control the game.
 - A program where it acts as a client to the mod above; it sends these commands to the game executed from the command line.
 
 Both of these communicate through localhost `127.0.0.1` on port 55770.
@@ -32,7 +32,10 @@ If yopu want to make a client yourself, it's up to you whether or not you want t
 
 # Commands
 
-Here are the list of commands that's supported in the server, with some info taken from the existing resources:
+Here are the list of commands that's supported in the server:
+
+> [!NOTE]
+> To use the `debug` command, your game has to have Debug Mode enabled. 
 
 - action
 - caution
@@ -58,3 +61,4 @@ Here are the list of commands that's supported in the server, with some info tak
 - webcam 
 - window
 
+If you want some more in-depth information for each command, feel free to take a look in the `tipstricks.md` file.
