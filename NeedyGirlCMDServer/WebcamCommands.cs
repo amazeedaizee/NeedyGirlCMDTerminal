@@ -9,7 +9,6 @@ namespace NeedyGirlCMDServer
     {
         internal static async UniTask<string> ControlWebcam(string input)
         {
-            IWindow ame;
             var seperator = new Regex(@"\s+");
             string[] commands = seperator.Split(input, 4);
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
@@ -21,7 +20,7 @@ namespace NeedyGirlCMDServer
             {
                 return MsgManager.SendMessage(ServerMessage.WEBCAM_NOT_ACTIVE);
             }
-            ame = SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.Webcam);
+            var ame = SingletonMonoBehaviour<WindowManager>.Instance.WindowList.Find(t => t.appType == AppType.Webcam);
             if (commands.Length == 1)
             {
                 ame.Touched();

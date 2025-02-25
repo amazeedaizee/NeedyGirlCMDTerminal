@@ -43,6 +43,16 @@ Opens the Load window.
 
 ------------------------------------------------------------------------------------
 
+> load <window state>
+	
+Sets the <window state> of the Load window.
+
+<window state>: {minimize | min | -}
+                {maximize | max | +}
+                {close | x}
+
+------------------------------------------------------------------------------------
+
 > load <data number> <day number>
 
 Loads a specific day. Only applies while the taskbar is interactable.

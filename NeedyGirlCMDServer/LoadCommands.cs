@@ -43,7 +43,7 @@ namespace NeedyGirlCMDServer
                 return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             if (commands.Length == 1)
             {
-                bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Jine);
+                bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.LoadData);
                 if (!isWindowActive)
                 {
                     SingletonMonoBehaviour<WindowManager>.Instance.NewWindow(AppType.LoadData);
@@ -53,6 +53,24 @@ namespace NeedyGirlCMDServer
             }
             if (commands.Length < 3)
             {
+                var window = SingletonMonoBehaviour<WindowManager>.Instance.WindowList.Find(t => t.appType == AppType.LoadData);
+                if (window != null)
+                {
+
+                    if (!(window._close.interactable || window._maximize.interactable || window._minimize.interactable))
+                        return MsgManager.SendMessage(ServerMessage.LOAD_NO_WIN_MODIFY);
+                    if (WindowCommands.IsWindowScroll(window, commands[1]))
+                    {
+                        return "";
+                    }
+                    if (!WindowCommands.ChangeWindowState(window, commands[1]))
+                    {
+                        return MsgManager.SendMessage(ServerMessage.CMD_WRONG_ARGS);
+                    }
+                    return "";
+                }
+                else if (window == null)
+                    return MsgManager.SendMessage(ServerMessage.LOAD_WIN_INACTIVE);
                 return MsgManager.SendMessage(ServerMessage.LOAD_MISSING_ARGS_TWO);
             }
             if (!int.TryParse(commands[1], out int user))

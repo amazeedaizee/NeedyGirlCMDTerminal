@@ -13,12 +13,13 @@ namespace NeedyGirlCMDServer
         readonly static string[] tweetFollow = { "follow", "f" };
         internal static string SelectTweetCommand(string input)
         {
-            IWindow window;
+
             string userToRead;
             var seperator = new Regex(@"\s+");
             string[] commands = seperator.Split(input, 3);
             bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
             bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Poketter);
+            IWindow window = SingletonMonoBehaviour<WindowManager>.Instance.WindowList.Find(t => t.appType == AppType.Poketter);
             if (!isDataActive || (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable && !isWindowActive))
             {
                 return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
@@ -35,9 +36,10 @@ namespace NeedyGirlCMDServer
 
                 return "";
             }
-            if (commands.Length == 2 && isWindowActive)
+            if (commands.Length == 2)
             {
-                window = SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.Poketter);
+                if (window == null)
+                    return MsgManager.SendMessage(ServerMessage.TWEET_WIN_INACTIVE);
                 if (!(window._close.interactable || window._maximize.interactable || window._minimize.interactable))
                     return MsgManager.SendMessage(ServerMessage.TWEET_NO_WIN_MODIFY);
                 if (WindowCommands.IsWindowScroll(window, commands[1]))

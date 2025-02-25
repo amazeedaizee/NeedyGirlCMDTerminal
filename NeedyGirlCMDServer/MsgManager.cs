@@ -201,7 +201,13 @@ namespace NeedyGirlCMDServer
         ZIP_NUM_NAN,
         ZIP_NUM_OUTRANGE,
         ZIP_OPENED,
-        PI_ID
+        PI_ID,
+        JINE_WIN_INACTIVE,
+        TWEET_WIN_INACTIVE,
+        OPTIONS_WIN_INACTIVE,
+        LOAD_NO_WIN_MODIFY,
+        LOAD_WIN_INACTIVE
+
 
     }
 }

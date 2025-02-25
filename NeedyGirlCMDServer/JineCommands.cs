@@ -16,7 +16,6 @@ namespace NeedyGirlCMDServer
         readonly static string[] jineRead = { "read", "r" };
         internal static async UniTask<string> SelectJineCommand(string input)
         {
-            IWindow window;
             string customMsg;
             string userToRead;
             var seperator = new Regex(@"\s+");
@@ -27,13 +26,14 @@ namespace NeedyGirlCMDServer
             bool isHorror = SingletonMonoBehaviour<EventManager>.Instance.isHorror;
             bool isJineRequiredForEnd = currentEnding == EndingType.Ending_Work || currentEnding == EndingType.Ending_Needy || currentEnding == EndingType.Ending_Normal || currentEnding == EndingType.Ending_Yarisute;
             bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.Jine);
+            var window = SingletonMonoBehaviour<WindowManager>.Instance.WindowList.Find(t => t.appType == AppType.Jine);
             if (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable && !isWindowActive && !isJineRequiredForEnd && !isHorror)
             {
                 return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             }
             if (commands.Length == 1)
             {
-                if (!isWindowActive)
+                if (window == null)
                 {
                     if (!SingletonMonoBehaviour<TaskbarManager>.Instance._taskbarGroup.interactable)
                         return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
@@ -42,11 +42,13 @@ namespace NeedyGirlCMDServer
                 else SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.Jine).Touched();
                 return "";
             }
-            if (commands.Length == 2 && isWindowActive)
+            if (commands.Length == 2)
             {
-                if (isJineRequiredForEnd || isHorror)
+                if (window == null)
+                    return MsgManager.SendMessage(ServerMessage.JINE_WIN_INACTIVE);
+                if (isWindowActive && (isJineRequiredForEnd || isHorror))
                     return MsgManager.SendMessage(ServerMessage.JINE_NO_WIN_MODIFY);
-                window = SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.Jine);
+
                 if (WindowCommands.IsWindowScroll(window, commands[1]))
                 {
                     return "";

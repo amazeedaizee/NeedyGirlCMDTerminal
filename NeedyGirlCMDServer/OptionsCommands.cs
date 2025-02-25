@@ -38,6 +38,7 @@ namespace NeedyGirlCMDServer
                 if (SceneManager.GetActiveScene().name.Contains("Window") && SingletonMonoBehaviour<DayPassing2D>.Instance.playingAnimation)
                     return MsgManager.SendMessage(ServerMessage.CMD_BUSY);
                 bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.ControlPanel);
+                var window = SingletonMonoBehaviour<WindowManager>.Instance.WindowList.Find(t => t.appType == AppType.ControlPanel);
                 if (commands.Length < 2)
                 {
 
@@ -54,9 +55,9 @@ namespace NeedyGirlCMDServer
                         return "";
                     }
                 }
-                else if (isWindowActive)
+                else if (window != null)
                 {
-                    var window = SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.ControlPanel);
+
                     if (!(window._close.interactable || window._maximize.interactable || window._minimize.interactable))
                         return MsgManager.SendMessage(ServerMessage.OPTIONS_NO_WIN_MODIFY);
                     if (WindowCommands.IsWindowScroll(window, commands[1]))
@@ -69,7 +70,8 @@ namespace NeedyGirlCMDServer
                     }
                     return "";
                 }
-                return MsgManager.SendMessage(ServerMessage.CMD_WRONG_ARGS);
+                else if (window == null)
+                    return MsgManager.SendMessage(ServerMessage.OPTIONS_WIN_INACTIVE);
             }
             if (CommandManager.IsInputMatchCmd(commands[1], optionLang))
             {

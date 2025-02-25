@@ -189,6 +189,7 @@ namespace NeedyGirlCMDTerminal
             Console.WriteLine("\n");
             Console.WriteLine(TIME_OUT_MSG);
             state = CommandState.TimedOut;
+            ConnectionManager.pipe.Client.Disconnect(false);
 
             async Task<bool> CheckIfAwaitingInput()
             {
@@ -212,6 +213,7 @@ namespace NeedyGirlCMDTerminal
             if (!ConnectionManager.pipe.Connected)
             {
                 Console.WriteLine(READ_OUT_MSG);
+                ConnectionManager.pipe.Client.Disconnect(false);
                 state = CommandState.TimedOut;
             }
             async Task<bool> CheckIfReadingInput()

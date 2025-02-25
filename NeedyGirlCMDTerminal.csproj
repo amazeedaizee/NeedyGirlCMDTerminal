@@ -71,6 +71,64 @@
     <Compile Remove="NeedyGirlCMDServer\ZipCommands.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Resources\angelASCIIart.txt" />
+    <None Remove="Resources\Help_action_main.txt" />
+    <None Remove="Resources\Help_action_parent.txt" />
+    <None Remove="Resources\Help_caution.txt" />
+    <None Remove="Resources\Help_cut.txt" />
+    <None Remove="Resources\Help_debug.txt" />
+    <None Remove="Resources\Help_ending.txt" />
+    <None Remove="Resources\Help_help.txt" />
+    <None Remove="Resources\Help_help_command.txt" />
+    <None Remove="Resources\Help_info.txt" />
+    <None Remove="Resources\Help_jine.txt" />
+    <None Remove="Resources\Help_load.txt" />
+    <None Remove="Resources\Help_login.txt" />
+    <None Remove="Resources\Help_notif.txt" />
+    <None Remove="Resources\Help_open.txt" />
+    <None Remove="Resources\Help_options.txt" />
+    <None Remove="Resources\Help_pic.txt" />
+    <None Remove="Resources\Help_read.txt" />
+    <None Remove="Resources\Help_reload.txt" />
+    <None Remove="Resources\Help_reset.txt" />
+    <None Remove="Resources\Help_shutdown.txt" />
+    <None Remove="Resources\Help_stream.txt" />
+    <None Remove="Resources\Help_tweet.txt" />
+    <None Remove="Resources\Help_unzip.txt" />
+    <None Remove="Resources\Help_video.txt" />
+    <None Remove="Resources\Help_webcam.txt" />
+    <None Remove="Resources\Help_window.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\angelASCIIart.txt" />
+    <EmbeddedResource Include="Resources\Help_action_main.txt" />
+    <EmbeddedResource Include="Resources\Help_action_parent.txt" />
+    <EmbeddedResource Include="Resources\Help_caution.txt" />
+    <EmbeddedResource Include="Resources\Help_cut.txt" />
+    <EmbeddedResource Include="Resources\Help_debug.txt" />
+    <EmbeddedResource Include="Resources\Help_ending.txt" />
+    <EmbeddedResource Include="Resources\Help_help.txt" />
+    <EmbeddedResource Include="Resources\Help_help_command.txt" />
+    <EmbeddedResource Include="Resources\Help_info.txt" />
+    <EmbeddedResource Include="Resources\Help_jine.txt" />
+    <EmbeddedResource Include="Resources\Help_load.txt" />
+    <EmbeddedResource Include="Resources\Help_login.txt" />
+    <EmbeddedResource Include="Resources\Help_notif.txt" />
+    <EmbeddedResource Include="Resources\Help_open.txt" />
+    <EmbeddedResource Include="Resources\Help_options.txt" />
+    <EmbeddedResource Include="Resources\Help_pic.txt" />
+    <EmbeddedResource Include="Resources\Help_read.txt" />
+    <EmbeddedResource Include="Resources\Help_reload.txt" />
+    <EmbeddedResource Include="Resources\Help_reset.txt" />
+    <EmbeddedResource Include="Resources\Help_shutdown.txt" />
+    <EmbeddedResource Include="Resources\Help_stream.txt" />
+    <EmbeddedResource Include="Resources\Help_tweet.txt" />
+    <EmbeddedResource Include="Resources\Help_unzip.txt" />
+    <EmbeddedResource Include="Resources\Help_video.txt" />
+    <EmbeddedResource Include="Resources\Help_webcam.txt" />
+    <EmbeddedResource Include="Resources\Help_window.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="App.config">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>

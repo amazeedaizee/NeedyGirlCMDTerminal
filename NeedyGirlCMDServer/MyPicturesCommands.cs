@@ -21,6 +21,7 @@ namespace NeedyGirlCMDServer
             var seperator = new Regex(@"\s+");
             string[] commands = seperator.Split(input, 3);
             bool isWindowActive = SingletonMonoBehaviour<WindowManager>.Instance.isAppOpen(AppType.MyPicture);
+            var window = SingletonMonoBehaviour<WindowManager>.Instance.WindowList.Find(t => t.appType == AppType.MyPicture);
             if (commands.Length == 1)
             {
                 if (!isWindowActive)
@@ -37,21 +38,23 @@ namespace NeedyGirlCMDServer
             {
                 return ViewPicture(commands[2]);
             }
-            else
+            else if (window != null)
             {
-                if (!isWindowActive)
-                    return MsgManager.SendMessage(ServerMessage.PIC_WIN_INACTIVE);
-                var window = SingletonMonoBehaviour<WindowManager>.Instance.GetWindowFromApp(AppType.MyPicture);
+
                 var picController = window.nakamiApp.GetComponent<MyPictureController_Sprit>();
                 if (CommandManager.IsInputMatchCmd(commands[1], backAction))
                 {
+                    if (!isWindowActive)
+                        return MsgManager.SendMessage(ServerMessage.PIC_WIN_INACTIVE);
                     picController.ReturnToChooseFile();
                     return "";
                 }
-                if (commands.Length > 2)
+                if (commands.Length > 1)
                 {
                     if (CommandManager.IsInputMatchCmd(commands[1], goToAction))
                     {
+                        if (!isWindowActive)
+                            return MsgManager.SendMessage(ServerMessage.PIC_WIN_INACTIVE);
                         if (commands.Length == 2)
                             return MsgManager.SendMessage(ServerMessage.CMD_MISSING_ARGS_THREE);
                         else return ViewFolder(commands[2], picController);
@@ -75,7 +78,9 @@ namespace NeedyGirlCMDServer
 
                 }
 
+
             }
+            else if (window == null) return MsgManager.SendMessage(ServerMessage.PIC_WIN_INACTIVE);
             return MsgManager.SendMessage(ServerMessage.INVALID_CMD);
         }
         internal static string ViewPicture(string picName)

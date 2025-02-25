@@ -94,7 +94,7 @@ namespace NeedyGirlCMDServer
             }
             else if (window != null && commands.Length == 1)
                 return "";
-            return MsgManager.SendMessage(ServerMessage.JINE_NO_WIN_MODIFY);
+            return MsgManager.SendMessage(ServerMessage.INVALID_CMD);
         }
 
         internal static bool IsWindowScroll(IWindow window, string command)
@@ -124,6 +124,7 @@ namespace NeedyGirlCMDServer
         }
         internal static void MoveScroll(IWindow window, bool isScrollUp)
         {
+
             float scrollPosition;
             var scroll = window.nakamiApp.GetComponentInChildren<ScrollRect>();
             if (scroll != null)
@@ -369,10 +370,6 @@ namespace NeedyGirlCMDServer
                 input = taskList.Count - 1;
             }
             window = taskList[input].window;
-            if (window.windowState == WindowState.minimized)
-            {
-                window.Pop();
-            }
             window.Touched();
 
         }
@@ -392,20 +389,22 @@ namespace NeedyGirlCMDServer
 
         internal static bool ChangeWindowState(IWindow window, string state)
         {
-
+            Initializer.logger.LogInfo("Window state: " + window.windowState.ToString());
             try
             {
                 if (CommandManager.IsInputMatchCmd(state, windowMin))
                 {
                     if (!window._minimize.interactable)
                         return false;
-                    if (window.windowState != WindowState.minimized)
-                        window._minimize.onClick.Invoke();
-                    else window.Pop();
+                    window._minimize.onClick.Invoke();
                     return true;
                 }
                 if (CommandManager.IsInputMatchCmd(state, windowMax) && window.windowState != WindowState.maximized)
                 {
+                    if (window.windowState == WindowState.minimized)
+                    {
+                        window.Pop();
+                    }
                     if (!window._maximize.interactable)
                         return false;
                     window._maximize.onClick.Invoke();
