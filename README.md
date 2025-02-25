@@ -62,3 +62,12 @@ Here are the list of commands that's supported in the server:
 - window
 
 If you want some more in-depth information for each command, feel free to take a look in the `tipstricks.md` file.
+
+------
+
+Mod uses the [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json) library.
+
+
+This mod is fan-made and is not associated with xemono and WSS Playground. All properties belong to their respective owners.
+
+Haven't downloaded Needy Streamer Overload yet? Get it here: https://store.steampowered.com/app/1451940/NEEDY_STREAMER_OVERLOAD/
