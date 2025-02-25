@@ -36,6 +36,9 @@ namespace NeedyGirlCMDServer
         readonly static string[] infoCommand = { "info", "i" };
         readonly static string[] videoCommand = { "video" };
 
+        internal readonly static string[] okOption = { "ok", "yes", "Y" };
+        internal readonly static string[] cancelOption = { "cancel", "no", "N" };
+
         internal static StreamReader streamReader;
         internal static StreamWriter streamWriter;
 
@@ -125,6 +128,58 @@ namespace NeedyGirlCMDServer
             else if (SceneManager.GetActiveScene().name.Contains("Window") && SingletonMonoBehaviour<DayPassing2D>.Instance.playingAnimation)
             {
                 message = MsgManager.SendMessage(ServerMessage.CMD_BUSY);
+            }
+            else if (IsInputMatchCmd(input, okOption))
+            {
+                message = ">";
+                var win = WindowCommands.GetActiveWindow();
+                if (win != null)
+                {
+                    message = WindowCommands.ClickOkButton(win);
+
+                }
+                if (!string.IsNullOrEmpty(message))
+                {
+                    if (SceneManager.GetActiveScene().name == "BiosToLoad")
+                    {
+                        var boot = SingletonMonoBehaviour<Boot>.Instance;
+                        if (boot.Caution.interactable)
+                        {
+                            boot.Ok.onClick.Invoke();
+                            message = "";
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(message))
+                    {
+                        message = MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
+                    }
+                }
+            }
+            else if (IsInputMatchCmd(input, cancelOption))
+            {
+                message = ">";
+                var win = WindowCommands.GetActiveWindow();
+                if (win != null)
+                {
+                    message = WindowCommands.ClickCancelButton(win);
+
+                }
+                if (!string.IsNullOrEmpty(message))
+                {
+                    if (SceneManager.GetActiveScene().name == "BiosToLoad")
+                    {
+                        var boot = SingletonMonoBehaviour<Boot>.Instance;
+                        if (boot.Caution.interactable)
+                        {
+                            boot.Cancel.onClick.Invoke();
+                            message = "";
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(message))
+                    {
+                        message = MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
+                    }
+                }
             }
             else if (IsInputMatchCmd(input, windowCommand, true))
             {
@@ -234,7 +289,7 @@ namespace NeedyGirlCMDServer
             }
             else
             {
-                message = "Invalid command.";
+                message = MsgManager.SendMessage(ServerMessage.INVALID_CMD);
             }
             if (string.IsNullOrWhiteSpace(message))
                 message = ">";

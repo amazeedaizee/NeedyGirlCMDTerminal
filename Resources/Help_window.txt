@@ -42,7 +42,7 @@ Sets the <scroll position> of the <selected window>.
 
 ------------------------------------------------------------------------------------
 
-> window <window to select> ok
+> window <window to select> {ok | yes | Y}
 
 Auto-clicks the "OK" button or similar in the <selected window>.
 

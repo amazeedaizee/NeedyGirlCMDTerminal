@@ -1,15 +1,13 @@
 ﻿using Cysharp.Threading.Tasks;
 using ngov3;
 using System.Text.RegularExpressions;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace NeedyGirlCMDServer
 {
     internal class BootCommands
     {
-        readonly static string[] okOption = { "ok" };
-        readonly static string[] cancelOption = { "cancel" };
+
         internal static string CautionCommand(string input)
         {
             Boot boot;
@@ -28,9 +26,9 @@ namespace NeedyGirlCMDServer
             {
                 return MsgManager.SendMessage(ServerMessage.BOOT_CAUTION_INACTIVE);
             }
-            if (CommandManager.IsInputMatchCmd(commands[1], cancelOption))
-                Application.Quit();
-            else if (CommandManager.IsInputMatchCmd(commands[1], okOption))
+            if (CommandManager.IsInputMatchCmd(commands[1], CommandManager.cancelOption))
+                boot.Cancel.onClick.Invoke();
+            else if (CommandManager.IsInputMatchCmd(commands[1], CommandManager.okOption))
                 boot.Ok.onClick.Invoke();
             else
             {

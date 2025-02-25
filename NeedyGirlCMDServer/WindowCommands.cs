@@ -9,8 +9,6 @@ namespace NeedyGirlCMDServer
 {
     internal class WindowCommands
     {
-        readonly static string[] windowOk = { "ok" };
-        readonly static string[] windowCancel = { "cancel" };
         readonly static string[] windowActive = { "active", "a" };
         readonly static string[] windowPrev = { "previous", "prev", "p" };
         readonly static string[] windowNext = { "next", "n" };
@@ -32,11 +30,11 @@ namespace NeedyGirlCMDServer
             {
                 return "";
             }
-            else if (CommandManager.IsInputMatchCmd(commands[0], windowOk))
+            else if (CommandManager.IsInputMatchCmd(commands[0], CommandManager.okOption))
             {
                 return ClickOkButton(window);
             }
-            else if (CommandManager.IsInputMatchCmd(commands[0], windowCancel))
+            else if (CommandManager.IsInputMatchCmd(commands[0], CommandManager.cancelOption))
             {
                 return ClickCancelButton(window);
             }

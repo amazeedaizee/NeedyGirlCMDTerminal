@@ -6,13 +6,13 @@ Caution Screen while in the Login/Caution Scene.
 
 ====================================================================================
 
-> caution ok
+> caution {ok | yes | Y}
 
 Continues to the Login Screen.
 
 ------------------------------------------------------------------------------------
 
-> caution cancel
+> caution {cancel | no | N}
 
 Quits the game.
 
