@@ -86,7 +86,7 @@ namespace NeedyGirlCMDServer
             bool canSend = false;
             var lang = SingletonMonoBehaviour<Settings>.instance.CurrentLanguage.Value;
             var ura = SingletonMonoBehaviour<EndingHappyUraUra>.Instance;
-            if (command == "raincandy_U")
+            if (command == "raincandy_U" || command == "x_angelkawaii_x")
             {
                 return MsgManager.SendMessage(ServerMessage.TWEET_MISC_FOLLOW);
             }
