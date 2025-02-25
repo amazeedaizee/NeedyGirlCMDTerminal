@@ -91,7 +91,7 @@ namespace NeedyGirlCMDServer
 
             }
             input = input.Trim();
-            Initializer.logger.LogInfo($"Receiving command: {input}");
+            Initializer.logger.LogMessage($"Receiving command: {input}");
 
             if (string.IsNullOrWhiteSpace(input))
             {
