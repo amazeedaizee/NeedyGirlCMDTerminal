@@ -1,4 +1,4 @@
-# NeedyGirlCMDTerminal
+# Needy Girl Commands Terminal/Server
 
 This repo actually contains the source code for two programs in one:
 
@@ -26,7 +26,7 @@ This is the program that, as a client, can send some commands to the server.
 
 While most commands are handled by the server, the `help` command is specifically handled by the client itself. 
 The `help` command provides a way of explaining to the user some extra info if needed while using the console.
-This is done by the server sending `?>` on a new line. This program does not capture `?>` or `>` in the console when the server sends them.
+This is done by the server sending `?>` on a new line. This program does not output `?>` or `>` in the console when the server sends them.
 
 If yopu want to make a client yourself, it's up to you whether or not you want to include a `help` command.
 
