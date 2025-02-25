@@ -99,6 +99,10 @@ namespace NeedyGirlCMDServer
 
         internal static bool IsWindowScroll(IWindow window, string command)
         {
+            if (window.windowState == WindowState.minimized)
+            {
+                window.Pop();
+            }
             if (CommandManager.IsInputMatchCmd(command, scrollUp))
             {
                 MoveScroll(window, true);
@@ -168,6 +172,10 @@ namespace NeedyGirlCMDServer
         {
             Transform transform;
             Button okButton;
+            if (window.windowState == WindowState.minimized)
+            {
+                window.Pop();
+            }
             //Initializer.logger.LogInfo("AppType: " + window.appType.ToString());
             //if (window.appType == AppType.TimePassDialog)
             //{
@@ -258,6 +266,10 @@ namespace NeedyGirlCMDServer
         internal static string ClickCancelButton(IWindow window)
         {
             Button cancelButton;
+            if (window.windowState == WindowState.minimized)
+            {
+                window.Pop();
+            }
             //Initializer.logger.LogInfo("AppType: " + window.appType.ToString());
             //if (window.appType == AppType.TimePassDialog)
             //{
@@ -327,7 +339,7 @@ namespace NeedyGirlCMDServer
                 {
                     input = taskList.Count - 1;
                 }
-                return SingletonMonoBehaviour<WindowManager>.Instance.WindowList[input];
+                return SingletonMonoBehaviour<WindowManager>.Instance.TaskBarList[input].window;
             }
             catch { return null; }
         }
@@ -383,11 +395,13 @@ namespace NeedyGirlCMDServer
 
             try
             {
-                if (CommandManager.IsInputMatchCmd(state, windowMin) && window.windowState != WindowState.minimized)
+                if (CommandManager.IsInputMatchCmd(state, windowMin))
                 {
                     if (!window._minimize.interactable)
                         return false;
-                    window._minimize.onClick.Invoke();
+                    if (window.windowState != WindowState.minimized)
+                        window._minimize.onClick.Invoke();
+                    else window.Pop();
                     return true;
                 }
                 if (CommandManager.IsInputMatchCmd(state, windowMax) && window.windowState != WindowState.maximized)
