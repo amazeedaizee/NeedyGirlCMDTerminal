@@ -201,7 +201,7 @@ namespace NeedyGirlCMDServer
         ZIP_NUM_NAN,
         ZIP_NUM_OUTRANGE,
         ZIP_OPENED,
-
+        PI_ID
 
     }
 }

@@ -250,7 +250,7 @@ namespace NeedyGirlCMDServer
             if (input >= jineHistory.Count || input < 0)
                 return MsgManager.SendMessage(ServerMessage.JINE_READ_OUTRANGE);
             jine = jineHistory[input];
-            user = jine.user == JineUserType.ame ? "Ame:" : "You:";
+            user = jine.user == JineUserType.ame ? $"{NgoEx.SystemTextFromType(SystemTextType.Tooltip_Ame, MsgManager.currentLang)}:" : $"{MsgManager.SendMessage(ServerMessage.PI_ID)}:";
             if (jine.responseType == ResponseType.Stamp)
             {
                 message = jine.stampType.ToString();
@@ -288,7 +288,7 @@ namespace NeedyGirlCMDServer
                     continue;
                 if (userType == JineUserType.pi && jineHistory[i].user != JineUserType.pi)
                     continue;
-                user = jineHistory[i].user == JineUserType.ame ? "Ame:" : "You:";
+                user = jineHistory[i].user == JineUserType.ame ? $"{NgoEx.SystemTextFromType(SystemTextType.Tooltip_Ame, MsgManager.currentLang)}:" : $"{MsgManager.SendMessage(ServerMessage.PI_ID)}:";
                 if (jineHistory[i].responseType == ResponseType.Freeform)
                 {
                     message = jineHistory[i].freeMessage;
@@ -301,5 +301,6 @@ namespace NeedyGirlCMDServer
             }
             return $"{user}\n{message}";
         }
+
     }
 }

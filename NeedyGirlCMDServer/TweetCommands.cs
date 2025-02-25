@@ -266,7 +266,7 @@ namespace NeedyGirlCMDServer
             {
                 if (isAngel != null && isAngel.Value != tweetHistory[i].IsOmote)
                     continue;
-                user = tweetHistory[i].IsOmote ? "KAngel:" : "Ame:";
+                user = tweetHistory[i].IsOmote ? "x_angelkawaii_x:" : "raincandy_U:";
                 message = ConvertDataToTweet(tweetHistory[i]);
                 if (tweetHistory[i].IsOmote && tweetHistory[i].kusoReps.Count > 0)
                 {
@@ -294,7 +294,7 @@ namespace NeedyGirlCMDServer
             {
                 return MsgManager.SendMessage(ServerMessage.TWEET_MSG_OUTRANGE);
             }
-            user = tweetHistory[input].IsOmote ? "KAngel:" : "Ame:";
+            user = tweetHistory[input].IsOmote ? "x_angelkawaii_x:" : "raincandy_U:";
             message = ConvertDataToTweet(tweetHistory[input]);
             if (tweetHistory[input].IsOmote && tweetHistory[input].kusoReps.Count > 0)
             {
