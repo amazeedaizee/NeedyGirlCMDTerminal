@@ -76,7 +76,7 @@ namespace NeedyGirlCMDServer
             var buf = new byte[size];
             //var sb = new StringBuilder();
             string input = "";
-            await ns.ReadAsync(buf, 0, size, ConnectionManager.cts.Token);
+            await ns.ReadAsync(buf, 0, size - 1, ConnectionManager.cts.Token);
             if (ConnectionManager.cts.IsCancellationRequested)
                 return;
             var arr = Encoding.UTF8.GetString(buf);
