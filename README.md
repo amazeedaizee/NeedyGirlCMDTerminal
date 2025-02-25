@@ -1,4 +1,4 @@
-# NeedyGirlCMDTerminal
+# Needy Girl Commands Terminal/Server
 
 This repo actually contains the source code for two programs in one:
 
