@@ -28,7 +28,7 @@ While most commands are handled by the server, the `help` command is specificall
 The `help` command provides a way of explaining to the user some extra info if needed while using the console.
 This is done by the server sending `?>` on a new line. This program does not output `?>` or `>` in the console when the server sends them.
 
-If yopu want to make a client yourself, it's up to you whether or not you want to include a `help` command.
+If you want to make a client yourself, it's up to you whether or not you want to include a `help` command.
 
 # Commands
 
@@ -61,7 +61,7 @@ Here are the list of commands that's supported in the server:
 - webcam 
 - window
 
-If you want some more in-depth information for each command, feel free to take a look in the `tipstricks.md` file.
+If you want some more in-depth information for each command, feel free to take a look in the wiki.
 
 ------
 
