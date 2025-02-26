@@ -1,5 +1,8 @@
 # Needy Girl Commands Terminal/Server
 
+![image](https://github.com/user-attachments/assets/64935604-b5f3-4bd8-8405-45718b4989b5)
+
+
 This repo actually contains the source code for two programs in one:
 
 - A BepInEx mod where the game acts as a server, accepting basic commands from one connected client as a way to control the game.
