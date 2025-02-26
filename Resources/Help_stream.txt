@@ -87,6 +87,13 @@ NOTE: This command only works if the skip button is visible.
 
 ------------------------------------------------------------------------------------
 
+> stream {read | r}
+
+Reads what's currently playing on the stream. If someone is currently talking,
+it will wait until all dialogue is finished.
+
+------------------------------------------------------------------------------------
+
 > stream {speed | s} <number>
 
 Sets the current stream speed to the specified number.

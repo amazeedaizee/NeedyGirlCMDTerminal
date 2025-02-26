@@ -206,8 +206,8 @@ namespace NeedyGirlCMDServer
         TWEET_WIN_INACTIVE,
         OPTIONS_WIN_INACTIVE,
         LOAD_NO_WIN_MODIFY,
-        LOAD_WIN_INACTIVE
-
+        LOAD_WIN_INACTIVE,
+        STREAM_READ_NULL
 
     }
 }

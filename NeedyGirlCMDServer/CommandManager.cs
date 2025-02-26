@@ -36,6 +36,7 @@ namespace NeedyGirlCMDServer
         readonly static string[] unzipCommand = { "unzip" };
         readonly static string[] myPicCommand = { "pic", "picture" };
         readonly static string[] infoCommand = { "info", "i" };
+        readonly static string[] listCommand = { "list", "L" };
         readonly static string[] videoCommand = { "video" };
 
         internal readonly static string[] okOption = { "ok", "yes", "Y" };
@@ -234,8 +235,13 @@ namespace NeedyGirlCMDServer
                 commands = seperator.Split(input, 3);
                 if (commands.Length == 1)
                     message = NotifCommands.ClickToEnding();
-                else if (commands.Length > 1 && IsInputMatchCmd(commands[1], infoCommand))
-                    message = InfoCommands.ShowEndingInfo();
+                else if (commands.Length > 1)
+                {
+                    if (IsInputMatchCmd(commands[1], infoCommand))
+                        message = InfoCommands.ShowEndingInfo();
+                    if (IsInputMatchCmd(commands[1], listCommand))
+                        message = InfoCommands.ShowEndingListInfo();
+                }
             }
             else if (IsInputMatchCmd(input, loginCommand, true))
             {
@@ -251,7 +257,7 @@ namespace NeedyGirlCMDServer
             }
             else if (IsInputMatchCmd(input, streamCommand, true))
             {
-                message = StreamCommands.ChooseStreamCommand(input);
+                message = await StreamCommands.ChooseStreamCommand(input);
             }
             else if (IsInputMatchCmd(input, jineCommand, true))
             {

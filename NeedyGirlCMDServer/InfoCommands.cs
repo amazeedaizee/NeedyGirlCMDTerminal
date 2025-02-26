@@ -134,8 +134,13 @@ namespace NeedyGirlCMDServer
         {
             string endingInfo = "";
             EndingType end;
+            bool isDataActive = SceneManager.GetActiveScene().name != "BiosToLoad" && SceneManager.GetActiveScene().name != "ChoozeZip";
+            if (!isDataActive)
+            {
+                return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
+            }
             var eventManager = SingletonMonoBehaviour<EventManager>.Instance;
-            var lang = SingletonMonoBehaviour<Settings>.Instance.CurrentLanguage.Value;
+            var lang = MsgManager.currentLang;
             end = eventManager.nowEnding;
             if (eventManager.nowEnding == NGO.EndingType.Ending_None)
             {
@@ -144,6 +149,26 @@ namespace NeedyGirlCMDServer
             endingInfo += $"{GetEndingTitle(end, lang)}\n\n" +
                          $"{GetEndingDesc(end, lang)}\n\n" +
                          $"\"{NgoEx.ReasonTextFromEDType(end, lang)}\"\n";
+            return endingInfo;
+        }
+
+        internal static string ShowEndingListInfo()
+        {
+            string endingInfo = "\n";
+            var lang = MsgManager.currentLang;
+            var endings = Enum.GetValues(typeof(EndingType));
+            var gotEnds = SingletonMonoBehaviour<Settings>.Instance.mitaEnd;
+            foreach (EndingType e in endings)
+            {
+                bool hasEnd = false;
+                if (e == EndingType.Ending_None || e == EndingType.Ending_NetShut || e == EndingType.Ending_Completed)
+                    continue;
+                if (gotEnds.Exists(end => end == e))
+                {
+                    hasEnd = true;
+                }
+                endingInfo += $"{GetEndingTitle(e, lang)}: {(hasEnd ? 'O' : 'X')}\n";
+            }
             return endingInfo;
         }
 

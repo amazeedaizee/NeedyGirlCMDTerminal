@@ -20,7 +20,7 @@ namespace NeedyGirlCMDServer
             }
             var idea = SingletonMonoBehaviour<NetaManager>.Instance._chipGet;
             notifList = SingletonMonoBehaviour<NotificationManager>.Instance._notiferParent;
-            if (notifList.childCount == 0 && idea._cover.alpha == 0f)
+            if (notifList.childCount == 0 && (idea == null || idea._cover.alpha == 0f))
             {
                 return MsgManager.SendMessage(ServerMessage.NOTIF_NO_ACTIVE);
             }

@@ -1832,5 +1832,19 @@
     "GE": "",
     "SP": "",
     "RU": ""
+  },
+  {
+    "Id": "STREAM_READ_NULL",
+    "EN": "No-one is saying anything in the stream right now.",
+    "JP": "",
+    "CN": "",
+    "KO": "",
+    "TW": "",
+    "VN": "",
+    "FR": "",
+    "IT": "",
+    "GE": "",
+    "SP": "",
+    "RU": ""
   }
 ]

@@ -43,8 +43,8 @@ namespace NeedyGirlCMDServer
             int user;
             Boot boot = SingletonMonoBehaviour<Boot>.Instance;
             adieuDialog adieu;
-            char[] seperator = { ' ' };
-            string[] commands = input.Split(seperator, 4);
+            var seperator = new Regex(@"\s+");
+            string[] commands = seperator.Split(input, 4);
             if (commands.Length < 2)
             {
                 return MsgManager.SendMessage(ServerMessage.CMD_WRONG_ARGS);

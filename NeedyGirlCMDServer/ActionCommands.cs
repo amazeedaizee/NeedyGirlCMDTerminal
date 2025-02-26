@@ -8,6 +8,8 @@ namespace NeedyGirlCMDServer
 {
     internal class ActionCommands
     {
+        readonly static string[] ideaCommand = { "hints", "hint", "ideas", "idea" };
+
         readonly static string[] streamAction = { "stream", "s", "1" };
         readonly static string[] hangoutAction = { "hangout", "h", "2" };
         readonly static string[] sleepAction = { "sleep", "z", "3" };
@@ -97,6 +99,8 @@ namespace NeedyGirlCMDServer
 
                 return MsgManager.SendMessage(ServerMessage.CMD_SPECIFIC_BUSY);
             }
+            if (CommandManager.IsInputMatchCmd(commands[1], ideaCommand))
+                return ListIdeas();
             if (commands.Length > 3 && (commands[3] == "f" || commands[3] == "force"))
                 isForceAction = true;
             if (CommandManager.IsInputMatchCmd(commands[1], hangoutAction))
@@ -553,6 +557,86 @@ namespace NeedyGirlCMDServer
                 return false;
             streamLevel = gotStream.level;
             return true;
+        }
+
+        internal static string ListIdeas()
+        {
+            string hintList = "\n";
+            var lang = MsgManager.currentLang;
+            int dark = SingletonMonoBehaviour<StatusManager>.Instance.GetStatus(StatusType.Yami);
+            ActionType[] goOut =
+            {
+            ActionType.OdekakeNakano,
+            ActionType.OdekakeHarajuku,
+            ActionType.OdekakeShibuya,
+            ActionType.OdekakeAkihabara,
+            ActionType.OdekakeIkebukuro,
+            ActionType.OdekakeUeno,
+            ActionType.OdekakeJinbocho,
+            ActionType.OdekakeShimokitazawa,
+            ActionType.OdekakeKichijoji,
+            ActionType.OdekakeGisneyland,
+            ActionType.OdekakeHikarigaokaPark,
+            ActionType.OdekakeAsakusa,
+            ActionType.OdekakeShinjuku,
+            ActionType.OdekakeToyosu,
+            ActionType.OdekakeOdaiba,
+            ActionType.OdekakeIchigaya,
+            ActionType.OdekakeHospital
+            };
+            var hints = SingletonMonoBehaviour<NetaManager>.Instance.fetchNextActionHint();
+            hintList += $"{NgoEx.SystemTextFromType(NGO.SystemTextType.Shortcut_Play, lang)}\n";
+            hintList += "--------------------------\n";
+            if (hints.Exists(h => h.Item1 == ActionType.EntameGame))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.EntameGame, lang)}\n";
+            if (hints.Exists(h => h.Item1 == ActionType.PlayIchatuku))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.PlayIchatuku, lang)}\n";
+            if (hints.Exists(h => h.Item1 == ActionType.PlayMakeLove))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.PlayMakeLove, lang)}\n";
+            hintList += $"\n{NgoEx.SystemTextFromType(NGO.SystemTextType.Window_Sleep, lang)}\n";
+            hintList += "--------------------------\n";
+            if (hints.Exists(h => h.Item1 == ActionType.SleepToTwilight))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.SleepToTwilight, lang)}\n";
+            if (hints.Exists(h => h.Item1 == ActionType.SleepToNight))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.SleepToNight, lang)}\n";
+            if (hints.Exists(h => h.Item1 == ActionType.SleepToTomorrow))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.SleepToTomorrow, lang)}\n";
+            hintList += $"\n{NgoEx.SystemTextFromType(NGO.SystemTextType.Shortcut_Drug, lang)}\n";
+            hintList += "--------------------------\n";
+            if (hints.Exists(h => h.Item1 == ActionType.OkusuriDaypassModerate))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.OkusuriDaypassModerate, lang)}\n";
+            if (hints.Exists(h => h.Item1 == ActionType.OkusuriDaypassOverdose))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.OkusuriDaypassOverdose, lang)}\n";
+            if (dark >= 20 && hints.Exists(h => h.Item1 == ActionType.OkusuriPuronModerate))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.OkusuriPuronModerate, lang)}\n";
+            if (dark >= 20 && hints.Exists(h => h.Item1 == ActionType.OkusuriPuronOverdose))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.OkusuriPuronOverdose, lang)}\n";
+            if (dark >= 40 && hints.Exists(h => h.Item1 == ActionType.OkusuriHiPuronOverdose))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.OkusuriHiPuronOverdose, lang)}\n";
+            if (dark >= 60 && hints.Exists(h => h.Item1 == ActionType.OkusuriHappa))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.OkusuriHappa, lang)}\n";
+            if (dark >= 80 && hints.Exists(h => h.Item1 == ActionType.OkusuriPsyche))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.OkusuriPsyche, lang)}\n";
+            hintList += $"\n{NgoEx.SystemTextFromType(NGO.SystemTextType.Window_Internet, lang)}\n";
+            hintList += "--------------------------\n";
+            if (hints.Exists(h => h.Item1 == ActionType.InternetPoketter))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.InternetPoketter, lang)}\n";
+            if (hints.Exists(h => h.Item1 == ActionType.InternetPoketterEgosa))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.InternetPoketterEgosa, lang)}\n";
+            if (hints.Exists(h => h.Item1 == ActionType.InternetYoutube))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.InternetYoutube, lang)}\n";
+            if (hints.Exists(h => h.Item1 == ActionType.Internet2ch))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.Internet2ch, lang)}\n";
+            if (hints.Exists(h => h.Item1 == ActionType.InternetDeai))
+                hintList += $"{NgoEx.ActNameFromType(ActionType.InternetDeai, lang)}\n";
+            hintList += $"\n{NgoEx.SystemTextFromType(NGO.SystemTextType.Shortcut_Odekake, lang)}\n";
+            hintList += "--------------------------\n";
+            foreach (var o in goOut)
+            {
+                if (hints.Exists(h => h.Item1 == o))
+                    hintList += $"{NgoEx.ActNameFromType(o, lang)}\n";
+            }
+            return hintList;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ngov3;
+﻿using Cysharp.Threading.Tasks;
+using ngov3;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine.SceneManagement;
@@ -22,7 +23,7 @@ namespace NeedyGirlCMDServer
         readonly static string[] commentSelect = { "select", "s" };
         readonly static string[] commentRead = { "read", "r" };
         readonly static string[] commentSuper = { "super", "s" };
-        internal static string ChooseStreamCommand(string input)
+        internal static async UniTask<string> ChooseStreamCommand(string input)
         {
             Live live;
             var seperator = new Regex(@"\s+");
@@ -97,6 +98,10 @@ namespace NeedyGirlCMDServer
                 {
                     return SkipStream(live);
                 }
+                if (CommandManager.IsInputMatchCmd(commands[1], commentRead))
+                {
+                    return await ReadDialogue(live);
+                }
                 if (CommandManager.IsInputMatchCmd(commands[1], streamSpeed))
                 {
                     if (commands.Length < 3) return MsgManager.SendMessage(ServerMessage.CMD_MISSING_ARGS);
@@ -163,6 +168,19 @@ namespace NeedyGirlCMDServer
             input--;
             live.setSpeed(input);
             return "";
+        }
+
+        internal static async UniTask<string> ReadDialogue(Live live)
+        {
+            if (live.isSpeaking)
+            {
+                await UniTask.WaitUntil(() => { return !live.isSpeaking; });
+            }
+            if (string.IsNullOrWhiteSpace(live.jimakuShowing.text))
+            {
+                return MsgManager.SendMessage(ServerMessage.STREAM_READ_NULL);
+            }
+            return live.jimakuShowing.text;
         }
         internal static string SelectComment(Live live, int input)
         {

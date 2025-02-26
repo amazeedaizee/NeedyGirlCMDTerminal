@@ -26,5 +26,11 @@ an empty command. (pressing Enter/Return without typing anything)
 
 Shows ending name and description for the current ending.
 
+------------------------------------------------------------------------------------
+
+> ending {list | l}
+
+Shows all ending names and ending completion. (O for Complete, X otherwise)
+
 ====================================================================================
 
