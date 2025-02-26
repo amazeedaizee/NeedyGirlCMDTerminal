@@ -32,36 +32,7 @@ If you want to make a client yourself, it's up to you whether or not you want to
 
 # Commands
 
-Here are the list of commands that's supported in the server:
-
-> [!NOTE]
-> To use the `debug` command, your game has to have Debug Mode enabled. 
-
-- action
-- caution
-- cut
-- debug
-- ending
-- info
-- jine
-- load
-- login
-- notification
-- open
-- options
-- picture
-- read
-- reload
-- reset
-- shutdown
-- stream
-- tweeter
-- unzip
-- video
-- webcam 
-- window
-
-If you want some more in-depth information for each command, feel free to take a look in the wiki.
+To know more about what commands can be used and how, I'd suggest looking at the **[wiki](https://github.com/amazeedaizee/NeedyGirlCMDTerminal/wiki)**. Warning, it can get a bit complicated.
 
 ------
 
