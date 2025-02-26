@@ -21,6 +21,8 @@ While running, it can accept specific commands from other programs, such as `cau
 After a client sends a command, the server will sometimes reply with extra information, before ending its message with `>` on a new line, indicating that it's ready to receive commands again from the client.
 If you plan on writing a program with this mod in mind, make sure to consider the above. Both the server and client are meant to share information with each other and wait until all information is sent/received.
 
+Only one client can communicate with the server at a time. While it is possible for a second client to connect, when sending/receiving commands, it will continuously hang until the first client disconnects, in which case the second client can try and connect again. Any extra clients after that will fail.
+
 Please note that this mod is slightly unstable. The game might hang if it's forcefully closed while it's in the process of sending/receiving a message to a connected client.
 
 ## Command Terminal
