@@ -37,7 +37,7 @@ namespace NeedyGirlCMDServer
                 return;
             }
             Initializer.logger.LogInfo("Waiting...");
-            pipe.Start();
+            pipe.Start(1);
             var linger = new LingerOption(false, 10);
             client = await pipe.AcceptTcpClientAsync();
             client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Linger, linger);
