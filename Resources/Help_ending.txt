@@ -24,13 +24,14 @@ an empty command. (pressing Enter/Return without typing anything)
 
 > ending {info | i}
 
-Shows ending name and description for the current ending.
+Shows ending name and description for the current ending in the terminal.
 
 ------------------------------------------------------------------------------------
 
 > ending {list | l}
 
-Shows all ending names and ending completion. (O for Complete, X otherwise)
+Shows all ending names and ending completion in the terminal. 
+(O for Complete, X otherwise)
 
 ====================================================================================
 

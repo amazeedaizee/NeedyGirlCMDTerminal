@@ -8,7 +8,7 @@ Cannot be used during the Login/Caution scene or when choosing a zip file.
 
 > action {ideas | ideas | hints | hint}
 
-Shows all actions that contains an idea for a stream.
+Shows all actions that contains an idea for a stream in the terminal.
 
 ------------------------------------------------------------------------------------
 
