@@ -74,11 +74,6 @@ namespace NeedyGirlCMDTerminal
             state = CommandState.AwaitingInput;
             if (!ConnectionManager.isRunning)
                 return;
-            if (!ConnectionManager.pipe.Connected)
-            {
-                ConnectionManager.isRunning = false;
-                return;
-            }
             //Task.Run(ExitCommandWrite);
             Task.Run(ReceiveCommand);
             Console.Write(P_CHAN_INPUT);
@@ -103,11 +98,6 @@ namespace NeedyGirlCMDTerminal
         {
             if (!ConnectionManager.isRunning)
                 return;
-            if (!ConnectionManager.pipe.Connected)
-            {
-                ConnectionManager.isRunning = false;
-                return;
-            }
             streamWriter.WriteLine(command);
             state = CommandState.ReadingInput;
             Console.WriteLine($"Sent: {command}");
@@ -115,6 +105,8 @@ namespace NeedyGirlCMDTerminal
             while (state == CommandState.ReadingInput)
             {
                 Thread.Sleep(100);
+                if (!ConnectionManager.isRunning)
+                    return;
             }
         }
 
@@ -128,20 +120,12 @@ namespace NeedyGirlCMDTerminal
             while (state != CommandState.ReadingInput)
             {
                 Thread.Sleep(100);
-                if (!ConnectionManager.pipe.Connected)
-                {
-                    ConnectionManager.isRunning = false;
+                if (!ConnectionManager.isRunning)
                     return;
-                }
             }
             //Task.Run(ExitCommandRead);
             while ((message = await streamReader.ReadLineAsync()) != ">")
             {
-                if (message == "!>")
-                {
-                    ConnectionManager.isRunning = false;
-                    return;
-                }
                 if (message != ">")
                     allMessages += message;
                 if (message != "?>")
@@ -154,14 +138,11 @@ namespace NeedyGirlCMDTerminal
 
 
             }
+            if (!ConnectionManager.isRunning)
+                return;
             //ConnectionManager.ns.ReadTimeout = Timeout.Infinite;
             state = CommandState.SendingOutput;
             streamReader.DiscardBufferedData();
-            if (!ConnectionManager.pipe.Connected)
-            {
-                ConnectionManager.isRunning = false;
-                return;
-            }
             //if (state == CommandState.AwaitingInput)
             //    Console.Write(P_CHAN_INPUT);
         }
