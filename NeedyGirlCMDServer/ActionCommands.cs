@@ -604,19 +604,19 @@ namespace NeedyGirlCMDServer
             hintList += $"\n{NgoEx.SystemTextFromType(NGO.SystemTextType.Shortcut_Drug, lang)}\n";
             hintList += "--------------------------\n";
             if (hints.Exists(h => h.Item1 == ActionType.OkusuriDaypassModerate))
-                hintList += $"{NgoEx.ActNameFromType(ActionType.OkusuriDaypassModerate, lang)}\n";
+                hintList += $"{NgoEx.CmdName(CmdType.OkusuriDaypassModerate, lang)}\n";
             if (hints.Exists(h => h.Item1 == ActionType.OkusuriDaypassOverdose))
-                hintList += $"{NgoEx.ActNameFromType(ActionType.OkusuriDaypassOverdose, lang)}\n";
+                hintList += $"{NgoEx.CmdName(CmdType.OkusuriDaypassOverdoseY1, lang)}\n";
             if (dark >= 20 && hints.Exists(h => h.Item1 == ActionType.OkusuriPuronModerate))
-                hintList += $"{NgoEx.ActNameFromType(ActionType.OkusuriPuronModerate, lang)}\n";
+                hintList += $"{NgoEx.CmdName(CmdType.OkusuriPuronModerate, lang)}\n";
             if (dark >= 20 && hints.Exists(h => h.Item1 == ActionType.OkusuriPuronOverdose))
-                hintList += $"{NgoEx.ActNameFromType(ActionType.OkusuriPuronOverdose, lang)}\n";
+                hintList += $"{NgoEx.CmdName(CmdType.OkusuriDaypassOverdoseY2, lang)}\n";
             if (dark >= 40 && hints.Exists(h => h.Item1 == ActionType.OkusuriHiPuronOverdose))
-                hintList += $"{NgoEx.ActNameFromType(ActionType.OkusuriHiPuronOverdose, lang)}\n";
+                hintList += $"{NgoEx.CmdName(CmdType.OkusuriHiPuronOverdoseY3, lang)}\n";
             if (dark >= 60 && hints.Exists(h => h.Item1 == ActionType.OkusuriHappa))
-                hintList += $"{NgoEx.ActNameFromType(ActionType.OkusuriHappa, lang)}\n";
+                hintList += $"{NgoEx.CmdName(CmdType.OkusuriHappaY4, lang)}\n";
             if (dark >= 80 && hints.Exists(h => h.Item1 == ActionType.OkusuriPsyche))
-                hintList += $"{NgoEx.ActNameFromType(ActionType.OkusuriPsyche, lang)}\n";
+                hintList += $"{NgoEx.CmdName(CmdType.OkusuriPsyche, lang)}\n";
             hintList += $"\n{NgoEx.SystemTextFromType(NGO.SystemTextType.Window_Internet, lang)}\n";
             hintList += "--------------------------\n";
             if (hints.Exists(h => h.Item1 == ActionType.InternetPoketter))
@@ -626,7 +626,7 @@ namespace NeedyGirlCMDServer
             if (hints.Exists(h => h.Item1 == ActionType.InternetYoutube))
                 hintList += $"{NgoEx.ActNameFromType(ActionType.InternetYoutube, lang)}\n";
             if (hints.Exists(h => h.Item1 == ActionType.Internet2ch))
-                hintList += $"{NgoEx.ActNameFromType(ActionType.Internet2ch, lang)}\n";
+                hintList += $"{NgoEx.SystemTextFromType(NGO.SystemTextType.Shortcut_Keijiban, lang)}\n";
             if (hints.Exists(h => h.Item1 == ActionType.InternetDeai))
                 hintList += $"{NgoEx.ActNameFromType(ActionType.InternetDeai, lang)}\n";
             hintList += $"\n{NgoEx.SystemTextFromType(NGO.SystemTextType.Shortcut_Odekake, lang)}\n";

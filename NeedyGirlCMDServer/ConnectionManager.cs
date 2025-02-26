@@ -23,6 +23,7 @@ namespace NeedyGirlCMDServer
             var linger = new LingerOption(false, 10);
             pipe = new TcpListener(IPAddress.Parse("127.0.0.1"), 55770);
             pipe.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Linger, linger);
+            pipe.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.MaxConnections, 1);
             //thread = new Thread(WaitForConnection);
             //thread.Start();
             WaitForConnection().Forget();
