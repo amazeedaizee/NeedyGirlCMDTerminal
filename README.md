@@ -1,5 +1,8 @@
 # Needy Girl Commands Terminal/Server
 
+![image](https://github.com/user-attachments/assets/64935604-b5f3-4bd8-8405-45718b4989b5)
+
+
 This repo actually contains the source code for two programs in one:
 
 - A BepInEx mod where the game acts as a server, accepting basic commands from one connected client as a way to control the game.
@@ -22,7 +25,7 @@ Please note that this mod is slightly unstable. The game might hang if it's forc
 
 ## Command Terminal
 
-This is the program that, as a client, can send some commands to the server.
+This is the program that, as a client, can send some commands to the server through the console/terminal.
 
 While most commands are handled by the server, the `help` command is specifically handled by the client itself. 
 The `help` command provides a way of explaining to the user some extra info if needed while using the console.
@@ -32,36 +35,7 @@ If you want to make a client yourself, it's up to you whether or not you want to
 
 # Commands
 
-Here are the list of commands that's supported in the server:
-
-> [!NOTE]
-> To use the `debug` command, your game has to have Debug Mode enabled. 
-
-- action
-- caution
-- cut
-- debug
-- ending
-- info
-- jine
-- load
-- login
-- notification
-- open
-- options
-- picture
-- read
-- reload
-- reset
-- shutdown
-- stream
-- tweeter
-- unzip
-- video
-- webcam 
-- window
-
-If you want some more in-depth information for each command, feel free to take a look in the wiki.
+To know more about what commands can be used and how, I'd suggest looking at the **[wiki](https://github.com/amazeedaizee/NeedyGirlCMDTerminal/wiki)**. Warning, it can get a bit complicated.
 
 ------
 
