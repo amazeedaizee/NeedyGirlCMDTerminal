@@ -89,13 +89,12 @@ namespace NeedyGirlCMDServer
                 }
                 
                 var systemInfoString = $@"
-User: {userName}@{machineName}
+User: angelkawaii2@windose
 OS: Windose20
 CPU: {cpuInfo} ({processorCount} cores)
 RAM: {availableMemory} / {totalMemory}
 Uptime: {uptime.Days}d {uptime.Hours}h {uptime.Minutes}m
 ";
-                // Разделяем арт и системную информацию на строки
                 string[] artLines = windoseArt.TrimEnd('\n').Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
                 string[] infoLines = systemInfoString.Trim().Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
