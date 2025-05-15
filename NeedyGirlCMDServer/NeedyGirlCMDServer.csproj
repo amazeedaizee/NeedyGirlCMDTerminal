@@ -61,6 +61,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Management" />
     <Reference Include="UniRx, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\1_2_1_Libraries\UniRx.dll</HintPath>
@@ -110,6 +111,7 @@
     <Compile Include="LoginCommands.cs" />
     <Compile Include="MetaCommands.cs" />
     <Compile Include="MyPicturesCommands.cs" />
+    <Compile Include="NeofetchCommands.cs" />
     <Compile Include="NotifCommands.cs" />
     <Compile Include="OptionsCommands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
