@@ -1,3 +1,4 @@
+### [A small update on my mods](https://gist.github.com/amazeedaizee/b065103e312e6339ddce15854445dc27)
 # Needy Girl Commands Terminal/Server
 
 ![image](https://github.com/user-attachments/assets/64935604-b5f3-4bd8-8405-45718b4989b5)
@@ -38,6 +39,14 @@ If you want to make a client yourself, it's up to you whether or not you want to
 # Commands
 
 To know more about what commands can be used and how, I'd suggest looking at the **[wiki](https://github.com/amazeedaizee/NeedyGirlCMDTerminal/wiki)**. Warning, it can get a bit complicated.
+
+------
+
+## Disclosure
+
+This mod was unfortunately created using Visual Studio 2022 with Intellicode (Ai-powered autocomplete)
+
+[More info](https://gist.github.com/amazeedaizee/b065103e312e6339ddce15854445dc27)
 
 ------
 
